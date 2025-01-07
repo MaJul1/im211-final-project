@@ -1,6 +1,3 @@
-using System;
-using System.Diagnostics.Contracts;
-using System.Security.Cryptography;
 using Database.Enums;
 
 namespace Database.Models;
@@ -19,6 +16,7 @@ public class Student
     public int YearLevel {get; set;}
     public char Section {get; set;}
     public string Program {get; set;} = null!;
+    public string Department {get; set;} = null!;
     public Sex Sex {get; set;}
     public StudentType Type {get; set;}
 

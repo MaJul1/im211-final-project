@@ -1,5 +1,8 @@
 ﻿using CommandLine;
+using ConsoleTables;
+using Database.Models;
 using Database.Options;
+using Database.Services;
 
 class Program
 {
