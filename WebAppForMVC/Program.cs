@@ -1,6 +1,19 @@
+using Microsoft.EntityFrameworkCore;
+using WebAppForMVC.Context;
+using WebAppForMVC.Repository;
+using WebAppForMVC.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddDbContext<SystemDatabaseContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("SqlLiteConnectionString"))
+);
+
+builder.Services.AddScoped<CourseRepository>();
+builder.Services.AddScoped<StudentRepository>();
+builder.Services.AddScoped<SkillRepository>();
+builder.Services.AddScoped<HomeViewService>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
