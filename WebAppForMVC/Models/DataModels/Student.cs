@@ -1,6 +1,6 @@
 using WebAppForMVC.Enums;
 
-namespace WebAppForMVC.Models;
+namespace WebAppForMVC.Models.DataModels;
 
 public class Student
 {

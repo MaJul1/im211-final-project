@@ -1,6 +1,6 @@
 using System;
 
-namespace WebAppForMVC.Models;
+namespace WebAppForMVC.Models.ViewModels;
 
 public class HomeViewModel
 {
