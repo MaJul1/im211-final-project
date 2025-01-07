@@ -76,4 +76,15 @@ public static class ParseService
             throw new ArgumentNullException($"{value} is not a valid date format. Must use the {format} format.");
         }
     }
+
+    public static SortType ParseToSortType(this string value)
+    {
+        if (value.Equals("asc", StringComparison.CurrentCultureIgnoreCase) || value.Equals("ascending", StringComparison.CurrentCultureIgnoreCase))
+            return SortType.ASCENDING;
+        
+        else if (value.Equals("dsc", StringComparison.CurrentCultureIgnoreCase) || value.Equals("descending", StringComparison.InvariantCultureIgnoreCase))
+            return SortType.DESCENDING;
+
+        throw new ArgumentException($"{value} is not a valid sort type.");
+    }
 }

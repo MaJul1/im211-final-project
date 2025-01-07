@@ -25,9 +25,39 @@ public class StudentQueryService
         throw new NotImplementedException();
     }
 
-    private IQueryable<Student> ApplyStudentSorts(IQueryable<Student> students, IEnumerable<string> sort)
+    private IQueryable<Student> ApplyStudentSorts(IQueryable<Student> students, IEnumerable<string> sorts)
     {
-        throw new NotImplementedException();
+        foreach (var sort in sorts)
+        {
+            students = ApplyStudentSort(students, sort);
+        }
+
+        return students;
+    }
+
+    private IQueryable<Student> ApplyStudentSort(IQueryable<Student> students, string sort)
+    {
+        var splitData = sort.GetSplitData();
+        var sortType = splitData.Value.ParseToSortType();
+        var type = splitData.Type;
+
+        students = students.ApplyFieldSort(type, s => s.Id, sortType);
+        students = students.ApplyFieldSort(type, s => s.FirstName, sortType);
+        students = students.ApplyFieldSort(type, s => s.MiddleName, sortType);
+        students = students.ApplyFieldSort(type, s => s.LastName, sortType);
+        students = students.ApplyFieldSort(type, s => s.Age, sortType);
+        students = students.ApplyFieldSort(type, s => s.BirthDay, sortType);
+        students = students.ApplyFieldSort(type, s => s.Email, sortType);
+        students = students.ApplyFieldSort(type, s => s.PhoneNumber, sortType);
+        students = students.ApplyFieldSort(type, s => s.Address, sortType);
+        students = students.ApplyFieldSort(type, s => s.Department, sortType);
+        students = students.ApplyFieldSort(type, s => s.YearLevel, sortType);
+        students = students.ApplyFieldSort(type, s => s.Section, sortType);
+        students = students.ApplyFieldSort(type, s => s.Program, sortType);
+        students = students.ApplyFieldSort(type, s => s.Sex, sortType);
+        students = students.ApplyFieldSort(type, s => s.Type, sortType);
+
+        return students;
     }
 
     private IQueryable<Student> ApplyStudentFilters(IQueryable<Student> students, IEnumerable<string> filters)
