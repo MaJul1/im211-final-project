@@ -16,10 +16,16 @@ public class SystemDatabaseContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Course>()
-            .HasMany(e => e.Students)
+        modelBuilder.Entity<Course>(e => 
+        {
+            e.HasMany(e => e.Students)
             .WithMany(e => e.Courses)
             .UsingEntity("StudentCourses");
+
+            e.HasIndex(e => e.CourseCode)
+            .IsUnique();
+
+        });
 
         modelBuilder.Entity<Skill>()
             .HasMany(e => e.Students)
