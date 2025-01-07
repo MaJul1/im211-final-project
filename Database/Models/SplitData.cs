@@ -1,6 +1,6 @@
 using System;
 
-namespace Database.InternalData;
+namespace Database.Models;
 
 public class SplitData
 {

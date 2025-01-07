@@ -1,4 +1,3 @@
-using Database.InternalData;
 using Database.Models;
 using Database.Options;
 
@@ -14,15 +13,12 @@ public class StudentQueryService
         if (options.Sort != null)
             students = ApplyStudentSorts(students, options.Sort);
         
-        if (options.GroupBy != null)
-            students = ApplyStudentGroupBy(students, options.GroupBy);
-        
         return students;
     }
 
-    private IQueryable<Student> ApplyStudentGroupBy(IQueryable<Student> students, string groupBy)
+    public IQueryable<IGrouping<object, Student>> ApplyStudentGroupBy(IQueryable<Student> students, IEnumerable<string> properties)
     {
-        throw new NotImplementedException();
+        return students.GroupByDynamic(properties);
     }
 
     private IQueryable<Student> ApplyStudentSorts(IQueryable<Student> students, IEnumerable<string> sorts)

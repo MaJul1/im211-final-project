@@ -19,6 +19,7 @@ public class Student
     public string Department {get; set;} = null!;
     public Sex Sex {get; set;}
     public StudentType Type {get; set;}
+    public DateTime DateAdded {get; set;}
 
     public ICollection<Skill> Skills {get; set;} = null!;
     public ICollection<Course> Courses {get; set;} = null!;

@@ -17,16 +17,16 @@ public class PropertyNameService
         throw new InvalidOperationException("Invalid expression format");
     }
 
-public static string GetPropertyName<T, TKey>(Expression<Func<T, TKey>> sortExpression)
-{
-    if (sortExpression.Body is MemberExpression memberExpression)
+    public static string GetPropertyName<T, TKey>(Expression<Func<T, TKey>> sortExpression)
     {
-        return memberExpression.Member.Name;
+        if (sortExpression.Body is MemberExpression memberExpression)
+        {
+            return memberExpression.Member.Name;
+        }
+        else if (sortExpression.Body is UnaryExpression unaryExpression && unaryExpression.Operand is MemberExpression operand)
+        {
+            return operand.Member.Name;
+        }
+        throw new InvalidOperationException("Invalid expression format");
     }
-    else if (sortExpression.Body is UnaryExpression unaryExpression && unaryExpression.Operand is MemberExpression operand)
-    {
-        return operand.Member.Name;
-    }
-    throw new InvalidOperationException("Invalid expression format");
-}
 }

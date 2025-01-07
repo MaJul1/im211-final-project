@@ -1,5 +1,5 @@
 using System;
-using Database.InternalData;
+using Database.Models;
 
 namespace Database.Services;
 

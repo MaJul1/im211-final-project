@@ -12,12 +12,12 @@ public class QueryOptions
     public string Entity {get; set;} = null!;
 
     [Option('f', "filter", HelpText = "Use to filter results.")]
-    public IEnumerable<string>? Filter {get; set;} //age>10,Sex==Male
+    public IEnumerable<string>? Filter {get; set;}
 
     [Option('s', "sort", HelpText = "Use to sort results.")]
-    public IEnumerable<string>? Sort {get; set;} //age:asc
+    public IEnumerable<string>? Sort {get; set;}
 
     [Option('g', "groupby", HelpText = "Use to group results.")]
-    public string? GroupBy {get; set;} //age
+    public IEnumerable<string>? GroupBy {get; set;}
 
 }
