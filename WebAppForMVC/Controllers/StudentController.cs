@@ -15,15 +15,26 @@ namespace WebAppForMVC.Controllers
         }
 
         // GET: StudentController
-        public IActionResult Index(string sortParam)
+        public IActionResult Index(string sortParam, string searchParam)
         {
             ViewData["IdSortParam"] = string.IsNullOrEmpty(sortParam) ? "Id" : "";
             ViewData["NameSortParam"] = sortParam == "Name" ? "Name_desc": "Name";
             ViewData["YearAndSectionSortParam"] = sortParam == "YearAndSection" ? "YearAndSection_desc" : "YearAndSection";
             ViewData["ProgramSortParam"] = sortParam == "Program" ? "Program_desc" : "Program";
             ViewData["DepartmentSortParam"] = sortParam == "Department" ? "Department_desc" : "Department";
+            ViewData["CurrentSortString"] = searchParam;
             
             var model = _studentRepository.GetAll();
+
+            if (searchParam != null)
+            {
+                model = model.Where(s => s.SchoolId.Contains(searchParam)
+                                || s.FirstName.Contains(searchParam)
+                                || s.LastName.Contains(searchParam)
+                                || string.Concat(s.YearLevel, s.Section).Contains(searchParam)
+                                || s.Program.Contains(searchParam)
+                                || s.Department.Contains(searchParam));
+            }
 
             switch (sortParam)
             {
@@ -84,6 +95,11 @@ namespace WebAppForMVC.Controllers
         public IActionResult UpdateStudent(Guid itemid)
         {
             return View();
+        }
+
+        public IActionResult DeleteStudent(Guid itemid)
+        {
+            return RedirectToAction("Index");
         }
 
     }

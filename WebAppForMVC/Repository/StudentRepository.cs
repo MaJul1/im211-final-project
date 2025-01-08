@@ -32,11 +32,15 @@ public class StudentRepository
 
     public Student? GetStudentById(Guid Id)
     {
-        var students = _context.Students
-            .Include(s => s.Courses)
-            .Include(s => s.Skills);
+        var student = _context.Students
+                .AsSplitQuery()
+                .FirstOrDefault(s => s.Id == Id);
 
-        var student= students.Where(s => s.Id == Id).FirstOrDefault();
+        if(student != null)
+        {
+            _context.Entry(student).Collection(s => s.Courses).Load();
+            _context.Entry(student).Collection(s => s.Skills).Load();
+        }
 
         return student;
     }
