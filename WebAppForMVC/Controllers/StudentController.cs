@@ -7,12 +7,10 @@ namespace WebAppForMVC.Controllers
 {
     public class StudentController : Controller
     {
-        private readonly StudentViewService _studentViewService;
         private readonly StudentRepository _studentRepository;
 
-        public StudentController(StudentViewService studentViewService, StudentRepository repository)
+        public StudentController(StudentRepository repository)
         {
-            _studentViewService = studentViewService;
             _studentRepository = repository;
         }
 
@@ -25,36 +23,40 @@ namespace WebAppForMVC.Controllers
             ViewData["ProgramSortParam"] = sortParam == "Program" ? "Program_desc" : "Program";
             ViewData["DepartmentSortParam"] = sortParam == "Department" ? "Department_desc" : "Department";
             
-            var model = _studentViewService.GetStudentViewModel();
+            var model = _studentRepository.GetAll();
 
             switch (sortParam)
             {
                 case "Id":
-                    model.StudentProfiles = model.StudentProfiles.OrderBy(s => s.Id);
+                    model = model.OrderBy(s => s.Id);
                 break;
                 case "Name":
-                    model.StudentProfiles = model.StudentProfiles.OrderBy(s => s.FullName);
+                    model = model.OrderBy(s => s.FirstName)
+                                .ThenBy(s => s.LastName);
                 break;
                 case "Name_desc":
-                    model.StudentProfiles = model.StudentProfiles.OrderByDescending(s => s.FullName);
+                    model = model.OrderByDescending(s => s.FirstName)
+                                .ThenBy(s => s.LastName);
                 break;
                 case "YearAndSection":
-                    model.StudentProfiles = model.StudentProfiles.OrderBy(s => s.YearAndSection);
+                    model = model.OrderBy(s => s.YearLevel)
+                                .ThenBy(s => s.Section);
                 break;
                 case "YearAndSection_desc":
-                    model.StudentProfiles = model.StudentProfiles.OrderByDescending(s => s.YearAndSection);
+                    model = model.OrderByDescending(s => s.YearLevel)
+                                .ThenBy(s => s.Section);
                 break;
                 case "Program":
-                    model.StudentProfiles = model.StudentProfiles.OrderBy(s => s.Program);
+                    model = model.OrderBy(s => s.Program);
                 break;
                 case "Program_desc":
-                    model.StudentProfiles = model.StudentProfiles.OrderByDescending(s => s.Program);
+                    model = model.OrderByDescending(s => s.Program);
                 break;
                 case "Department":
-                    model.StudentProfiles = model.StudentProfiles.OrderBy(s => s.Department);
+                    model = model.OrderBy(s => s.Department);
                 break;
                 case "Department_desc":
-                    model.StudentProfiles = model.StudentProfiles.OrderByDescending(s => s.Department);
+                    model = model.OrderByDescending(s => s.Department);
                 break;
 
             }

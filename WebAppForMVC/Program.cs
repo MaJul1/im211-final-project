@@ -13,7 +13,6 @@ builder.Services.AddScoped<CourseRepository>();
 builder.Services.AddScoped<StudentRepository>();
 builder.Services.AddScoped<SkillRepository>();
 builder.Services.AddScoped<HomeViewService>();
-builder.Services.AddScoped<StudentViewService>();
 builder.Services.AddScoped<SeederService>();
 
 builder.Services.AddControllersWithViews();

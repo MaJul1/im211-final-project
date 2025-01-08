@@ -2,14 +2,14 @@
     ViewData["Title"] = "Student Page";
 }
 
-@model StudentViewModel
+@model IEnumerable<Student>
 
 <div>
     <h1>Student Page</h1>
 </div>
 
 <div>
-    @if (@Model.StudentProfiles.Count() == 0)
+    @if (@Model.Count() == 0)
     {
         <div class="text-center">
             <p>No Record Found</p>
@@ -29,12 +29,12 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var s in @Model.StudentProfiles)
+                @foreach (var s in @Model)
                 {
                     <tr>
                         <td>@s.SchoolId</td>
-                        <td>@s.FullName</td>
-                        <td>@s.YearAndSection</td>
+                        <td>@string.Join(" ", s.FirstName, s.LastName)</td>
+                        <td>@string.Concat(s.YearLevel, s.Section)</td>
                         <td>@s.Program</td>
                         <td>@s.Department</td>
                         <td>
