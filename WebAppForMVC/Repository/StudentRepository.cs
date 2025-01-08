@@ -54,4 +54,13 @@ public class StudentRepository
 
         return true;
     }
+
+    public void RemoveById(Guid Id)
+    {
+        var student = _context.Students.Find(Id);
+
+        if (student != null) _context.Students.Remove(student);
+
+        _context.SaveChanges();
+    }
 }

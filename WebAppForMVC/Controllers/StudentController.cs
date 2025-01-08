@@ -99,6 +99,8 @@ namespace WebAppForMVC.Controllers
 
         public IActionResult DeleteStudent(Guid itemid)
         {
+            _studentRepository.RemoveById(itemid);
+            
             return RedirectToAction("Index");
         }
 
