@@ -17,25 +17,30 @@
     }
     else
     {
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-sm table-hover">
             <thead>
                 <tr>
-                    <th>Student Id</th>
-                    <th>Name</th>
-                    <th>YearAndSection</th>
-                    <th>Program</th>
-                    <th>Department</th>
+                    <th><a asp-action="Index" asp-controller="Student" asp-route-sortParam="@ViewData["IdSortParam"]">Student Id</a></th>
+                    <th><a asp-action="Index" asp-controller="Student" asp-route-sortParam="@ViewData["NameSortParam"]">Full Name</a></th>
+                    <th><a asp-action="Index" asp-controller="Student" asp-route-sortParam="@ViewData["YearAndSectionSortParam"]">Year and Section</a></th>
+                    <th><a asp-action="Index" asp-controller="Student" asp-route-sortParam="@ViewData["ProgramSortParam"]">Program</a></th>
+                    <th><a asp-action="Index" asp-controller="Student" asp-route-sortParam="@ViewData["DepartmentSortParam"]">Department Id</a></th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var s in @Model.StudentProfiles)
                 {
                     <tr>
-                        <th>@s.Id</th>
-                        <th>@s.FullName</th>
-                        <th>@s.YearAndSection</th>
-                        <th>@s.Program</th>
-                        <th>@s.Department</th>
+                        <td>@s.SchoolId</td>
+                        <td>@s.FullName</td>
+                        <td>@s.YearAndSection</td>
+                        <td>@s.Program</td>
+                        <td>@s.Department</td>
+                        <td>
+                            <a asp-action="ViewStudent" asp-controller="Student" asp-route-itemid="@s.Id">View</a> |
+                            <a asp-action="DeleteStudent" asp-controller="Student" asp-route-itemid="@s.Id">Delete</a>
+                        </td>
                     </tr>
                 }
             </tbody>

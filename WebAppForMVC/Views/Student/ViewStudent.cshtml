@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "View Student Page";
+}
+
+@model WebAppForMVC.Models.DataModels.Student
+
+<div class="container mt-5">
+    <h2>@Model.FirstName @Model.MiddleName @Model.LastName</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <p><strong>School ID:</strong> @Model.SchoolId</p>
+            <p><strong>Birth Date:</strong> @Model.BirthDay.ToShortDateString()</p>
+            <p><strong>Age:</strong> @Model.Age</p>
+            <p><strong>Email:</strong> @Model.Email</p>
+            <p><strong>Phone Number:</strong> @Model.PhoneNumber</p>
+            <p><strong>Address:</strong> @Model.Address</p>
+        </div>
+        <div class="col-md-6">
+            <p><strong>Year Level:</strong> @Model.YearLevel</p>
+            <p><strong>Section:</strong> @Model.Section</p>
+            <p><strong>Program:</strong> @Model.Program</p>
+            <p><strong>Department:</strong> @Model.Department</p>
+            <p><strong>Sex:</strong> @Model.Sex</p>
+            <p><strong>Type:</strong> @Model.Type</p>
+            <p><strong>Date Added:</strong> @Model.DateAdded.ToShortDateString()</p>
+        </div>
+    </div>
+    <div>
+        <h4>Courses Enrolled</h4>
+        <table class="table table-border">
+            <thead>
+                <tr>
+                    <th>Course Code</th>
+                    <th>Course Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (@Model.Courses == null || @Model.Courses.Any() == false)
+                {
+                    <tr>
+                        <td colspan="2">No Courses Enrolled</td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var c in @Model.Courses)
+                    {
+                        <tr>
+                            <td>@c.CourseCode</td>
+                            <td>@c.CourseDescription</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <h4>Skills</h4>
+        <ul>
+            @if (@Model.Skills == null || @Model.Skills.Any() == false)
+            {
+                <li>No Skills Listed</li>
+            }
+            else
+            {
+                @foreach (var skill in @Model.Skills)
+                {
+                    <li>@skill.Description</li>
+                }
+            }
+        </ul>
+    </div>
+    <div class="mt-3">
+        <button type="button" class="btn btn-primary" onclick="confirmEdit()">Edit Information</button>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        function confirmEdit() {
+            window.location.href = '@Url.Action("UpdateStudent", "Student", new { itemid = Model.Id })';
+        }
+    </script>
+}

@@ -18,7 +18,7 @@ public class StudentViewService
         StudentViewModel studentViewModel = new()
         {
             NumberOfStudentsRegistered = _studentRepository.GetCount(),
-            StudentProfiles = [.. _studentRepository.GetAll().Select(s => s.ToStudentProfile())]
+            StudentProfiles = _studentRepository.GetAll().Select(s => s.ToStudentProfile())
         };
 
         return studentViewModel;

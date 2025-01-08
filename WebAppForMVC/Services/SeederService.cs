@@ -31,6 +31,7 @@ public class SeederService
         {
             new()
             {
+                SchoolId = "23-78563",
                 FirstName = "Mark",
                 MiddleName = "Stance",
                 LastName = "Craig",
@@ -49,6 +50,7 @@ public class SeederService
             },
             new()
             {
+                SchoolId = "23-37645",
                 FirstName = "Jane",
                 MiddleName = "Doe",
                 LastName = "Smith",
@@ -67,6 +69,7 @@ public class SeederService
             },
             new()
             {
+                SchoolId = "23-11223",
                 FirstName = "John",
                 MiddleName = "Michael",
                 LastName = "Doe",

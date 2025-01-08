@@ -11,8 +11,9 @@ public static class StudentMapper
         var studentProfile = new StudentProfile()
         {
             Id = student.Id,
+            SchoolId = student.SchoolId,
             FullName = string.Join(" ", student.FirstName, student.LastName),
-            YearAndSection = string.Join("-", student.YearLevel, student.Section),
+            YearAndSection = string.Join("", student.YearLevel, student.Section),
             Program = student.Program,
             Department = student.Department
         };
