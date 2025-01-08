@@ -2,4 +2,43 @@
     ViewData["Title"] = "Student Page";
 }
 
-<h1>Student Page</h1>
+@model StudentViewModel
+
+<div>
+    <h1>Student Page</h1>
+</div>
+
+<div>
+    @if (@Model.StudentProfiles.Count() == 0)
+    {
+        <div class="text-center">
+            <p>No Record Found</p>
+        </div>
+    }
+    else
+    {
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Student Id</th>
+                    <th>Name</th>
+                    <th>YearAndSection</th>
+                    <th>Program</th>
+                    <th>Department</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var s in @Model.StudentProfiles)
+                {
+                    <tr>
+                        <th>@s.Id</th>
+                        <th>@s.FullName</th>
+                        <th>@s.YearAndSection</th>
+                        <th>@s.Program</th>
+                        <th>@s.Department</th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

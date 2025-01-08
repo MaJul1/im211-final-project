@@ -13,10 +13,18 @@ builder.Services.AddScoped<CourseRepository>();
 builder.Services.AddScoped<StudentRepository>();
 builder.Services.AddScoped<SkillRepository>();
 builder.Services.AddScoped<HomeViewService>();
+builder.Services.AddScoped<StudentViewService>();
+builder.Services.AddScoped<SeederService>();
 
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetService<SeederService>();
+    await seeder!.SeedData();
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

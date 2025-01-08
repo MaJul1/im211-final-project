@@ -1,6 +1,6 @@
 using System;
 
-namespace WebAppForMVC.Models.DataModels;
+namespace WebAppForMVC.Models.DataTransferObjects;
 
 public class StudentProfile
 {

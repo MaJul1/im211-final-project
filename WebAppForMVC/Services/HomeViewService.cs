@@ -1,5 +1,4 @@
-using System;
-using WebAppForMVC.Models;
+using WebAppForMVC.Models.ViewModels;
 using WebAppForMVC.Repository;
 
 namespace WebAppForMVC.Services;
@@ -22,7 +21,7 @@ public class HomeViewService
         _student = student;
     }
 
-    public HomeViewModel GetHomeView()
+    public HomeViewModel GetHomeViewModel()
     {
         HomeViewModel view = new()
         {

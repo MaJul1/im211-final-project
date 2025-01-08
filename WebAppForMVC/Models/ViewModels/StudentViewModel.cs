@@ -1,5 +1,4 @@
-using System;
-using WebAppForMVC.Models.DataModels;
+using WebAppForMVC.Models.DataTransferObjects;
 
 namespace WebAppForMVC.Models.ViewModels;
 

@@ -1,6 +1,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using WebAppForMVC.Models;
+using WebAppForMVC.Models.DataModels;
 
 namespace WebAppForMVC.Context;
 

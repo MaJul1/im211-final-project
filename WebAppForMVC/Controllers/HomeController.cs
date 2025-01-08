@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using WebAppForMVC.Models;
+using WebAppForMVC.Models.ViewModels;
 using WebAppForMVC.Services;
 
 namespace WebAppForMVC.Controllers;
@@ -18,7 +19,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View(_homeService.GetHomeView());
+        return View(_homeService.GetHomeViewModel());
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
