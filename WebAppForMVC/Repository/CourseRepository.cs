@@ -1,5 +1,6 @@
 using System;
 using WebAppForMVC.Context;
+using WebAppForMVC.Models.DataModels;
 
 namespace WebAppForMVC.Repository;
 
@@ -15,6 +16,11 @@ public class CourseRepository
     public int GetCount()
     {
         return _context.Courses.Count();
+    }
+
+    public IEnumerable<Course> GetAll()
+    {
+        return _context.Courses;
     }
 
 }

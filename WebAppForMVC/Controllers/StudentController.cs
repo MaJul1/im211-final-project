@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebAppForMVC.Models.ViewModels;
 using WebAppForMVC.Repository;
 using WebAppForMVC.Services;
 
@@ -8,10 +9,12 @@ namespace WebAppForMVC.Controllers
     public class StudentController : Controller
     {
         private readonly StudentRepository _studentRepository;
+        private readonly CreateStudentViewService _studentCreateService;
 
-        public StudentController(StudentRepository repository)
+        public StudentController(StudentRepository repository, CreateStudentViewService studentCreateService)
         {
             _studentRepository = repository;
+            _studentCreateService = studentCreateService;
         }
 
         // GET: StudentController
@@ -77,7 +80,14 @@ namespace WebAppForMVC.Controllers
 
         public IActionResult CreateStudent()
         {
-            return View();
+            var viewModel = _studentCreateService.GetCreateStudentViewModel();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult CreateStudent(CreateStudentViewModel model)
+        {
+            return RedirectToAction("Index");
         }
 
         public IActionResult ViewStudent(Guid itemid)

@@ -1,5 +1,6 @@
 using System;
 using WebAppForMVC.Context;
+using WebAppForMVC.Models.DataModels;
 
 namespace WebAppForMVC.Repository;
 
@@ -15,5 +16,10 @@ public class SkillRepository
     public int GetCount()
     {
         return _context.Skills.Count();
+    }
+
+    public IEnumerable<Skill> GetAll()
+    {
+        return _context.Skills;
     }
 }
