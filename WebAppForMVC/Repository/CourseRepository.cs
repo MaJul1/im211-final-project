@@ -23,4 +23,10 @@ public class CourseRepository
         return _context.Courses;
     }
 
+    public void CreateCourse(Course course)
+    {
+        _context.Courses.Add(course);
+        _context.SaveChanges();
+    }
+
 }

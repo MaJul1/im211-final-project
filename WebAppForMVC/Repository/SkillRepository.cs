@@ -22,4 +22,10 @@ public class SkillRepository
     {
         return _context.Skills;
     }
+    
+    public void CreateSkill(Skill skill)
+    {
+        _context.Skills.Add(skill);
+        _context.SaveChanges();
+    }
 }
