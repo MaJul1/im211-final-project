@@ -15,7 +15,9 @@ public class Student
     public int Age {get; set;}
     public string Email {get; set;} = null!;
     public string PhoneNumber {get; set;} = null!;
-    public string Address {get; set;} = null!;
+    public string Barangay {get; set;} = null!;
+    public string Municipality {get; set;} = null!;
+    public string Province {get; set;} = null!;
     public int YearLevel {get; set;}
     public char Section {get; set;}
     public string Program {get; set;} = null!;

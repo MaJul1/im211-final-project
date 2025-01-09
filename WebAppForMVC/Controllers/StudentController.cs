@@ -21,12 +21,12 @@ namespace WebAppForMVC.Controllers
         public IActionResult Index(string sortParam, string searchParam)
         {
             ViewData["IdSortParam"] = string.IsNullOrEmpty(sortParam) ? "Id" : "";
-            ViewData["NameSortParam"] = sortParam == "Name" ? "Name_desc": "Name";
+            ViewData["NameSortParam"] = sortParam == "Name" ? "Name_desc" : "Name";
             ViewData["YearAndSectionSortParam"] = sortParam == "YearAndSection" ? "YearAndSection_desc" : "YearAndSection";
             ViewData["ProgramSortParam"] = sortParam == "Program" ? "Program_desc" : "Program";
             ViewData["DepartmentSortParam"] = sortParam == "Department" ? "Department_desc" : "Department";
             ViewData["CurrentSortString"] = searchParam;
-            
+
             var model = _studentRepository.GetAll();
 
             if (searchParam != null)
@@ -43,36 +43,35 @@ namespace WebAppForMVC.Controllers
             {
                 case "Id":
                     model = model.OrderBy(s => s.Id);
-                break;
+                    break;
                 case "Name":
                     model = model.OrderBy(s => s.FirstName)
                                 .ThenBy(s => s.LastName);
-                break;
+                    break;
                 case "Name_desc":
                     model = model.OrderByDescending(s => s.FirstName)
                                 .ThenBy(s => s.LastName);
-                break;
+                    break;
                 case "YearAndSection":
                     model = model.OrderBy(s => s.YearLevel)
                                 .ThenBy(s => s.Section);
-                break;
+                    break;
                 case "YearAndSection_desc":
                     model = model.OrderByDescending(s => s.YearLevel)
                                 .ThenBy(s => s.Section);
-                break;
+                    break;
                 case "Program":
                     model = model.OrderBy(s => s.Program);
-                break;
+                    break;
                 case "Program_desc":
                     model = model.OrderByDescending(s => s.Program);
-                break;
+                    break;
                 case "Department":
                     model = model.OrderBy(s => s.Department);
-                break;
+                    break;
                 case "Department_desc":
                     model = model.OrderByDescending(s => s.Department);
-                break;
-
+                    break;
             }
 
             return View(model);
@@ -87,7 +86,20 @@ namespace WebAppForMVC.Controllers
         [HttpPost]
         public IActionResult CreateStudent(CreateStudentViewModel model)
         {
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            foreach (var error in errors)
+            {
+                Console.WriteLine(error.ErrorMessage);
+            }
+
+            var newModel = _studentCreateService.GetCreateStudentViewModel(model);
+
+            return View(newModel);
         }
 
         public IActionResult ViewStudent(Guid itemid)
@@ -97,8 +109,8 @@ namespace WebAppForMVC.Controllers
                 return NotFound($"Student with ID {itemid} not found.");
             }
 
-            var student =  _studentRepository.GetStudentById(itemid);
-            
+            var student = _studentRepository.GetStudentById(itemid);
+
             return View(student);
         }
 
@@ -110,7 +122,7 @@ namespace WebAppForMVC.Controllers
         public IActionResult DeleteStudent(Guid itemid)
         {
             _studentRepository.RemoveById(itemid);
-            
+
             return RedirectToAction("Index");
         }
 
