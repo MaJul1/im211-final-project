@@ -91,12 +91,6 @@ namespace WebAppForMVC.Controllers
                 return RedirectToAction("Index");
             }
 
-            var errors = ModelState.Values.SelectMany(v => v.Errors);
-            foreach (var error in errors)
-            {
-                Console.WriteLine(error.ErrorMessage);
-            }
-
             var newModel = _studentCreateService.GetCreateStudentViewModel(model);
 
             return View(newModel);
