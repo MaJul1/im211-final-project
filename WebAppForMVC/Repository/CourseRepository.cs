@@ -29,4 +29,9 @@ public class CourseRepository
         _context.SaveChanges();
     }
 
+    public Course? GetById(Guid Id)
+    {
+        return _context.Courses.Find(Id);
+    }
+
 }

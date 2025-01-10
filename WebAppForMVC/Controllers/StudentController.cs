@@ -84,10 +84,12 @@ namespace WebAppForMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateStudent(CreateStudentViewModel model)
+        public async Task<IActionResult> CreateStudent(CreateStudentViewModel model)
         {
             if (ModelState.IsValid)
             {
+                await _studentRepository.CreateStudent(_studentCreateService.GetStudent(model));
+
                 return RedirectToAction("Index");
             }
 

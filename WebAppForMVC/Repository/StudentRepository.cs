@@ -27,6 +27,7 @@ public class StudentRepository
     public async Task CreateStudent(Student student)
     {
         await _context.Students.AddAsync(student);
+        
         await _context.SaveChangesAsync();
     }
 

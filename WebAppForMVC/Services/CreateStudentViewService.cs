@@ -90,4 +90,48 @@ public class CreateStudentViewService
 
         return model;
     }
+
+    public Student GetStudent(CreateStudentViewModel model)
+    {
+        Student student = new()
+        {
+            SchoolId = model.SchoolId,
+            FirstName = model.FirstName,
+            MiddleName = model.MiddleName,
+            LastName = model.LastName,
+            BirthDay = model.BirthDay,
+            Email = model.Email,
+            PhoneNumber = model.PhoneNumber,
+            Barangay = model.Barangay,
+            Municipality = model.Municipality,
+            Province = model.Province,
+            YearLevel = model.YearLevel,
+            Section = model.Section,
+            Program = model.Program,
+            Department = model.Department,
+            Sex = model.Sex,
+            Type = model.Type,
+            DateAdded = DateTime.Now
+        };
+
+        foreach(var s in model.SkillIds)
+        {
+            var skill = _skillRepository.GetById(Guid.Parse(s));
+            
+            if (skill == null) continue;
+
+            student.Skills.Add(skill);
+        }
+
+        foreach(var c in model.CourseIds)
+        {
+            var course = _courseRepository.GetById(Guid.Parse(c));
+            
+            if (course == null) continue;
+
+            student.Courses.Add(course);
+        }
+
+        return student;
+    }
 }

@@ -12,7 +12,6 @@ public class Student
     public string MiddleName {get; set;} = null!;
     public string LastName {get; set;} = null!;
     public DateOnly BirthDay {get; set;}
-    public int Age {get; set;}
     public string Email {get; set;} = null!;
     public string PhoneNumber {get; set;} = null!;
     public string Barangay {get; set;} = null!;
@@ -26,6 +25,7 @@ public class Student
     public StudentType Type {get; set;}
     public DateTime DateAdded {get; set;}
 
-    public ICollection<Skill> Skills {get; set;} = null!;
-    public ICollection<Course> Courses {get; set;} = null!;
+
+    public ICollection<Skill> Skills {get; set;} = [];
+    public ICollection<Course> Courses {get; set;} = [];
 }
