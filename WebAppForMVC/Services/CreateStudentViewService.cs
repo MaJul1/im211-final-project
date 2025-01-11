@@ -11,8 +11,10 @@ public class CreateStudentViewService
 {
     private readonly SkillRepository _skillRepository;
     private readonly CourseRepository _courseRepository;
-    public CreateStudentViewService(SkillRepository skillRepository, CourseRepository courseRepository)
+    private readonly IConfiguration _configuration;
+    public CreateStudentViewService(SkillRepository skillRepository, CourseRepository courseRepository, IConfiguration configuration)
     {
+        _configuration = configuration;
         _skillRepository = skillRepository;
         _courseRepository = courseRepository;
     }
@@ -33,16 +35,15 @@ public class CreateStudentViewService
 
             model.BirthDay = DateOnly.Parse(DateTime.Now.ToString("yyyy-MM-dd"));
 
-            model.SectionOptions = new(new List<SelectListItem>
-            {
-                new() { Value = "A", Text = "A" },
-                new() { Value = "B", Text = "B" },
-                new() { Value = "C", Text = "C" },
-                new() { Value = "D", Text = "D" },
-                new() { Value = "E", Text = "E" },
-                new() { Value = "F", Text = "F" },
-                new() { Value = "G", Text = "G" }
-            }, "Value", "Text");
+            model.SectionOptions = new
+            (
+                _configuration.GetSection("Sections")
+                .Get<List<string>>()!
+                .Select
+                (
+                    s => new SelectListItem{Value = s, Text = s}
+                ), "Value", "Text"
+            );
 
             model.YearLevelOptions = new(new List<SelectListItem>
             {
@@ -52,10 +53,16 @@ public class CreateStudentViewService
                 new() { Value = "4", Text = "4" },
             }, "Value", "Text");
 
-            model.ProgramOptions = new(new List<SelectListItem>
-            {
-                new() { Value = "BPED", Text = "BPED" }
-            }, "Value", "Text");
+            model.ProgramOptions = new
+            (
+                _configuration.GetSection("Programs")
+                .Get<List<string>>()!
+                .Select(s => new SelectListItem
+                {
+                    Value = s,
+                    Text = s
+                }), "Value", "Text"
+            );
 
             model.SkillOptions = new(_skillRepository.GetAll()
             .Select(s => new SelectListItem
@@ -84,10 +91,16 @@ public class CreateStudentViewService
                 new() { Value = StudentType.IRREGULAR.ToString(), Text = "Irregular"}
             }, "Value", "Text");
 
-            model.DepartmentOptions = new(new List<SelectListItem>()
-            {
-                new() { Value = "CHK", Text = "College Of Human Kinetics"}
-            }, "Value", "Text");
+            model.DepartmentOptions = new
+            ( 
+                _configuration.GetSection("Departments")
+                .Get<List<string>>()!
+                .Select(s => new SelectListItem
+                {
+                    Value = s,
+                    Text = s
+                }), "Value", "Text"
+            );
 
         return model;
     }
