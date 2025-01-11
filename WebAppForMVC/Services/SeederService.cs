@@ -65,7 +65,10 @@ public class SeederService
                 Department = "CCST",
                 Sex = SexType.MALE,
                 Type = StudentType.REGULAR,
-                DateAdded = DateTime.Now
+                DateAdded = DateTime.Now,
+                Barangay = "Santa Ana",
+                Municipality = "Laguna",
+                Province = "Laguna"
             },
             new()
             {
@@ -82,7 +85,10 @@ public class SeederService
                 Department = "CCST",
                 Sex = SexType.FEMALE,
                 Type = StudentType.REGULAR,
-                DateAdded = DateTime.Now
+                DateAdded = DateTime.Now,
+                Barangay = "San Juan",
+                Municipality = "Quezon City",
+                Province = "Metro Manila"
             },
             new()
             {
@@ -99,7 +105,10 @@ public class SeederService
                 Department = "CCST",
                 Sex = SexType.MALE,
                 Type = StudentType.IRREGULAR,
-                DateAdded = DateTime.Now
+                DateAdded = DateTime.Now,
+                Barangay = "Santa Cruz",
+                Municipality = "Manila",
+                Province = "Metro Manila"
             },
             new()
             {
@@ -116,7 +125,10 @@ public class SeederService
                 Department = "CCST",
                 Sex = SexType.FEMALE,
                 Type = StudentType.REGULAR,
-                DateAdded = DateTime.Now
+                DateAdded = DateTime.Now,
+                Barangay = "San Miguel",
+                Municipality = "Pasig",
+                Province = "Metro Manila"
             },
             new()
             {
@@ -133,7 +145,10 @@ public class SeederService
                 Department = "CCST",
                 Sex = SexType.MALE,
                 Type = StudentType.REGULAR,
-                DateAdded = DateTime.Now
+                DateAdded = DateTime.Now,
+                Barangay = "San Andres",
+                Municipality = "Cavite City",
+                Province = "Cavite"
             }
         };
 

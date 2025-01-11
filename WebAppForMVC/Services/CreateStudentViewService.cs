@@ -75,6 +75,7 @@ public class CreateStudentViewService
             {
                 new() { Value = SexType.MALE.ToString(), Text = "Male" },
                 new() { Value = SexType.FEMALE.ToString(), Text = "Female" },
+                new() { Value = SexType.OTHERS.ToString(), Text = "Others" },
             }, "Value", "Text");
 
             model.StudentTypeOptions = new(new List<SelectListItem>()

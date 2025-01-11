@@ -32,8 +32,7 @@ namespace WebAppForMVC.Controllers
             if (searchParam != null)
             {
                 model = model.Where(s => s.SchoolId.Contains(searchParam)
-                                || s.FirstName.Contains(searchParam)
-                                || s.LastName.Contains(searchParam)
+                                || string.Join(" ",s.FirstName, s.LastName).Contains(searchParam)
                                 || string.Concat(s.YearLevel, s.Section).Contains(searchParam)
                                 || s.Program.Contains(searchParam)
                                 || s.Department.Contains(searchParam));
