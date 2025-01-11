@@ -9,15 +9,14 @@ namespace WebAppForMVC.Controllers
     public class StudentController : Controller
     {
         private readonly StudentRepository _studentRepository;
-        private readonly CreateStudentViewService _studentCreateService;
 
-        public StudentController(StudentRepository repository, CreateStudentViewService studentCreateService)
+        public StudentController(StudentRepository repository)
         {
             _studentRepository = repository;
-            _studentCreateService = studentCreateService;
         }
 
         // GET: StudentController
+        [HttpGet]
         public IActionResult Index(string sortParam, string searchParam)
         {
             ViewData["IdSortParam"] = string.IsNullOrEmpty(sortParam) ? "Id" : "";
@@ -76,27 +75,6 @@ namespace WebAppForMVC.Controllers
             return View(model);
         }
 
-        public IActionResult CreateStudent()
-        {
-            var viewModel = _studentCreateService.GetCreateStudentViewModel();
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CreateStudent(CreateStudentViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                await _studentRepository.CreateStudent(_studentCreateService.GetStudent(model));
-
-                return RedirectToAction("Index");
-            }
-
-            var newModel = _studentCreateService.GetCreateStudentViewModel(model);
-
-            return View(newModel);
-        }
-
         public IActionResult ViewStudent(Guid itemid)
         {
             if (_studentRepository.Exist(itemid) == false)
@@ -108,18 +86,5 @@ namespace WebAppForMVC.Controllers
 
             return View(student);
         }
-
-        public IActionResult UpdateStudent(Guid itemid)
-        {
-            return View();
-        }
-
-        public IActionResult DeleteStudent(Guid itemid)
-        {
-            _studentRepository.RemoveById(itemid);
-
-            return RedirectToAction("Index");
-        }
-
     }
 }
