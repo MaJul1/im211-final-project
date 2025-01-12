@@ -61,7 +61,7 @@ public class ConfigurationService
     {
         var list = new List<string>();
 
-        for (int i = 100; i < numberSection + 100; i++)
+        for (int i = 65; i < numberSection + 65; i++)
         {
             list.Add(Convert.ToChar(i).ToString());
         }

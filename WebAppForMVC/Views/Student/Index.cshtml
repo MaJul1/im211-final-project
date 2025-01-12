@@ -68,6 +68,12 @@
                         </div>
                     </div>
                 </div>
+                <div class="mb-2">
+                    <label class="form-label" asp-for="SectionFilter"></label>
+                    <select asp-for="SectionFilter" asp-items="@Model.SectionOptions" class="form-select">
+                          <option selected>None</option>
+                    </select>
+                </div>
             </form>
         </div>
     </div>
