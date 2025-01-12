@@ -17,13 +17,22 @@ public class StudentViewService
 
     public StudentViewModel Create()
     {
-        StudentViewModel model = new()
-        {
-            Students = _studentRepository.GetAll(),
-            SectionOptions = _configurationService.GetSelectListSection(),
-            DepartmentOptions = _configurationService.GetSelectListDepartment(),
-            ProgramOptions = _configurationService.GetSelectListProgram()
-        };
+        return GenerateStudentViewModel(null);
+    }
+
+    public StudentViewModel ReGenerateStudentViewModel(StudentViewModel model)
+    {
+        return GenerateStudentViewModel(model);
+    }
+
+    private StudentViewModel GenerateStudentViewModel(StudentViewModel? currentModel)
+    {
+        StudentViewModel model = currentModel ?? new();
+        
+        model.Students = _studentRepository.GetAll();
+        model.ProgramOptions = _configurationService.GetSelectListProgram();
+        model.DepartmentOptions = _configurationService.GetSelectListDepartment();
+        model.SectionOptions = _configurationService.GetSelectListSection();
 
         return model;
     }

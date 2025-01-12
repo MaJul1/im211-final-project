@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebAppForMVC.Enums;
 using WebAppForMVC.Interface;
@@ -11,12 +12,14 @@ public class StudentViewModel : IStudentFilter, IStudentOption, IStudentSort
     public IEnumerable<Student> Students {get; set;} = [];
 
     //Filters
+    [Display(Name = "Minimum Birthday")]
     public DateOnly? BirthdayMinimumFilter {get; set;}
     public DateOnly? BirthdayMaximumFilter {get; set;}
     public int? AgeMinimumFilter {get; set;}
     public int? AgeMaximumFilter {get; set;}
     public string? MunicipalityFilter {get; set;}
     public string? ProvinceFilter {get; set;}
+    [Display(Name = "Year Level")]
     public int? YearLevelFilter {get; set;}
     public char? SectionFilter {get; set;}
     public string? ProgramFilter {get; set;}

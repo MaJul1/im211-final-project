@@ -26,13 +26,47 @@
             <h3>Filter</h3>
         </div>
         <div class="card-body">
-            <form class="form" asp-action="Index" method="get">
-                <div class="d-flex">
-                    <input type="text" name="searchParam" class="form-control me-1" value="@ViewData["CurrentSortString"]"
-                        placeholder="Search students...">
+            <form class="form" asp-action="Index" method="post">
+                <div class="d-flex mb-2">
+                    <input type="text" asp-for="SearchParameter" class="form-control me-1"
+                        value="@Model.SearchParameter" placeholder="Search students...">
                     <button type="submit" class="btn btn-primary">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-search">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
                     </button>
+                </div>
+                <div class="mb-2">
+                    <label asp-for="YearLevelFilter" class="form-label"></label>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" asp-for="YearLevelFilter" value="1"
+                                    id="yearLevelFilter1" data-checked="false">
+                                <label class="form-check-label" for="yearLevelFilter1">1</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" asp-for="YearLevelFilter" value="2"
+                                    id="yearLevelFilter2" data-checked="false">
+                                <label class="form-check-label" for="yearLevelFilter2">2</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" asp-for="YearLevelFilter" value="3"
+                                    id="yearLevelFilter3" data-checked="false">
+                                <label class="form-check-label" for="yearLevelFilter3">3</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" asp-for="YearLevelFilter" value="4"
+                                    id="yearLevelFilter4">
+                                <label class="form-check-label" for="yearLevelFilter4">4</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
@@ -82,4 +116,18 @@
     function GoToStudentView(studentId) {
         window.location.href = '@Url.Action("ViewStudent", "Student")' + '?itemid=' + studentId;
     }
+
+    document.querySelectorAll('.form-check-input').forEach(function (radio) {
+        radio.addEventListener('click', function () {
+            if (this.dataset.checked === 'true') {
+                this.checked = false;
+                this.dataset.checked = 'false';
+            } else {
+                document.querySelectorAll('.form-check-input').forEach(function (r) {
+                    r.dataset.checked = 'false';
+                });
+                this.dataset.checked = 'true';
+            }
+        });
+    });
 </script>
