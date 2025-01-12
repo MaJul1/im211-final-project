@@ -5,8 +5,6 @@ namespace WebAppForMVC.Interface;
 
 public interface IStudentFilter
 {
-    DateOnly? BirthdayMinimumFilter {get; set;}
-    DateOnly? BirthdayMaximumFilter {get; set;}
     int? AgeMinimumFilter {get; set;}
     int? AgeMaximumFilter {get; set;}
     string? MunicipalityFilter {get; set;}

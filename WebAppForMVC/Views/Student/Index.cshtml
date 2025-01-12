@@ -1,4 +1,5 @@
 ﻿@using WebAppForMVC.Models.ViewModels;
+@using WebAppForMVC.Enums;
 @model StudentViewModel;
 
 @{
@@ -73,6 +74,76 @@
                     <select asp-for="SectionFilter" asp-items="@Model.SectionOptions" class="form-select">
                           <option selected>None</option>
                     </select>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label" asp-for="ProgramFilter"></label>
+                    <select asp-for="ProgramFilter" asp-items="@Model.ProgramOptions" class="form-select">
+                          <option selected value="">None</option>
+                    </select>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label" asp-for="DepartmentFilter"></label>
+                    <select asp-for="DepartmentFilter" asp-items="@Model.DepartmentOptions" class="form-select">
+                          <option selected value="">None</option>
+                    </select>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label" asp-for="@Model.AgeMinimumFilter"></label>
+                    <input class="form-control" asp-for="@Model.AgeMinimumFilter">
+                </div>
+                <div class="mb-2">
+                    <label class="form-label" asp-for="@Model.AgeMaximumFilter"></label>
+                    <input class="form-control" asp-for="@Model.AgeMaximumFilter">
+                </div>
+                <div class="mb-2">
+                    <label class="form-label" asp-for="@Model.MunicipalityFilter"></label>
+                    <input class="form-control" asp-for="@Model.MunicipalityFilter" list="municipalities">
+                    <datalist id="municipalities">
+                        <option value="Alaminos"></option>
+                        <option value="Dolores"></option>
+                        <option value="Nagcarlan"></option>
+                        <option value="San Pablo"></option>
+                        <option value="Tiaong"></option>                        
+                    </datalist>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label" asp-for="@Model.ProvinceFilter"></label>
+                    <input class="form-control" asp-for="@Model.ProvinceFilter" list="provinces">
+                    <datalist id="provinces">
+                        <option value="Batangas"></option>
+                        <option value="Laguna"></option>
+                        <option value="Quezon"></option>
+                    </datalist>
+                </div>
+                <div class="mb-2">
+                    <label class="form-lable" asp-for="@Model.SexFilter"></label>
+                    <div class="row">
+                        <div class="col">
+                            <input class="form-check-input" type="radio" value="@SexType.MALE" asp-for="@Model.SexFilter"
+                                    id="sexTypeMale" data-checked="false">
+                            <label asp-for="@Model.SexFilter" class="form-check-label" for="sexTypeMale">Male</label>
+                        </div>
+                        <div class="col">
+                            <input class="form-check-input" type="radio" value="@SexType.FEMALE" asp-for="@Model.SexFilter"
+                                    id="sexTypeFemale" data-checked="false">
+                            <label asp-for="@Model.SexFilter" class="form-check-label" for="sexTypeFemale">Female</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label class="form-lable" asp-for="@Model.TypeFilter"></label>
+                    <div class="row">
+                        <div class="col">
+                            <input class="form-check-input" type="radio" value="@StudentType.REGULAR" asp-for="@Model.TypeFilter"
+                                    id="studentTypeRegular" data-checked="false">
+                            <label asp-for="@Model.TypeFilter" class="form-check-label" for="studentTypeRegular">Regular</label>
+                        </div>
+                        <div class="col">
+                            <input class="form-check-input" type="radio" value="@StudentType.IRREGULAR" asp-for="@Model.TypeFilter"
+                                    id="studentTypeIrregular" data-checked="false">
+                            <label asp-for="@Model.SexFilter" class="form-check-label" for="studentTypeIrregular">Irregular</label>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>

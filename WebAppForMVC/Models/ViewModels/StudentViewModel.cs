@@ -12,12 +12,6 @@ public class StudentViewModel : IStudentFilter, IStudentOption, IStudentSort
     public IEnumerable<Student> Students {get; set;} = [];
 
     //Filters
-    [Display(Name = "Minimum Birthday")]
-    public DateOnly? BirthdayMinimumFilter {get; set;}
-
-    [Display(Name = "Maximum Birthday")]
-    public DateOnly? BirthdayMaximumFilter {get; set;}
-
     [Display(Name = "Minimum Age")]
     public int? AgeMinimumFilter {get; set;}
 
