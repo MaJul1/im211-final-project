@@ -1,9 +1,10 @@
-﻿@model IEnumerable<Student>
+﻿@using WebAppForMVC.Models.ViewModels;
+@model StudentViewModel;
 
 @{
     ViewData["Title"] = "Student Page";
 
-    var students = @Model.Select(s => new
+    var students = @Model.Students.Select(s => new
     {
         s.Id,
         s.SchoolId,
