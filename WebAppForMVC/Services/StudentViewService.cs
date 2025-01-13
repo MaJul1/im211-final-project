@@ -30,9 +30,12 @@ public class StudentViewService
         StudentViewModel model = currentModel ?? new();
         
         model.Students = _studentRepository.GetAll();
-        model.ProgramOptions = _configurationService.GetSelectListProgram();
-        model.DepartmentOptions = _configurationService.GetSelectListDepartment();
-        model.SectionOptions = _configurationService.GetSelectListSection();
+
+        model.ProgramOptions = _configurationService.GetSelectListOptionProgram();
+
+        model.DepartmentOptions = _configurationService.GetSelectListOptionDepartment();
+
+        model.SectionOptions = _configurationService.GetSelectListOptionSections();
 
         return model;
     }

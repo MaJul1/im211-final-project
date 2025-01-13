@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using WebAppForMVC.Enums;
 using WebAppForMVC.Interface;
 using WebAppForMVC.Models.DataModels;
+using WebAppForMVC.Services;
 
 namespace WebAppForMVC.Models.ViewModels;
 
@@ -44,9 +45,9 @@ public class StudentViewModel : IStudentFilter, IStudentOption, IStudentSort
     public string? SearchParameter {get; set;}
 
     //Options
-    public SelectList SectionOptions {get; set;} = null!;
-    public SelectList DepartmentOptions {get; set;} = null!;
-    public SelectList ProgramOptions {get; set;} = null!;
+    public List<SelectListOption> SectionOptions {get; set;} = null!;
+    public List<SelectListOption> DepartmentOptions {get; set;} = null!;
+    public List<SelectListOption> ProgramOptions {get; set;} = null!;
 
     //Sort
     public string IdSortParameter { get; set; } = "Id";
@@ -55,4 +56,20 @@ public class StudentViewModel : IStudentFilter, IStudentOption, IStudentSort
     public string ProgramSortParameter { get; set; } = "Program";
     public string DepartmentSortParameter { get; set; } = "Department";
     public string? SortParameter { get; set; }
+
+    public SelectList GetSelectListSections()
+    {
+        return SelectListService.GetSelectList(SectionOptions);
+    }
+
+    public SelectList GetSelectListDepartments()
+    {
+        return SelectListService.GetSelectList(DepartmentOptions);
+    }
+
+    public SelectList GetSelectListPrograms()
+    {
+        return SelectListService.GetSelectList(ProgramOptions);
+    }
+
 }

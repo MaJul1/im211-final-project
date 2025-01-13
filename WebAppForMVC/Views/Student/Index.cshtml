@@ -71,19 +71,19 @@
                 </div>
                 <div class="mb-2">
                     <label class="form-label" asp-for="SectionFilter"></label>
-                    <select asp-for="SectionFilter" asp-items="@Model.SectionOptions" class="form-select">
+                    <select asp-for="SectionFilter" asp-items="@Model.GetSelectListSections()" class="form-select">
                           <option selected>None</option>
                     </select>
                 </div>
                 <div class="mb-2">
                     <label class="form-label" asp-for="ProgramFilter"></label>
-                    <select asp-for="ProgramFilter" asp-items="@Model.ProgramOptions" class="form-select">
+                    <select asp-for="ProgramFilter" asp-items="@Model.GetSelectListPrograms()" class="form-select">
                           <option selected value="">None</option>
                     </select>
                 </div>
                 <div class="mb-2">
                     <label class="form-label" asp-for="DepartmentFilter"></label>
-                    <select asp-for="DepartmentFilter" asp-items="@Model.DepartmentOptions" class="form-select">
+                    <select asp-for="DepartmentFilter" asp-items="@Model.GetSelectListDepartments()" class="form-select">
                           <option selected value="">None</option>
                     </select>
                 </div>

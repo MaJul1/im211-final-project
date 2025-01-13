@@ -21,6 +21,15 @@ namespace WebAppForMVC.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            var studentViewModel = TempData["StudentViewModel"];
+
+            if (studentViewModel is string json)
+            {
+                var model = JsonSerializer.Deserialize<StudentViewModel>(json);
+
+                return View(model);
+            }
+
             return View(_service.Create());
         }
 
@@ -30,8 +39,10 @@ namespace WebAppForMVC.Controllers
             model = _service.ReGenerateStudentViewModel(model);
 
             model.Students = model.Students.ApplyFilter(model);
+
+            TempData["StudentViewModel"] = JsonSerializer.Serialize(model);
             
-            return View(model);
+            return RedirectToAction("Index");
         }
 
         public IActionResult ViewStudent(Guid itemid)

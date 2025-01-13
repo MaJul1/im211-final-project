@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
+using WebAppForMVC.Models;
 
 namespace WebAppForMVC.Interface;
 
 public interface IStudentOption
 {
-    SelectList SectionOptions {get; set;}
-    SelectList DepartmentOptions {get; set;}
-    SelectList ProgramOptions {get; set;}
+    List<SelectListOption> SectionOptions {get; set;}
+    List<SelectListOption> DepartmentOptions {get; set;}
+    List<SelectListOption> ProgramOptions {get; set;}
 }
