@@ -11,35 +11,6 @@ public class ConfigurationService
         _configuration = configuration;
     }
 
-    public SelectList GetSelectListSection()
-    {
-        var numberSection = GetNumberOfSection();
-
-        var sections = GetListOfCharSections(numberSection);
-
-        var selectList = GetSelectList(sections);
-
-        return selectList;
-    }
-
-    public SelectList GetSelectListDepartment()
-    {
-        var list = _configuration.GetSection("Departments").Get<List<string>>();
-
-        var selectlist = GetSelectList(list);
-
-        return selectlist;
-    }
-
-    public SelectList GetSelectListProgram()
-    {
-        var list = _configuration.GetSection("Programs").Get<List<string>>();
-
-        var selectList = GetSelectList(list);
-
-        return selectList;
-    }
-
     public List<SelectListOption> GetSelectListOptionSections()
     {
         var numberOfSection = GetNumberOfSection();
@@ -73,20 +44,6 @@ public class ConfigurationService
         }
 
         return lists;
-    }
-
-    private static SelectList GetSelectList(List<string>? list)
-    {
-        var items = new List<SelectListItem>();
-
-        if (list == null) return new(items);
-
-        foreach (var d in list)
-        {
-            items.Add(new() { Value = d, Text = d});
-        }
-
-        return new SelectList(items, "Value", "Text");
     }
     private static List<string> GetListOfCharSections(int numberSection)
     {

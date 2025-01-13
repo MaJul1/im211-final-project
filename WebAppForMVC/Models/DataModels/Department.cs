@@ -1,0 +1,19 @@
+using System;
+using System.Text.Json.Serialization;
+
+namespace WebAppForMVC.Models.DataModels;
+
+public partial class Department
+{
+    public Guid Id {get; set;}
+    public string Code {get; set;} = null!;
+    public string Description {get; set;} = null!;
+
+    [JsonIgnore]
+    public ICollection<Student> Students {get; set;} = null!;
+
+    public string GetFullText()
+    {
+        return string.Join(" - ", Code, Description);
+    }
+}

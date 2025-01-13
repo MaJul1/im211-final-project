@@ -5,7 +5,7 @@ namespace WebAppForMVC.Services;
 
 public class SelectListService
 {
-    public static SelectList GetSelectList(IEnumerable<SelectListOption> options)
+    public static SelectList CreateSelectList(IEnumerable<SelectListOption> options)
     {
         List<SelectListItem> items = [];
 
@@ -15,5 +15,10 @@ public class SelectListService
         }
 
         return new (items, "Value", "Text");
+    }
+
+    public static SelectListOption CreateSelectListOption(string value, string text)
+    {
+        return new SelectListOption() {Value = value, Text = text};
     }
 }
