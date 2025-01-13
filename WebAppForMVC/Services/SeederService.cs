@@ -12,10 +12,10 @@ public class SeederService
     private readonly ProgramRepository _programRepository;
     private readonly DepartmentRepository _departmentRepository;
 
-    public SeederService 
+    public SeederService
     (
-        StudentRepository studentRepository, 
-        CourseRepository courseRepository, 
+        StudentRepository studentRepository,
+        CourseRepository courseRepository,
         SkillRepository skillRepository,
         ProgramRepository programRepository,
         DepartmentRepository departmentRepository
@@ -47,7 +47,7 @@ public class SeederService
             }
         }
 
-        if(_programRepository.GetAll().Any() == false)
+        if (_programRepository.GetAll().Any() == false)
         {
             foreach (var p in GetPrograms())
             {
@@ -70,7 +70,7 @@ public class SeederService
                 await _studentRepository.CreateStudent(s);
             }
         }
-        
+
     }
 
     private List<Student> GetListOfStudents()
@@ -258,10 +258,16 @@ public class SeederService
     {
         List<Department> departments = new()
         {
-            new() {Code = "CCST", Description = "College of Computer Studies and Technology"},
-            new() {Code = "CHK", Description = "College of Human Kinetics"}
+            new () { Code = "CCST", Description = "College of Computer Studies and Technology" },
+            new () { Code = "CHK", Description = "College of Human Kinetics" },
+            new () { Code = "COA", Description = "College of Accountancy" },
+            new () { Code = "CAHS", Description = "College Of Allied Health Science" },
+            new () { Code = "CAS", Description = "College of Arts and Science" },
+            new () { Code = "CBA", Description = "College of Business Administration" },
+            new () { Code = "COE", Description = "College of Engineering" },
+            new () { Code = "CTHM", Description = "College of Tourism And Hospitality Management" },
+            new () { Code = "CTEd", Description = "Bachelor of Teacher Education" }
         };
-
         return departments;
     }
 
@@ -269,11 +275,31 @@ public class SeederService
     {
         List<SchoolProgram> program = new()
         {
-            new() {Code = "BSIT", Description = "Bachelor of Science in Information Technology"},
-            new() {Code = "BSIS", Description = "Bachelor of Science in Information System"},
-            new() {Code = "BSPED", Description = "Bachelor of Science in Physical Education"}
+            new () { Code = "BSIT", Description = "Bachelor of Science in Information Technology" },
+            new () { Code = "BSIS", Description = "Bachelor of Science in Information System" },
+            new () { Code = "BSPED", Description = "Bachelor of Science in Physical Education" },
+            new () { Code = "BSA", Description = "Bachelor of Science in Accountancy" },
+            new () { Code = "BSAIS", Description = "Bachelor of Science in Accounting Information System" },
+            new () { Code = "BSMA", Description = "Bachelor Of Science In Management Accounting" },
+            new () { Code = "BSN", Description = "Bachelor of Science in Nursing" },
+            new () { Code = "BAPS", Description = "Bachelor of Arts in Political Science" },
+            new () { Code = "BAC", Description = "Bachelor of Arts in Communication" },
+            new () { Code = "BPA", Description = "Bachelor of Public Administration" },
+            new () { Code = "BSP", Description = "Bachelor of Science in Psychology" },
+            new () { Code = "BSEc", Description = "Bachelor of Science in Economics" },
+            new () { Code = "BSBA", Description = "Bachelor of Science in Business Administration" },
+            new () { Code = "BSEnt", Description = "Bachelor of Science in Entrepreneurship" },
+            new () { Code = "BSOA", Description = "Bachelor of Science Office Administration" },
+            new () { Code = "BSCE", Description = "Bachelor of Science in Computer Engineering" },
+            new () { Code = "BSHM", Description = "Bachelor of Science in Hospitality Management" },
+            new () { Code = "BSTM", Description = "Bachelor of Science in Tourism Management" },
+            new () { Code = "BSNEd", Description = "Bachelor of Special Need Education" },
+            new () { Code = "BTTVTEd", Description = "Bachelor of Technical - Vocational Teacher Education" },
+            new () { Code = "BECEd", Description = "Bachelor of Early Childhood Education" },
+            new () { Code = "BEEd", Description = "Bachelor of Elementary Education" },
+            new () { Code = "BPEd", Description = "Bachelor of Physical Education" },
+            new () { Code = "BSEd", Description = "Bachelor of Secondary Education" }        
         };
-
         return program;
     }
 }
