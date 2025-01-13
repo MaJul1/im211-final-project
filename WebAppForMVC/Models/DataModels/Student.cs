@@ -19,12 +19,12 @@ public class Student
     public string Province {get; set;} = null!;
     public int YearLevel {get; set;}
     public char Section {get; set;}
-    public string Program {get; set;} = null!;
-    public string Department {get; set;} = null!;
     public SexType Sex {get; set;}
     public StudentType Type {get; set;}
     public DateTime DateAdded {get; set;}
 
+    public SchoolProgram Program {get; set;} = null!;
+    public Department Department {get; set;} = null!;
 
     public ICollection<Skill> Skills {get; set;} = [];
     public ICollection<Course> Courses {get; set;} = [];

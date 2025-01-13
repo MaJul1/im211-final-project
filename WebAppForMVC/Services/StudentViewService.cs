@@ -1,3 +1,4 @@
+using WebAppForMVC.Models.DataModels;
 using WebAppForMVC.Models.ViewModels;
 using WebAppForMVC.Repository;
 
@@ -5,12 +6,22 @@ namespace WebAppForMVC.Services;
 
 public class StudentViewService
 {
-    private StudentRepository _studentRepository;
-    private ConfigurationService _configurationService;
-    public StudentViewService(StudentRepository repository, ConfigurationService configurationService)
+    private readonly StudentRepository _studentRepository;
+    private readonly ConfigurationService _configurationService;
+    private readonly ProgramRepository _programRepository;
+    private readonly DepartmentRepository _departmentRepository;
+    public StudentViewService
+    (
+        StudentRepository repository, 
+        ConfigurationService configurationService,
+        ProgramRepository programRepository,
+        DepartmentRepository departmentRepository
+    )
     {
         _studentRepository = repository;
         _configurationService = configurationService;
+        _programRepository = programRepository;
+        _departmentRepository = departmentRepository;
     }
 
     public StudentViewModel Create()
@@ -29,9 +40,9 @@ public class StudentViewService
         
         model.Students = _studentRepository.GetAll();
 
-        model.ProgramOptions = _configurationService.GetSelectListOptionProgram();
+        model.ProgramOptions = _programRepository.GetAsSelectListOptions();
 
-        model.DepartmentOptions = _configurationService.GetSelectListOptionDepartment();
+        model.DepartmentOptions = _departmentRepository.GetAsSelectListOptions();
 
         model.SectionOptions = _configurationService.GetSelectListOptionSections();
 

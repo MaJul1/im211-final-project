@@ -59,17 +59,17 @@ public class StudentViewModel : IStudentFilter, IStudentOption, IStudentSort
 
     public SelectList GetSelectListSections()
     {
-        return SelectListService.GetSelectList(SectionOptions);
+        return SelectListService.CreateSelectList(SectionOptions);
     }
 
     public SelectList GetSelectListDepartments()
     {
-        return SelectListService.GetSelectList(DepartmentOptions);
+        return SelectListService.CreateSelectList(DepartmentOptions);
     }
 
     public SelectList GetSelectListPrograms()
     {
-        return SelectListService.GetSelectList(ProgramOptions);
+        return SelectListService.CreateSelectList(ProgramOptions);
     }
 
 }
