@@ -46,6 +46,14 @@ public class StudentViewService
 
         model.SectionOptions = _configurationService.GetSelectListOptionSections();
 
+        model.SortOptions = [
+            new() {Value = "Id", Text = "Id"},
+            new() {Value = "Name", Text = "Name"},
+            new() {Value = "YearAndSection", Text = "YearAndSection"},
+            new() {Value = "Program", Text = "Program"},
+            new() {Value = "Department", Text = "Department"}
+        ];
+
         return model;
     }
 }

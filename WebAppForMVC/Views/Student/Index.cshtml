@@ -31,13 +31,7 @@
                 <div class="mb-2">
                     <div>
                         <label class="form-label" asp-for="SortParameter">Sort By</label>
-                        <select asp-for="SortParameter" class="form-select">
-                            <option value="SchoolId">School Id</option>
-                            <option value="Name">Name</option>
-                            <option value="YearAndSection">Year and Section</option>
-                            <option value="Program">Program</option>
-                            <option value="Department">Department</option>                        
-                        </select>
+                        <select asp-for="SortParameter" asp-items="@Model.GetSelectListSort()" class="form-select"></select>
                         <div class="mx-auto mt-1">
                             <div class="form-check form-switch">
                                 <label class="form-label me-2" asp-for="IsDescending">Descending</label>

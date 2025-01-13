@@ -46,6 +46,11 @@ public static class SortService
                 break;
         }
 
+        if (string.IsNullOrEmpty(sort.SortParameter) == false && sort.SortParameter.Contains("_desc"))
+        {
+            sort.SortParameter = sort.SortParameter.Split("_desc")[0];
+        }
+
         return students;
     }
 }

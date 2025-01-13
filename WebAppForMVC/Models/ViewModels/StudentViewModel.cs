@@ -48,6 +48,7 @@ public class StudentViewModel : IStudentFilter, IStudentOption, ISortOption
     public List<SelectListOption> SectionOptions {get; set;} = null!;
     public List<SelectListOption> DepartmentOptions {get; set;} = null!;
     public List<SelectListOption> ProgramOptions {get; set;} = null!;
+    public List<SelectListOption> SortOptions {get; set;} = null!;
 
     //Sort
     public string? SortParameter { get; set; }
@@ -66,6 +67,11 @@ public class StudentViewModel : IStudentFilter, IStudentOption, ISortOption
     public SelectList GetSelectListPrograms()
     {
         return SelectListService.CreateSelectList(ProgramOptions);
+    }
+
+    public SelectList GetSelectListSort()
+    {
+        return SelectListService.CreateSelectList(SortOptions);
     }
 
 }
