@@ -28,4 +28,12 @@ public class Student
 
     public ICollection<Skill> Skills {get; set;} = [];
     public ICollection<Course> Courses {get; set;} = [];
+
+    public int GetAge()
+    {
+        var today = DateTime.Today;
+        var age = today.Year - BirthDay.Year;
+        if (BirthDay.DayNumber > DateOnly.FromDateTime(today.AddYears(-age)).DayNumber) age--;
+        return age;
+    }
 }
