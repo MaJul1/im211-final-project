@@ -8,7 +8,7 @@ using WebAppForMVC.Services;
 
 namespace WebAppForMVC.Models.ViewModels;
 
-public class StudentViewModel : IStudentFilter, IStudentOption, IStudentSort
+public class StudentViewModel : IStudentFilter, IStudentOption, ISortOption
 {
     public IEnumerable<Student> Students {get; set;} = [];
 
@@ -50,12 +50,8 @@ public class StudentViewModel : IStudentFilter, IStudentOption, IStudentSort
     public List<SelectListOption> ProgramOptions {get; set;} = null!;
 
     //Sort
-    public string IdSortParameter { get; set; } = "Id";
-    public string NameSortParameter { get; set; } = "Name";
-    public string YearAndSectionSortParameter { get; set; } = "YearAndSection";
-    public string ProgramSortParameter { get; set; } = "Program";
-    public string DepartmentSortParameter { get; set; } = "Department";
     public string? SortParameter { get; set; }
+    public bool IsDescending { get; set; }
 
     public SelectList GetSelectListSections()
     {

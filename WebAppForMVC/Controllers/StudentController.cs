@@ -25,6 +25,8 @@ namespace WebAppForMVC.Controllers
             {
                 var model = JsonSerializer.Deserialize<StudentViewModel>(json);
 
+                model!.Students = model.Students.ApplySort(model);
+
                 return View(model);
             }
 
