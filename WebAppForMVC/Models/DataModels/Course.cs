@@ -1,5 +1,3 @@
-using System;
-
 namespace WebAppForMVC.Models.DataModels;
 
 public class Course

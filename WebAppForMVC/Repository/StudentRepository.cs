@@ -1,4 +1,3 @@
-using System;
 using Microsoft.EntityFrameworkCore;
 using WebAppForMVC.Context;
 using WebAppForMVC.Models.DataModels;
@@ -41,6 +40,8 @@ public class StudentRepository
         {
             _context.Entry(student).Collection(s => s.Courses).Load();
             _context.Entry(student).Collection(s => s.Skills).Load();
+            _context.Entry(student).Reference(s => s.Program).Load();
+            _context.Entry(student).Reference(s => s.Department).Load();
         }
 
         return student;

@@ -1,4 +1,3 @@
-using System;
 using WebAppForMVC.Enums;
 using WebAppForMVC.Models.DataModels;
 using WebAppForMVC.Repository;
@@ -10,23 +9,27 @@ public class SeederService
     private readonly StudentRepository _studentRepository;
     private readonly CourseRepository _courseRepository;
     private readonly SkillRepository _skillRepository;
+    private readonly ProgramRepository _programRepository;
+    private readonly DepartmentRepository _departmentRepository;
 
-    public SeederService (StudentRepository studentRepository, CourseRepository courseRepository, SkillRepository skillRepository)
+    public SeederService 
+    (
+        StudentRepository studentRepository, 
+        CourseRepository courseRepository, 
+        SkillRepository skillRepository,
+        ProgramRepository programRepository,
+        DepartmentRepository departmentRepository
+    )
     {
         _studentRepository = studentRepository;
         _courseRepository = courseRepository;
         _skillRepository = skillRepository;
+        _programRepository = programRepository;
+        _departmentRepository = departmentRepository;
     }
 
     public async Task SeedData()
     {
-        if (_studentRepository.GetAll().Any() == false)
-        {
-            foreach (var s in GetListOfStudents())
-            {
-                await _studentRepository.CreateStudent(s);
-            }
-        }
 
         if (_courseRepository.GetAll().Any() == false)
         {
@@ -43,10 +46,34 @@ public class SeederService
                 _skillRepository.CreateSkill(s);
             }
         }
+
+        if(_programRepository.GetAll().Any() == false)
+        {
+            foreach (var p in GetPrograms())
+            {
+                _programRepository.Create(p);
+            }
+        }
+
+        if (_departmentRepository.GetAll().Any() == false)
+        {
+            foreach (var d in GetDepartments())
+            {
+                _departmentRepository.Create(d);
+            }
+        }
+
+        if (_studentRepository.GetAll().Any() == false)
+        {
+            foreach (var s in GetListOfStudents())
+            {
+                await _studentRepository.CreateStudent(s);
+            }
+        }
         
     }
 
-    private static List<Student> GetListOfStudents()
+    private List<Student> GetListOfStudents()
     {
         List<Student> students = new List<Student>
         {
@@ -61,14 +88,14 @@ public class SeederService
                 PhoneNumber = "09387465231",
                 YearLevel = 1,
                 Section = 'B',
-                Program = "BSIT",
-                Department = "CCST",
                 Sex = SexType.MALE,
                 Type = StudentType.REGULAR,
                 DateAdded = DateTime.Now,
                 Barangay = "Santa Ana",
                 Municipality = "Laguna",
-                Province = "Laguna"
+                Province = "Laguna",
+                Department = _departmentRepository.GetByCode("CHK")!,
+                Program = _programRepository.GetByCode("BSPED")!
             },
             new()
             {
@@ -81,14 +108,14 @@ public class SeederService
                 PhoneNumber = "09123456789",
                 YearLevel = 2,
                 Section = 'A',
-                Program = "BSCS",
-                Department = "CCST",
                 Sex = SexType.FEMALE,
                 Type = StudentType.REGULAR,
                 DateAdded = DateTime.Now,
                 Barangay = "San Juan",
                 Municipality = "Quezon City",
-                Province = "Metro Manila"
+                Province = "Metro Manila",
+                Department = _departmentRepository.GetByCode("CCST")!,
+                Program = _programRepository.GetByCode("BSIT")!
             },
             new()
             {
@@ -101,14 +128,14 @@ public class SeederService
                 PhoneNumber = "09876543210",
                 YearLevel = 3,
                 Section = 'C',
-                Program = "BSIT",
-                Department = "CCST",
                 Sex = SexType.MALE,
                 Type = StudentType.IRREGULAR,
                 DateAdded = DateTime.Now,
                 Barangay = "Santa Cruz",
                 Municipality = "Manila",
-                Province = "Metro Manila"
+                Province = "Metro Manila",
+                Department = _departmentRepository.GetByCode("CCST")!,
+                Program = _programRepository.GetByCode("BSIS")!
             },
             new()
             {
@@ -121,14 +148,14 @@ public class SeederService
                 PhoneNumber = "09234567890",
                 YearLevel = 2,
                 Section = 'D',
-                Program = "BSCS",
-                Department = "CCST",
                 Sex = SexType.FEMALE,
                 Type = StudentType.REGULAR,
                 DateAdded = DateTime.Now,
                 Barangay = "San Miguel",
                 Municipality = "Pasig",
-                Province = "Metro Manila"
+                Province = "Metro Manila",
+                Department = _departmentRepository.GetByCode("CCST")!,
+                Program = _programRepository.GetByCode("BSIS")!
             },
             new()
             {
@@ -141,14 +168,14 @@ public class SeederService
                 PhoneNumber = "09198765432",
                 YearLevel = 4,
                 Section = 'E',
-                Program = "BSIT",
-                Department = "CCST",
                 Sex = SexType.MALE,
                 Type = StudentType.REGULAR,
                 DateAdded = DateTime.Now,
                 Barangay = "San Andres",
                 Municipality = "Cavite City",
-                Province = "Cavite"
+                Province = "Cavite",
+                Department = _departmentRepository.GetByCode("CHK")!,
+                Program = _programRepository.GetByCode("BSPED")!
             }
         };
 
@@ -194,7 +221,7 @@ public class SeederService
         return courses;
     }
 
-    public List<Skill> GetSkills()
+    private static List<Skill> GetSkills()
     {
         List<Skill> skills =
         [
@@ -225,5 +252,28 @@ public class SeederService
         ];
 
         return skills;
+    }
+
+    private static List<Department> GetDepartments()
+    {
+        List<Department> departments = new()
+        {
+            new() {Code = "CCST", Description = "College of Computer Studies and Technology"},
+            new() {Code = "CHK", Description = "College of Human Kinetics"}
+        };
+
+        return departments;
+    }
+
+    private static List<SchoolProgram> GetPrograms()
+    {
+        List<SchoolProgram> program = new()
+        {
+            new() {Code = "BSIT", Description = "Bachelor of Science in Information Technology"},
+            new() {Code = "BSIS", Description = "Bachelor of Science in Information System"},
+            new() {Code = "BSPED", Description = "Bachelor of Science in Physical Education"}
+        };
+
+        return program;
     }
 }
