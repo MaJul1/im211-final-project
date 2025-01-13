@@ -1,7 +1,5 @@
 using System.Text.Json;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using WebAppForMVC.Models.DataModels;
 using WebAppForMVC.Models.ViewModels;
 using WebAppForMVC.Repository;
 using WebAppForMVC.Services;

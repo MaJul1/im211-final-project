@@ -1,5 +1,3 @@
-using System;
-
 namespace WebAppForMVC.Interface;
 
 public interface IStudentSort

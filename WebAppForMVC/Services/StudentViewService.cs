@@ -1,5 +1,3 @@
-using System;
-using WebAppForMVC.Models.DataModels;
 using WebAppForMVC.Models.ViewModels;
 using WebAppForMVC.Repository;
 

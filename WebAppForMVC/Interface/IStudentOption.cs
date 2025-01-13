@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Mvc.Rendering;
 using WebAppForMVC.Models;
 
 namespace WebAppForMVC.Interface;
