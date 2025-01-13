@@ -9,12 +9,12 @@ public static class FilterService
     {
         if (filter.AgeMinimumFilter != null)
         {
-            students = students.Where(s => s.GetAge() > filter.AgeMinimumFilter);
+            students = students.Where(s => s.GetAge() >= filter.AgeMinimumFilter);
         }
 
         if (filter.AgeMaximumFilter != null)
         {
-            students = students.Where(s => s.GetAge() < filter.AgeMaximumFilter);
+            students = students.Where(s => s.GetAge() <= filter.AgeMaximumFilter);
         }
 
         if (string.IsNullOrEmpty(filter.MunicipalityFilter) == false)
