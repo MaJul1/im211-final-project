@@ -1,3 +1,48 @@
 ﻿@model Course
 @{
+    ViewData["Title"] = "Course Page";
 }
+
+<div class="text-center">
+    <h1>@Model.CourseCode</h1>
+    <h2>@Model.CourseDescription</h2>
+    <h3>@Model.Units - Units</h3>
+</div>
+
+<hr>
+
+
+<div>
+    <div>
+        <h3>List of students enrolled in @Model.CourseCode</h3>
+    </div>
+    <table class="table table-bordered table-sm table-hover table-striped">
+            <thead>
+                <tr>
+                    <th><a asp-action="ViewCourse" asp-route-courseId="@Model.Id" asp-route-sortParam="@ViewData["IdSortParam"]">Student Id</a></th>                    
+                    <th><a asp-action="ViewCourse" asp-route-courseId="@Model.Id" asp-route-sortParam="@ViewData["NameSortParam"]">Name</a></th>
+                    <th><a asp-action="ViewCourse" asp-route-courseId="@Model.Id" asp-route-sortParam="@ViewData["YearAndSectionSortParam"]">Year and Section</a></th>
+                    <th><a asp-action="ViewCourse" asp-route-courseId="@Model.Id" asp-route-sortParam="@ViewData["ProgramSortParam"]">Program</a></th>
+                    <th><a asp-action="ViewCourse" asp-route-courseId="@Model.Id" asp-route-sortParam="@ViewData["DepartmentSortParam"]">Department</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (@Model.Students.Count() == 0 || @Model.Students.Any() == false)
+                {
+                    <tr>
+                        <td colspan="5" class="text-center">No student records</td>
+                    </tr>
+                }
+                @foreach (var s in @Model.Students)
+                {
+                    <tr onclick="GoToStudentView('@s.Id')">
+                        <td>@s.SchoolId</td>
+                        <td>@s.FirstName @s.LastName</td>
+                        <td>@s.YearLevel@s.Section</td>
+                        <td>@s.Program.Code</td>
+                        <td>@s.Department.Code</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+</div>

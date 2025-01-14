@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using Microsoft.EntityFrameworkCore;
 using WebAppForMVC.Context;
 using WebAppForMVC.Models.DataModels;
@@ -34,7 +35,22 @@ public class CourseRepository
 
     public Course? GetById(Guid Id)
     {
-        return _context.Courses.Find(Id);
+        var course =  _context.Courses.Find(Id);
+
+        if (course == null)
+        {
+            return null;
+        }
+
+        _context.Entry(course).Collection(c => c.Students).Load();
+
+        foreach (var s in course.Students)
+        {
+            _context.Entry(s).Reference(s => s.Program).Load();
+            _context.Entry(s).Reference(s => s.Department).Load();
+        }
+
+        return course;
     }
 
     public Course? GetByCode(string Code)

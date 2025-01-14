@@ -12,7 +12,19 @@ public static class SortService
             sort.SortParameter = string.Concat(sort.SortParameter, "_desc");
         }
 
-        switch (sort.SortParameter)
+        students = students.ApplySort(sort.SortParameter);
+
+        if (string.IsNullOrEmpty(sort.SortParameter) == false && sort.SortParameter.Contains("_desc"))
+        {
+            sort.SortParameter = sort.SortParameter.Split("_desc")[0];
+        }
+
+        return students;
+    }
+
+    public static IEnumerable<Student> ApplySort(this IEnumerable <Student> students, string? sortParam)
+    {
+        switch (sortParam)
         {
             case "Id":
                 students = students.OrderBy(s => s.SchoolId);
@@ -46,15 +58,10 @@ public static class SortService
                 break;
         }
 
-        if (string.IsNullOrEmpty(sort.SortParameter) == false && sort.SortParameter.Contains("_desc"))
-        {
-            sort.SortParameter = sort.SortParameter.Split("_desc")[0];
-        }
-
         return students;
     }
 
-    public static IEnumerable<Course> ApplySort(this IEnumerable<Course> courses, string sortParam)
+    public static IEnumerable<Course> ApplySort(this IEnumerable<Course> courses, string? sortParam)
     {
         switch (sortParam)
         {
