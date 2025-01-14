@@ -28,6 +28,8 @@ public class Student
 
     public ICollection<Skill> Skills {get; set;} = [];
     public ICollection<Course> Courses {get; set;} = [];
+    public ICollection<StudentSkill> StudentSkills {get; set;} = [];
+    public ICollection<StudentCourse> StudentCourses {get; set;} = [];
 
     public int GetAge()
     {

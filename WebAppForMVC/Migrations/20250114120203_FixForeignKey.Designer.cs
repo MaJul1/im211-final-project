@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAppForMVC.Context;
 
@@ -10,12 +11,44 @@ using WebAppForMVC.Context;
 namespace WebAppForMVC.Migrations
 {
     [DbContext(typeof(SystemDatabaseContext))]
-    partial class SystemDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20250114120203_FixForeignKey")]
+    partial class FixForeignKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.11");
+
+            modelBuilder.Entity("StudentCourses", b =>
+                {
+                    b.Property<Guid>("CoursesId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("StudentsId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CoursesId", "StudentsId");
+
+                    b.HasIndex("StudentsId");
+
+                    b.ToTable("StudentCourses");
+                });
+
+            modelBuilder.Entity("StudentSkills", b =>
+                {
+                    b.Property<Guid>("SkillsId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("StudentsId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("SkillsId", "StudentsId");
+
+                    b.HasIndex("StudentsId");
+
+                    b.ToTable("StudentSkills");
+                });
 
             modelBuilder.Entity("WebAppForMVC.Models.DataModels.Course", b =>
                 {
@@ -38,6 +71,9 @@ namespace WebAppForMVC.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CourseCode")
+                        .IsUnique();
 
                     b.ToTable("Courses");
                 });
@@ -179,34 +215,34 @@ namespace WebAppForMVC.Migrations
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("WebAppForMVC.Models.DataModels.StudentCourse", b =>
+            modelBuilder.Entity("StudentCourses", b =>
                 {
-                    b.Property<Guid>("StudentId")
-                        .HasColumnType("TEXT");
+                    b.HasOne("WebAppForMVC.Models.DataModels.Course", null)
+                        .WithMany()
+                        .HasForeignKey("CoursesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<Guid>("CourseId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("StudentId", "CourseId");
-
-                    b.HasIndex("CourseId");
-
-                    b.ToTable("StudentCourses");
+                    b.HasOne("WebAppForMVC.Models.DataModels.Student", null)
+                        .WithMany()
+                        .HasForeignKey("StudentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("WebAppForMVC.Models.DataModels.StudentSkill", b =>
+            modelBuilder.Entity("StudentSkills", b =>
                 {
-                    b.Property<Guid>("StudentId")
-                        .HasColumnType("TEXT");
+                    b.HasOne("WebAppForMVC.Models.DataModels.Skill", null)
+                        .WithMany()
+                        .HasForeignKey("SkillsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<Guid>("SkillId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("StudentId", "SkillId");
-
-                    b.HasIndex("SkillId");
-
-                    b.ToTable("StudentSkills");
+                    b.HasOne("WebAppForMVC.Models.DataModels.Student", null)
+                        .WithMany()
+                        .HasForeignKey("StudentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("WebAppForMVC.Models.DataModels.Student", b =>
@@ -228,49 +264,6 @@ namespace WebAppForMVC.Migrations
                     b.Navigation("Program");
                 });
 
-            modelBuilder.Entity("WebAppForMVC.Models.DataModels.StudentCourse", b =>
-                {
-                    b.HasOne("WebAppForMVC.Models.DataModels.Course", "Course")
-                        .WithMany("StudentCourses")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebAppForMVC.Models.DataModels.Student", "Student")
-                        .WithMany("StudentCourses")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("WebAppForMVC.Models.DataModels.StudentSkill", b =>
-                {
-                    b.HasOne("WebAppForMVC.Models.DataModels.Skill", "Skill")
-                        .WithMany("StudentSkills")
-                        .HasForeignKey("SkillId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebAppForMVC.Models.DataModels.Student", "Student")
-                        .WithMany("StudentSkills")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Skill");
-
-                    b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("WebAppForMVC.Models.DataModels.Course", b =>
-                {
-                    b.Navigation("StudentCourses");
-                });
-
             modelBuilder.Entity("WebAppForMVC.Models.DataModels.Department", b =>
                 {
                     b.Navigation("Students");
@@ -279,18 +272,6 @@ namespace WebAppForMVC.Migrations
             modelBuilder.Entity("WebAppForMVC.Models.DataModels.SchoolProgram", b =>
                 {
                     b.Navigation("Students");
-                });
-
-            modelBuilder.Entity("WebAppForMVC.Models.DataModels.Skill", b =>
-                {
-                    b.Navigation("StudentSkills");
-                });
-
-            modelBuilder.Entity("WebAppForMVC.Models.DataModels.Student", b =>
-                {
-                    b.Navigation("StudentCourses");
-
-                    b.Navigation("StudentSkills");
                 });
 #pragma warning restore 612, 618
         }

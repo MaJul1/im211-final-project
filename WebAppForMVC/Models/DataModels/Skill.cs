@@ -7,4 +7,5 @@ public class Skill
     public DateTime DateAdded {get; set;}
 
     public ICollection<Student> Students {get; set;} = null!;
+    public ICollection<StudentSkill> StudentSkills {get; set;} = null!;
 }
