@@ -30,7 +30,7 @@ namespace WebAppForMVC.Controllers
         }
 
         //ToDo: Sorting
-        public ActionResult ViewCourse(string courseId, string? sortParam)
+        public ActionResult ViewCourse(int courseId, string? sortParam)
         {
             ViewData["IdSortParam"] = string.IsNullOrEmpty(sortParam) ? "Id" : "";
             ViewData["NameSortParam"] = sortParam == "Name" ? "Name_desc" : "Name";
@@ -38,7 +38,7 @@ namespace WebAppForMVC.Controllers
             ViewData["ProgramSortParam"] = sortParam == "Program" ? "Program_desc" : "Program";
             ViewData["DepartmentSortParam"] = sortParam == "Department" ? "Department_desc" : "Department";
             
-            var model = _repository.GetById(Guid.Parse(courseId));
+            var model = _repository.GetById(courseId);
 
             if (model == null)
             {

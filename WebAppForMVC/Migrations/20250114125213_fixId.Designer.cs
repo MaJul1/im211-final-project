@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAppForMVC.Context;
 
@@ -10,18 +11,19 @@ using WebAppForMVC.Context;
 namespace WebAppForMVC.Migrations
 {
     [DbContext(typeof(SystemDatabaseContext))]
-    partial class SystemDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20250114125213_fixId")]
+    partial class fixId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.11");
 
             modelBuilder.Entity("WebAppForMVC.Models.DataModels.Course", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("CourseCode")
                         .IsRequired()
@@ -44,9 +46,8 @@ namespace WebAppForMVC.Migrations
 
             modelBuilder.Entity("WebAppForMVC.Models.DataModels.Department", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -66,9 +67,8 @@ namespace WebAppForMVC.Migrations
 
             modelBuilder.Entity("WebAppForMVC.Models.DataModels.SchoolProgram", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -88,9 +88,8 @@ namespace WebAppForMVC.Migrations
 
             modelBuilder.Entity("WebAppForMVC.Models.DataModels.Skill", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("TEXT");
@@ -106,9 +105,8 @@ namespace WebAppForMVC.Migrations
 
             modelBuilder.Entity("WebAppForMVC.Models.DataModels.Student", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Barangay")
                         .IsRequired()
@@ -120,8 +118,9 @@ namespace WebAppForMVC.Migrations
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("DepartmentId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -147,8 +146,9 @@ namespace WebAppForMVC.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("ProgramId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("ProgramId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Province")
                         .IsRequired()
@@ -181,11 +181,11 @@ namespace WebAppForMVC.Migrations
 
             modelBuilder.Entity("WebAppForMVC.Models.DataModels.StudentCourse", b =>
                 {
-                    b.Property<int>("StudentId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("StudentId")
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("CourseId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("CourseId")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("StudentId", "CourseId");
 
@@ -196,11 +196,11 @@ namespace WebAppForMVC.Migrations
 
             modelBuilder.Entity("WebAppForMVC.Models.DataModels.StudentSkill", b =>
                 {
-                    b.Property<int>("StudentId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("StudentId")
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("SkillId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("SkillId")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("StudentId", "SkillId");
 

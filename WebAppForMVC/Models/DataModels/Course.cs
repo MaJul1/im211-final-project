@@ -2,7 +2,7 @@ namespace WebAppForMVC.Models.DataModels;
 
 public class Course
 {
-    public Guid Id {get; set;}
+    public int Id {get; set;}
     public string CourseCode {get; set;} = null!;
     public string CourseDescription {get; set;} = null!;
     public int Units {get; set;}

@@ -31,7 +31,7 @@ public class DepartmentRepository
         _context.SaveChanges();
     }
 
-    public Department? GetById(Guid Id)
+    public Department? GetById(int Id)
     {
         return _context.Departments.Find(Id);
     }

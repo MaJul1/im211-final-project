@@ -45,7 +45,7 @@ namespace WebAppForMVC.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult ViewStudent(Guid itemid)
+        public IActionResult ViewStudent(int itemid)
         {
             if (_repository.Exist(itemid) == false)
             {

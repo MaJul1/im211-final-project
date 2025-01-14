@@ -33,7 +33,7 @@ public class CourseRepository
         _context.SaveChanges();
     }
 
-    public Course? GetById(Guid Id)
+    public Course? GetById(int Id)
     {
         var course =  _context.Courses.Find(Id);
 

@@ -28,7 +28,7 @@ public class SkillRepository
         _context.SaveChanges();
     }
 
-    public Skill? GetById(Guid Id)
+    public Skill? GetById(int Id)
     {
         return _context.Skills.Find(Id);
     }

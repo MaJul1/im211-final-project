@@ -30,7 +30,7 @@ public class StudentRepository
         await _context.SaveChangesAsync();
     }
 
-    public Student? GetStudentById(Guid Id)
+    public Student? GetStudentById(int Id)
     {
         var student = _context.Students
                 .AsSplitQuery()
@@ -47,7 +47,7 @@ public class StudentRepository
         return student;
     }
 
-    public bool Exist(Guid Id)
+    public bool Exist(int Id)
     {
         var student = _context.Students.Find(Id);
 
@@ -57,7 +57,7 @@ public class StudentRepository
         return true;
     }
 
-    public void RemoveById(Guid Id)
+    public void RemoveById(string Id)
     {
         var student = _context.Students.Find(Id);
 

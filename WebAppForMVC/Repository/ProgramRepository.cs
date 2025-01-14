@@ -31,7 +31,7 @@ public class ProgramRepository
         _context.SaveChanges();
     }
 
-    public SchoolProgram? GetById(Guid Id)
+    public SchoolProgram? GetById(int Id)
     {
         return _context.Programs.Find(Id);
     }

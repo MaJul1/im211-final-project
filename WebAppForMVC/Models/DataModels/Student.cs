@@ -6,7 +6,7 @@ namespace WebAppForMVC.Models.DataModels;
 
 public class Student
 {
-    public Guid Id {get; set;}
+    public int Id {get; set;}
     public string SchoolId {get; set;} = null!;
     public string FirstName {get; set;} = null!;
     public string MiddleName {get; set;} = null!;

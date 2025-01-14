@@ -2,7 +2,7 @@ namespace WebAppForMVC.Models.DataModels;
 
 public class Skill
 {
-    public Guid Id {get; set;}
+    public int Id {get; set;}
     public string Description {get; set;} = null!;
     public DateTime DateAdded {get; set;}
 
