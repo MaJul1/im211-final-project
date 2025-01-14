@@ -22,7 +22,6 @@
             <p><strong>Department:</strong> @Model.Department.Description</p>
             <p><strong>Sex:</strong> @Model.Sex</p>
             <p><strong>Type:</strong> @Model.Type</p>
-            <p><strong>Date Added:</strong> @Model.DateAdded.ToShortDateString()</p>
         </div>
     </div>
     <div>
@@ -32,6 +31,7 @@
                 <tr>
                     <th>Course Code</th>
                     <th>Course Description</th>
+                    <th>Units</th>
                 </tr>
             </thead>
             <tbody>
@@ -48,8 +48,15 @@
                         <tr>
                             <td>@c.CourseCode</td>
                             <td>@c.CourseDescription</td>
+                            <td>@c.Units</td>
                         </tr>
                     }
+                    
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><strong>@Model.GetTotalUnits()</strong></td>
+                    </tr>
                 }
             </tbody>
         </table>

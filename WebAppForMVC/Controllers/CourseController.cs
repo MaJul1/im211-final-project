@@ -10,5 +10,10 @@ namespace WebAppForMVC.Controllers
             return View();
         }
 
+        public ActionResult ViewCourse(string itemid)
+        {
+            return View();
+        }
+
     }
 }

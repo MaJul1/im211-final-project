@@ -33,4 +33,9 @@ public class CourseRepository
         return _context.Courses.Find(Id);
     }
 
+    public Course? GetByCode(string Code)
+    {
+        return _context.Courses.FirstOrDefault(c => c.CourseCode == Code);
+    }
+
 }

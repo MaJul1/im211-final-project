@@ -9,5 +9,10 @@ public class Course
     public DateTime DateAdded{get; set;}
 
     public ICollection<Student> Students {get; set;} = null!;
+
+    public int GetNumberOfStudentsEnrolled()
+    {
+        return Students.Count;
+    }
 }
 

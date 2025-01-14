@@ -36,4 +36,17 @@ public class Student
         if (BirthDay.DayNumber > DateOnly.FromDateTime(today.AddYears(-age)).DayNumber) age--;
         return age;
     }
+
+    public int GetTotalUnits()
+    {
+        var units = Courses.Select(s => s.Units);
+
+        var total = 0;
+        foreach (var u in units)
+        {
+            total += u;
+        }
+
+        return total;
+    }
 }

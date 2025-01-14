@@ -95,7 +95,8 @@ public class SeederService
                 Municipality = "Laguna",
                 Province = "Laguna",
                 Department = _departmentRepository.GetByCode("CHK")!,
-                Program = _programRepository.GetByCode("BSPED")!
+                Program = _programRepository.GetByCode("BSPED")!,
+                Courses = [_courseRepository.GetByCode("IM211")!, _courseRepository.GetByCode("CS101")!]
             },
             new()
             {
@@ -115,7 +116,8 @@ public class SeederService
                 Municipality = "Quezon City",
                 Province = "Metro Manila",
                 Department = _departmentRepository.GetByCode("CCST")!,
-                Program = _programRepository.GetByCode("BSIT")!
+                Program = _programRepository.GetByCode("BSIT")!,
+                Courses = [_courseRepository.GetByCode("IM211")!, _courseRepository.GetByCode("CS101")!]
             },
             new()
             {
@@ -135,7 +137,8 @@ public class SeederService
                 Municipality = "Manila",
                 Province = "Metro Manila",
                 Department = _departmentRepository.GetByCode("CCST")!,
-                Program = _programRepository.GetByCode("BSIS")!
+                Program = _programRepository.GetByCode("BSIS")!,
+                Courses = [_courseRepository.GetByCode("IM211")!, _courseRepository.GetByCode("CS101")!]
             },
             new()
             {
@@ -155,7 +158,8 @@ public class SeederService
                 Municipality = "Pasig",
                 Province = "Metro Manila",
                 Department = _departmentRepository.GetByCode("CCST")!,
-                Program = _programRepository.GetByCode("BSIS")!
+                Program = _programRepository.GetByCode("BSIS")!,
+                Courses = [_courseRepository.GetByCode("IM211")!, _courseRepository.GetByCode("CS101")!]
             },
             new()
             {
@@ -175,7 +179,8 @@ public class SeederService
                 Municipality = "Cavite City",
                 Province = "Cavite",
                 Department = _departmentRepository.GetByCode("CHK")!,
-                Program = _programRepository.GetByCode("BSPED")!
+                Program = _programRepository.GetByCode("BSPED")!,
+                Courses = [_courseRepository.GetByCode("IM211")!, _courseRepository.GetByCode("CS101")!]
             }
         };
 
@@ -189,32 +194,38 @@ public class SeederService
             new()
             {
                 CourseCode = "IM211",
-                CourseDescription = "Fundamental of Database System"
+                CourseDescription = "Fundamental of Database System",
+                Units = 3
             },
             new()
             {
                 CourseCode = "CS101",
-                CourseDescription = "Introduction to Computer Science"
+                CourseDescription = "Introduction to Computer Science",
+                Units = 3
             },
             new()
             {
                 CourseCode = "CS102",
-                CourseDescription = "Data Structures and Algorithms"
+                CourseDescription = "Data Structures and Algorithms",
+                Units = 3
             },
             new()
             {
                 CourseCode = "CS103",
-                CourseDescription = "Operating Systems"
+                CourseDescription = "Operating Systems",
+                Units = 3
             },
             new()
             {
                 CourseCode = "CS104",
-                CourseDescription = "Computer Networks"
+                CourseDescription = "Computer Networks",
+                Units = 3
             },
             new()
             {
                 CourseCode = "CS105",
-                CourseDescription = "Software Engineering"
+                CourseDescription = "Software Engineering",
+                Units = 3
             }
         };
 
