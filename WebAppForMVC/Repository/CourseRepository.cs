@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using WebAppForMVC.Context;
 using WebAppForMVC.Models.DataModels;
 
@@ -19,7 +20,10 @@ public class CourseRepository
 
     public IEnumerable<Course> GetAll()
     {
-        return _context.Courses;
+        var courses = _context.Courses
+            .Include(c => c.Students);
+        
+        return courses;
     }
 
     public void CreateCourse(Course course)

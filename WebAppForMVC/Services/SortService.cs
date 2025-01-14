@@ -53,4 +53,28 @@ public static class SortService
 
         return students;
     }
+
+    public static IEnumerable<Course> ApplySort(this IEnumerable<Course> courses, string sortParam)
+    {
+        switch (sortParam)
+        {
+            case "Code":
+                courses = courses.OrderBy(s => s.CourseCode);
+            break;
+            case "Description":
+                courses = courses.OrderBy(s => s.CourseDescription);
+            break;
+            case "Description_desc":
+                courses = courses.OrderByDescending (s => s.CourseDescription);
+            break;
+            case "NumberOfStudents":
+                courses = courses.OrderBy (s => s.GetNumberOfStudentsEnrolled());
+            break;
+            case "NumberOfStudents_desc":
+                courses = courses.OrderByDescending (s => s.GetNumberOfStudentsEnrolled());
+            break;
+        }
+
+        return courses;
+    }
 }

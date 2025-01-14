@@ -3,30 +3,37 @@
     ViewData["Tiltle"] = "Course Page";
 }
 
-<div class="text-center">
-    <h3>Course Page</h3>
+<div>
+    <h1 class="text-center">Course Page</h1>
+    <hr>
 </div>
 
 <div>
-    <table>
+    <table class="table table-bordered table-sm table-hover table-striped">
         <thead>
             <tr>
-                <th>Course Code</th>
-                <th>Course Description</th>
-                <th>Number of Students Enrolled</th>
+                <th><a asp-action="Index" asp-route-sortParam="@ViewData["CodeSortParam"]">Course Code</a></th>
+                <th><a asp-action="Index" asp-route-sortParam="@ViewData["DescriptionSortParam"]">Course Description</a></th>
+                <th><a asp-action="Index" asp-route-sortParam="@ViewData["NumberOfStudentsSortParam"]">Number of Students Enrolled</a></th>
             </tr>
         </thead>
         <tbody>
             @{
                 foreach(var c in @Model.Courses)
                 {
-                    <tr>
-                        <th>@c.CourseCode</th>
-                        <th>@c.CourseDescription</th>
-                        <th>@c.GetNumberOfStudentsEnrolled()</th>
+                    <tr onclick="GoToCourseView('@c.Id')">
+                        <td>@c.CourseCode</td>
+                        <td>@c.CourseDescription</td>
+                        <td>@c.GetNumberOfStudentsEnrolled()</td>
                     </tr>
                 }
             }
         </tbody>
     </table>
 </div>
+
+<script>
+    function GoToCourseView(courseId) {
+        window.location.href = '@Url.Action("ViewCourse", "Course")' + '?itemid=' + courseId;
+    }
+</script>
