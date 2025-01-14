@@ -46,3 +46,9 @@
             </tbody>
         </table>
 </div>
+
+<script>
+    function GoToStudentView(studentId) {
+        window.location.href = '@Url.Action("ViewStudent", "Student")' + '?itemid=' + studentId;
+    }
+</script>
