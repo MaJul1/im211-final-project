@@ -16,7 +16,7 @@
     <div>
         <h3>List of students enrolled in @Model.CourseCode</h3>
     </div>
-    <table class="table table-bordered table-sm table-hover table-striped">
+    <table class="table table-bordered table-sm">
             <thead>
                 <tr>
                     <th><a asp-action="ViewCourse" asp-route-courseId="@Model.Id" asp-route-sortParam="@ViewData["IdSortParam"]">Student Id</a></th>                    
@@ -35,7 +35,7 @@
                 }
                 @foreach (var s in @Model.Students)
                 {
-                    <tr onclick="GoToStudentView('@s.Id')">
+                    <tr>
                         <td>@s.SchoolId</td>
                         <td>@s.FirstName @s.LastName</td>
                         <td>@s.YearLevel@s.Section</td>
@@ -46,9 +46,3 @@
             </tbody>
         </table>
 </div>
-
-<script>
-    function GoToStudentView(studentId) {
-        window.location.href = '@Url.Action("ViewStudent", "Student")' + '?itemid=' + studentId;
-    }
-</script>
