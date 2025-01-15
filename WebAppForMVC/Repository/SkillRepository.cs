@@ -19,7 +19,14 @@ public class SkillRepository
 
     public IEnumerable<Skill> GetAll()
     {
-        return _context.Skills;
+        var skill = _context.Skills;
+
+        foreach (var s in skill)
+        {
+            _context.Entry(s).Collection(s => s.Students).Load();
+        }
+
+        return skill;
     }
     
     public void CreateSkill(Skill skill)

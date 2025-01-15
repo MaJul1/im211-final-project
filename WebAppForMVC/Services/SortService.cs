@@ -84,4 +84,22 @@ public static class SortService
 
         return courses;
     }
+
+    public static IEnumerable<Skill> ApplySort(this IEnumerable<Skill> skills, string sortParam)
+    {
+        switch (sortParam)
+        {
+            case "Name":
+                skills = skills.OrderBy(s => s.Description);
+            break;
+            case "NumberOfStudents":
+                skills = skills.OrderBy(s => s.GetStudentCount());
+            break;
+            case "NumberOfStudents_desc":
+                skills = skills.OrderByDescending(s => s.GetStudentCount());
+            break;
+        }
+
+        return skills;
+    }
 }

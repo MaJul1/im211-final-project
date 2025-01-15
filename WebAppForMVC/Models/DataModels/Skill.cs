@@ -8,4 +8,9 @@ public class Skill
 
     public ICollection<Student> Students {get; set;} = null!;
     public ICollection<StudentSkill> StudentSkills {get; set;} = null!;
+
+    public int GetStudentCount()
+    {
+        return Students.Count;
+    }
 }
