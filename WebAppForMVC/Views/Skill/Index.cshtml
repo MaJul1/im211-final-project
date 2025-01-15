@@ -12,7 +12,7 @@
     <table class="table table-bordered table-sm table-hover table-striped">
         <thead>
             <tr>
-                <th><a asp-action="Index" asp-route-sortParam="@ViewData["NameSortParam"]">Skill Name</a></th>
+                <th><a asp-action="Index" asp-route-sortParam="@ViewData["NameSortParam"]">Skill</a></th>
                 <th><a asp-action="Index" asp-route-sortParam="@ViewData["NumberOfStudentSortParam"]">Student Count</a></th>
             </tr>
         </thead>
@@ -20,7 +20,7 @@
             @{
                 foreach(var s in @Model.Skills)
                 {
-                    <tr>
+                    <tr onclick="GoToSkillView('@s.Id')">
                         <td>@s.Description</td>
                         <td>@s.GetStudentCount()</td>
                     </tr>
@@ -29,3 +29,10 @@
         </tbody>
     </table>
 </div>
+
+<script>
+    function GoToSkillView(skillId)
+    {
+        window.location.href = '@Url.Action("ViewSkill", "Skill")' + '?itemId=' + skillId  
+    }
+</script>

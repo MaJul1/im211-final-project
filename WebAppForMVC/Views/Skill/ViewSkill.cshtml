@@ -1,5 +1,44 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Skill
 @{
+    ViewData["Title"] = "View Skill Page";
 }
+
+<div class="text-center">
+    <h1>@Model.Description</h1>
+    <hr>
+</div>
+
+<div>
+    <div>
+        <h3>List of students who have @Model.Description skill</h3>
+    </div>
+    <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th><a asp-action="ViewSkill" asp-route-itemid="@Model.Id" asp-route-sortParam="@ViewData["IdSortParam"]">Student Id</a></th>                    
+                    <th><a asp-action="ViewSkill" asp-route-itemid="@Model.Id" asp-route-sortParam="@ViewData["NameSortParam"]">Name</a></th>
+                    <th><a asp-action="ViewSkill" asp-route-itemid="@Model.Id" asp-route-sortParam="@ViewData["YearAndSectionSortParam"]">Year and Section</a></th>
+                    <th><a asp-action="ViewSkill" asp-route-itemid="@Model.Id" asp-route-sortParam="@ViewData["ProgramSortParam"]">Program</a></th>
+                    <th><a asp-action="ViewSkill" asp-route-itemid="@Model.Id" asp-route-sortParam="@ViewData["DepartmentSortParam"]">Department</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (@Model.Students.Count() == 0 || @Model.Students.Any() == false)
+                {
+                    <tr>
+                        <td colspan="5" class="text-center">No student records</td>
+                    </tr>
+                }
+                @foreach (var s in @Model.Students)
+                {
+                    <tr>
+                        <td>@s.SchoolId</td>
+                        <td>@s.FirstName @s.LastName</td>
+                        <td>@s.YearLevel@s.Section</td>
+                        <td>@s.Program.Code</td>
+                        <td>@s.Department.Code</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+</div>

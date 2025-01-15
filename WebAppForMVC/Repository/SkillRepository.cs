@@ -37,6 +37,20 @@ public class SkillRepository
 
     public Skill? GetById(int Id)
     {
-        return _context.Skills.Find(Id);
+        var skill =  _context.Skills.Find(Id);
+
+        if (skill == null) return null;
+
+        _context.Entry(skill).Collection(s => s.Students).Load();
+
+        foreach (var s in skill.Students)
+        {
+            _context.Entry(s).Reference(s => s.Program).Load();
+            _context.Entry(s).Reference(s => s.Department).Load();
+        }
+
+        return skill;
     }
+
+
 }
