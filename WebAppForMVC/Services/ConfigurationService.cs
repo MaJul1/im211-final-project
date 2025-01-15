@@ -20,20 +20,6 @@ public class ConfigurationService
         return GetSelectListOption(chars);
     }
 
-    public List<SelectListOption> GetSelectListOptionDepartment()
-    {
-        var departmentStrings = _configuration.GetSection("Departments").Get<List<string>>();
-
-        return GetSelectListOption(departmentStrings!);
-    }
-
-    public List<SelectListOption> GetSelectListOptionProgram()
-    {
-        var programStrings = _configuration.GetSection("Programs").Get<List<string>>();
-
-        return GetSelectListOption(programStrings!);
-    }
-
     private static List<SelectListOption> GetSelectListOption(List<string> options)
     {
         List<SelectListOption> lists = [];
