@@ -156,9 +156,10 @@
         </div>
     </div>
     <div class="flex-grow-1">
-        <table class="table table-bordered table-sm table-hover table-striped">
+        <table class="table table-bordered table-sm table-hover table-striped text-center">
             <thead>
                 <tr>
+                    <th>No.</th>
                     <th>Student Id</th>                    
                     <th>Name</th>
                     <th>Year and Section</th>
@@ -167,21 +168,27 @@
                 </tr>
             </thead>
             <tbody>
-                @if (students.Count() == 0 || students.Any() == false)
-                {
-                    <tr>
-                        <td colspan="5" class="text-center">No student records</td>
-                    </tr>
-                }
-                @foreach (var s in students)
-                {
-                    <tr onclick="GoToStudentView('@s.Id')">
-                        <td>@s.SchoolId</td>
-                        <td>@s.Name</td>
-                        <td>@s.YearLevelAndSection</td>
-                        <td>@s.Program.Code</td>
-                        <td>@s.Department.Code</td>
-                    </tr>
+                @{
+                    int number = 1;
+                    if (students.Count() == 0 || students.Any() == false)
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center">No student records</td>
+                        </tr>
+                    }
+                    foreach (var s in students)
+                    {
+                        <tr onclick="GoToStudentView('@s.Id')">
+                            <td>@number</td>
+                            <td>@s.SchoolId</td>
+                            <td>@s.Name</td>
+                            <td>@s.YearLevelAndSection</td>
+                            <td>@s.Program.Code</td>
+                            <td>@s.Department.Code</td>
+                        </tr>
+
+                        number++;
+                    }
                 }
             </tbody>
         </table>

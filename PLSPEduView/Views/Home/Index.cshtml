@@ -8,21 +8,85 @@
     <h1 class="display-4">Welcome</h1>
 </div>
 
-<div>
-    <table class="table table-bordered">
+<div class="mb-3">
+    <table class="table table-bordered mb-3">
         <tbody>
             <tr>
                 <th>Number of students registered</th>
-                <th>@Model.NumberOfStudentRegistered</th>
+                <th style="width: 200px;">@Model.NumberOfStudentRegistered</th>
             </tr>
             <tr>
                 <th>Number of skills registered</th>
-                <th>@Model.NumberOfSkillsRegistered</th>
+                <th style="width: 200px;">@Model.NumberOfSkillsRegistered</th>
             </tr>
             <tr>
                 <th>Number of courses registered</th>
-                <th>@Model.NumberOfCoursesRegistered</th>
+                <th style="width: 200px;">@Model.NumberOfCoursesRegistered</th>
             </tr>
         </tbody>
     </table>
+    <div class="mb-3">
+        <h4>Number of students by municipality</h4>
+        <table class="table table-bordered">
+            <tbody>
+                @{
+                    foreach(var s in Model.GroupByMunicipality)
+                    {
+                        <tr>
+                            <td>@s.Key</td>
+                            <td style="width: 200px;">@s.Value</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="mb-3">
+        <h4>Number of students by province</h4>
+        <table class="table table-bordered">
+            <tbody>
+                @{
+                    foreach(var s in Model.GroupByProvince)
+                    {
+                        <tr>
+                            <td>@s.Key</td>
+                            <td style="width: 200px;">@s.Value</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="mb-3">
+        <h4>Number of students by sex</h4>
+        <table class="table table-bordered">
+            <tbody>
+                @{
+                    foreach(var s in Model.GroupBySex)
+                    {
+                        <tr>
+                            <td>@s.Key</td>
+                            <td style="width: 200px;">@s.Value</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="mb-3">
+        <h4>Number of students by student type</h4>
+        <table class="table table-bordered">
+            <tbody>
+                @{
+                    foreach(var s in Model.GroupByType)
+                    {
+                        <tr>
+                            <td>@s.Key</td>
+                            <td style="width: 200px;">@s.Value</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

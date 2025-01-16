@@ -27,7 +27,27 @@ public class HomeViewService
         {
             NumberOfCoursesRegistered = _course.GetCount(),
             NumberOfSkillsRegistered = _skill.GetCount(),
-            NumberOfStudentRegistered = _student.GetCount()
+            NumberOfStudentRegistered = _student.GetCount(),
+
+            GroupByMunicipality = _student.GetAll()
+                .GroupBy(s => s.Municipality)
+                .OrderByDescending(s => s.Count())
+                .ToDictionary(g => g.Key, g => g.Count()),
+
+            GroupByProvince = _student.GetAll()
+                .GroupBy(s => s.Province)
+                .OrderByDescending(s => s.Count())
+                .ToDictionary(s => s.Key, s => s.Count()),
+
+            GroupBySex = _student.GetAll()
+                .GroupBy(s => s.Sex)
+                .OrderByDescending(s => s.Count())
+                .ToDictionary(s => s.Key.ToString(), s => s.Count()),
+
+            GroupByType = _student.GetAll()
+                .GroupBy(s => s.Type)
+                .OrderByDescending(s => s.Count())
+                .ToDictionary(s => s.Key.ToString(), s => s.Count())
         };
 
         return view;
