@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/PLSPEduView.styles.css" asp-append-version="true" />
-    <!-- Include Select2 CSS -->
+    <link rel="stylesheet" href="~/css/custom.css" asp-append-version="true" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="icon" href="~/plsp.ico" type="image/x-icon">
 </head>
@@ -20,32 +20,33 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="Index">Student</a>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item text-dark">
+                            <a class="nav-link" asp-area="" asp-controller="Student" asp-action="Index">Student</a>
                         </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Course" asp-action="Index">Course</a>
+                        <li class="nav-item text-dark">
+                            <a class="nav-link" asp-area="" asp-controller="Course" asp-action="Index">Course</a>
                         </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Skill" asp-action="Index">Skill</a>
+                        <li class="nav-item text-dark">
+                            <a class="nav-link" asp-area="" asp-controller="Skill" asp-action="Index">Skill</a>
+                        </li>
+                        <li class="nav-item text-dark">
+                            <a class="nav-link" asp-area="" asp-controller="About" asp-action="Index">About</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container mt-4">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - PLSPEduView
-        </div>
+    <footer class="footer text-white">
+        &copy; PLSPEduView - 2025
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
