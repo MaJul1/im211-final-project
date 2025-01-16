@@ -24,3 +24,45 @@ body {
 .btn-wide{
   width: 150px;
 }
+
+.container-box {
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.inner-container {
+  display: flex;
+  padding: 29px 17px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  border: 1px solid #ADB5BD;
+}
+
+.inner-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 26px;
+  flex-shrink: 0;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.svg-icon {
+  width: 90%; 
+  height: 90%;
+}
+
+@media (min-width: 768px) {
+  .container-box {
+      flex-direction: row; /* Align horizontally on larger screens */
+      justify-content: center;
+  }
+}
