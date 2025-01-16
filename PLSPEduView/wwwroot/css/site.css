@@ -66,3 +66,12 @@ body {
       justify-content: center;
   }
 }
+
+.homebutton{
+  background-color: white;
+  transition: background-color 0.3s ease;
+}
+
+.homebutton:hover {
+  background-color: #e7e7e7;
+}

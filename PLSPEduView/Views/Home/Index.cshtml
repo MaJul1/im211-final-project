@@ -8,31 +8,100 @@
     <h1 class="display-4">Welcome to PLSPEduView</h1>
 </div>
 
-<div class="container-box">
-    <button class="inner-container" onclick="GoToStudent()">        
-        <div class="inner-content">
-            <svg class="svg-icon" viewBox="0 0 135 136" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M112.5 118.625V107.375C112.5 101.408 110.129 95.6847 105.91 91.4651C101.69 87.2455 95.9674 84.875 90 84.875H45C39.0326 84.875 33.3097 87.2455 29.0901 91.4651C24.8705 95.6847 22.5 101.408 22.5 107.375V118.625M90 39.875C90 52.3014 79.9264 62.375 67.5 62.375C55.0736 62.375 45 52.3014 45 39.875C45 27.4486 55.0736 17.375 67.5 17.375C79.9264 17.375 90 27.4486 90 39.875Z" stroke="#1E1E1E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <h4 class="text-center">@Model.NumberOfStudentRegistered Students Registered</h4>
-        </div>
-    </button>
-    <button class="inner-container" onclick="GoToCourse()">        
-        <div class="inner-content">
-            <svg class="svg-icon" viewBox="0 0 135 136" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M67.5 39.875C67.5 33.9076 65.1295 28.1847 60.9099 23.9651C56.6903 19.7455 50.9674 17.375 45 17.375H11.25V101.75H50.625C55.1005 101.75 59.3928 103.528 62.5574 106.693C65.7221 109.857 67.5 114.149 67.5 118.625M67.5 39.875V118.625M67.5 39.875C67.5 33.9076 69.8705 28.1847 74.0901 23.9651C78.3097 19.7455 84.0326 17.375 90 17.375H123.75V101.75H84.375C79.8995 101.75 75.6072 103.528 72.4426 106.693C69.2779 109.857 67.5 114.149 67.5 118.625" stroke="#1E1E1E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <h4 class="text-center">@Model.NumberOfCoursesRegistered Courses Registered</h4>
-        </div>
-    </button>
-    <button class="inner-container" onclick="GoToSkill()">        
-        <div class="inner-content">
-            <svg class="svg-icon" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18.3333 18.3333L151.25 50.4167L165 119.167L119.167 165L50.4167 151.25L18.3333 18.3333ZM18.3333 18.3333L87.8717 87.8717M110 174.167L174.167 110L201.667 137.5L137.5 201.667L110 174.167ZM119.167 100.833C119.167 110.959 110.959 119.167 100.833 119.167C90.7081 119.167 82.5 110.959 82.5 100.833C82.5 90.7081 90.7081 82.5 100.833 82.5C110.959 82.5 119.167 90.7081 119.167 100.833Z" stroke="#1E1E1E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <h4 class="text-center">@Model.NumberOfSkillsRegistered Skills Registered</h4>
-        </div>
-    </button>
+<div class="mb-5">
+    <div class="container-box">
+        <button class="inner-container homebutton" onclick="GoToStudent()">        
+            <div class="inner-content">
+                <svg class="svg-icon" viewBox="0 0 135 136" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M112.5 118.625V107.375C112.5 101.408 110.129 95.6847 105.91 91.4651C101.69 87.2455 95.9674 84.875 90 84.875H45C39.0326 84.875 33.3097 87.2455 29.0901 91.4651C24.8705 95.6847 22.5 101.408 22.5 107.375V118.625M90 39.875C90 52.3014 79.9264 62.375 67.5 62.375C55.0736 62.375 45 52.3014 45 39.875C45 27.4486 55.0736 17.375 67.5 17.375C79.9264 17.375 90 27.4486 90 39.875Z" stroke="#1E1E1E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h4 class="text-center">@Model.NumberOfStudentRegistered Students Registered</h4>
+            </div>
+        </button>
+        <button class="inner-container homebutton" onclick="GoToCourse()">        
+            <div class="inner-content">
+                <svg class="svg-icon" viewBox="0 0 135 136" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M67.5 39.875C67.5 33.9076 65.1295 28.1847 60.9099 23.9651C56.6903 19.7455 50.9674 17.375 45 17.375H11.25V101.75H50.625C55.1005 101.75 59.3928 103.528 62.5574 106.693C65.7221 109.857 67.5 114.149 67.5 118.625M67.5 39.875V118.625M67.5 39.875C67.5 33.9076 69.8705 28.1847 74.0901 23.9651C78.3097 19.7455 84.0326 17.375 90 17.375H123.75V101.75H84.375C79.8995 101.75 75.6072 103.528 72.4426 106.693C69.2779 109.857 67.5 114.149 67.5 118.625" stroke="#1E1E1E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h4 class="text-center">@Model.NumberOfCoursesRegistered Courses Registered</h4>
+            </div>
+        </button>
+        <button class="inner-container homebutton" onclick="GoToSkill()">        
+            <div class="inner-content">
+                <svg class="svg-icon" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.3333 18.3333L151.25 50.4167L165 119.167L119.167 165L50.4167 151.25L18.3333 18.3333ZM18.3333 18.3333L87.8717 87.8717M110 174.167L174.167 110L201.667 137.5L137.5 201.667L110 174.167ZM119.167 100.833C119.167 110.959 110.959 119.167 100.833 119.167C90.7081 119.167 82.5 110.959 82.5 100.833C82.5 90.7081 90.7081 82.5 100.833 82.5C110.959 82.5 119.167 90.7081 119.167 100.833Z" stroke="#1E1E1E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h4 class="text-center">@Model.NumberOfSkillsRegistered Skills Registered</h4>
+            </div>
+        </button>
+    </div>
+</div>
+
+<div>
+    <div class="mb-3">
+        <h4>Number of students by municipality</h4>
+        <table class="table table-bordered">
+            <tbody>
+                @{
+                    foreach(var s in Model.GroupByMunicipality)
+                    {
+                        <tr>
+                            <td>@s.Key</td>
+                            <td style="width: 200px;">@s.Value</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="mb-3">
+        <h4>Number of students by province</h4>
+        <table class="table table-bordered">
+            <tbody>
+                @{
+                    foreach(var s in Model.GroupByProvince)
+                    {
+                        <tr>
+                            <td>@s.Key</td>
+                            <td style="width: 200px;">@s.Value</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="mb-3">
+        <h4>Number of students by sex</h4>
+        <table class="table table-bordered">
+            <tbody>
+                @{
+                    foreach(var s in Model.GroupBySex)
+                    {
+                        <tr>
+                            <td>@s.Key</td>
+                            <td style="width: 200px;">@s.Value</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="mb-3">
+        <h4>Number of students by student type</h4>
+        <table class="table table-bordered">
+            <tbody>
+                @{
+                    foreach(var s in Model.GroupByType)
+                    {
+                        <tr>
+                            <td>@s.Key</td>
+                            <td style="width: 200px;">@s.Value</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script>
