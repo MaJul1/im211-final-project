@@ -1,4 +1,5 @@
-﻿@{
+﻿@using PLSPEduView.Services
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -24,6 +25,7 @@
                     <path d="M67.5 39.875C67.5 33.9076 65.1295 28.1847 60.9099 23.9651C56.6903 19.7455 50.9674 17.375 45 17.375H11.25V101.75H50.625C55.1005 101.75 59.3928 103.528 62.5574 106.693C65.7221 109.857 67.5 114.149 67.5 118.625M67.5 39.875V118.625M67.5 39.875C67.5 33.9076 69.8705 28.1847 74.0901 23.9651C78.3097 19.7455 84.0326 17.375 90 17.375H123.75V101.75H84.375C79.8995 101.75 75.6072 103.528 72.4426 106.693C69.2779 109.857 67.5 114.149 67.5 118.625" stroke="#1E1E1E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <h4 class="text-center">@Model.NumberOfCoursesRegistered Courses Registered</h4>
+    using PLSPEduView.Services;
             </div>
         </button>
         <button class="inner-container homebutton" onclick="GoToSkill()">        
@@ -78,7 +80,7 @@
                     foreach(var s in Model.GroupBySex)
                     {
                         <tr>
-                            <td>@s.Key</td>
+                            <td>@s.Key.ToCapitalized()</td>
                             <td style="width: 200px;">@s.Value</td>
                         </tr>
                     }
@@ -94,7 +96,7 @@
                     foreach(var s in Model.GroupByType)
                     {
                         <tr>
-                            <td>@s.Key</td>
+                            <td>@s.Key.ToCapitalized()</td>
                             <td style="width: 200px;">@s.Value</td>
                         </tr>
                     }
