@@ -16,7 +16,7 @@ public class SelectListService
 
         return new (items, "Value", "Text");
     }
-
+    
     public static SelectListOption CreateSelectListOption(string value, string text)
     {
         return new SelectListOption() {Value = value, Text = text};

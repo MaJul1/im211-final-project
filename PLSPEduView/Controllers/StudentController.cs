@@ -10,10 +10,17 @@ namespace PLSPEduView.Controllers
     {
         private readonly StudentViewService _service;
         private readonly StudentRepository _repository;
-        public StudentController(StudentViewService service, StudentRepository repository)
+        private readonly CreateStudentViewService _createService;
+        public StudentController
+        (
+            StudentViewService service, 
+            StudentRepository repository,
+            CreateStudentViewService createService
+        )
         {
             _service = service;
             _repository = repository;
+            _createService = createService;
         }
 
         [HttpGet]
@@ -59,7 +66,7 @@ namespace PLSPEduView.Controllers
 
         public IActionResult CreateStudent()
         {
-            return View();
+            return View(_createService.GetCreateStudentViewModel());
         }
     }
 }

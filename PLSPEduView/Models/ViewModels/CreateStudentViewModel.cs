@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PLSPEduView.Enums;
+using PLSPEduView.Services;
 
 namespace PLSPEduView.Models.ViewModels;
 
@@ -66,11 +67,9 @@ public class CreateStudentViewModel
     [Display(Name = "Department")]
     public string Department { get; set; } = null!;
 
-    // [RegularExpression("Male|Female|Other", ErrorMessage = "Sex must be 'Male', 'Female', or 'Other'.")]
     [Display(Name = "Sex")]
     public SexType Sex { get; set; }
 
-    // [StringLength(50, ErrorMessage = "Type cannot exceed 50 characters.")]
     [Display(Name = "Student Type")]
     public StudentType Type { get; set; }
 
@@ -81,19 +80,52 @@ public class CreateStudentViewModel
     public List<string> SkillIds { get; set; } = null!;
 
     [ValidateNever]
-    public SelectList CoursesOptions { get; set; } = null!;
+    public List<SelectListOption> CoursesOptions { get; set; } = null!;
     [ValidateNever]
-    public SelectList SkillOptions { get; set; } = null!;
+    public List<SelectListOption> SkillOptions { get; set; } = null!;
     [ValidateNever]
-    public SelectList YearLevelOptions { get; set; } = null!;
+    public List<SelectListOption> YearLevelOptions { get; set; } = null!;
     [ValidateNever]
-    public SelectList SectionOptions { get; set; } = null!;
+    public List<SelectListOption> SectionOptions { get; set; } = null!;
     [ValidateNever]
-    public SelectList ProgramOptions { get; set; } = null!;
+    public List<SelectListOption> ProgramOptions { get; set; } = null!;
     [ValidateNever]
-    public SelectList StudentTypeOptions {get; set;} = null!;
+    public List<SelectListOption> DepartmentOptions {get; set;} = null!;
     [ValidateNever]
-    public SelectList SexTypeOptions {get; set;} = null!;
+    public List<SelectListOption> SexOptions {get; set;} = null!;
     [ValidateNever]
-    public SelectList DepartmentOptions {get; set;} = null!;
+    public List<SelectListOption> StudentTypeOption {get; set;} = null!;
+
+    public SelectList GetSelectListCourses()
+    {
+        return SelectListService.CreateSelectList(CoursesOptions);
+    }
+    public SelectList GetSelectListPrograms()
+    {
+        return SelectListService.CreateSelectList(ProgramOptions);
+    }
+    public SelectList GetSelectListSkills()
+    {
+        return SelectListService.CreateSelectList(SkillOptions);
+    }
+    public SelectList GetSelectListYearLevel()
+    {
+        return SelectListService.CreateSelectList(YearLevelOptions);
+    }
+    public SelectList GetSelectListSections()
+    {
+        return SelectListService.CreateSelectList(SectionOptions);
+    }
+    public SelectList GetSelectListDepartment()
+    {
+        return SelectListService.CreateSelectList(DepartmentOptions);
+    }
+    public SelectList GetSelectListSex()
+    {
+        return SelectListService.CreateSelectList(SexOptions);
+    }
+    public SelectList GetSelectListStudentType()
+    {
+        return SelectListService.CreateSelectList(StudentTypeOption);
+    }
 }
