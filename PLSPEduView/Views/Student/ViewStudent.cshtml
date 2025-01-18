@@ -1,28 +1,78 @@
-﻿@{
+﻿@using PLSPEduView.Services
+@{
     ViewData["Title"] = "View Student Page";
 }
 
 @model PLSPEduView.Models.DataModels.Student
 
-<div class="container mt-5">
-    <h2>@Model.FirstName @Model.MiddleName @Model.LastName</h2>
-    <div class="row">
-        <div class="col-md-6">
-            <p><strong>School ID:</strong> @Model.SchoolId</p>
-            <p><strong>Birth Date:</strong> @Model.BirthDay.ToShortDateString()</p>
-            <p><strong>Age:</strong> @Model.GetAge()</p>
-            <p><strong>Email:</strong> @Model.Email</p>
-            <p><strong>Phone Number:</strong> @Model.PhoneNumber</p>
-            <p><strong>Address:</strong> @string.Join(',', @Model.Barangay, @Model.Municipality, @Model.Province)</p>
+<div class="container">
+    <div class="mb-3">
+        <h1 class="text-center">@Model.FirstName @Model.MiddleName @Model.LastName</h1>
+        <hr>
+    </div>
+    <div>
+        <div>
+            <h3>Personal Information</h3>
         </div>
-        <div class="col-md-6">
-            <p><strong>Year Level:</strong> @Model.YearLevel</p>
-            <p><strong>Section:</strong> @Model.Section</p>
-            <p><strong>Program:</strong> @Model.Program.Description</p>
-            <p><strong>Department:</strong> @Model.Department.Description</p>
-            <p><strong>Sex:</strong> @Model.Sex</p>
-            <p><strong>Type:</strong> @Model.Type</p>
+        <div class="personal-information">
+            <table class="flex-fill personal-information-table">
+                <tbody>
+                    <tr>
+                        <td class="personal-information-table-data"><strong>School Id:</strong></td>
+                        <td>@Model.SchoolId</td>
+                    </tr>                    
+                    <tr>
+                        <td><strong>Birth Date:</strong></td>
+                        <td>@Model.BirthDay</td>
+                    </tr>                    
+                    <tr>
+                        <td><strong>Age</strong></td>
+                        <td>@Model.GetAge()</td>
+                    </tr>                    
+                    <tr>
+                        <td><strong>Email:</strong></td>
+                        <td>@Model.Email</td>
+                    </tr>                    
+                    <tr>
+                        <td><strong>Phone Number:</strong></td>
+                        <td>@Model.PhoneNumber</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Address:</strong></td>
+                        <td>@string.Join(',', @Model.Barangay, @Model.Municipality, @Model.Province)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="flex-fill personal-information-table">
+                <tbody>
+                    <tr style="padding-bottom: 1em;">
+                        <td class="personal-information-table-data"><strong>Year Level:</strong></td>
+                        <td>@Model.YearLevel</td>
+                    </tr>                    
+                    <tr>
+                        <td><strong>Section:</strong></td>
+                        <td>@Model.Section</td>
+                    </tr>                    
+                    <tr>
+                        <td><strong>Program:</strong></td>
+                        <td>@Model.Program.Description</td>
+                    </tr>                    
+                    <tr>
+                        <td><strong>Department:</strong></td>
+                        <td>@Model.Department.Description</td>
+                    </tr>                    
+                    <tr>
+                        <td><strong>Status:</strong></td>
+                        <td>@Model.Type.ToString().ToCapitalized()</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sex:</strong></td>
+                        <td>@Model.Sex.ToString().ToCapitalized()</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+        <hr>
     </div>
     <div>
         <h4>Courses Enrolled</h4>
@@ -38,7 +88,7 @@
                 @if (@Model.Courses == null || @Model.Courses.Any() == false)
                 {
                     <tr>
-                        <td colspan="2">No Courses Enrolled</td>
+                        <td colspan="3">No Courses Enrolled</td>
                     </tr>
                 }
                 else
@@ -53,13 +103,13 @@
                     }
                     
                     <tr>
-                        <td></td>
-                        <td></td>
+                        <td colspan="2"></td>
                         <td><strong>@Model.GetTotalUnits() - Total Units</strong></td>
                     </tr>
                 }
             </tbody>
         </table>
+        <hr>
     </div>
     <div>
         <h4>Skills</h4>
@@ -78,3 +128,6 @@
         </ul>
     </div>
 </div>
+
+<style>
+</style>
