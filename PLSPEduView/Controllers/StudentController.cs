@@ -56,5 +56,10 @@ namespace PLSPEduView.Controllers
 
             return View(student);
         }
+
+        public IActionResult CreateStudent()
+        {
+            return View();
+        }
     }
 }
