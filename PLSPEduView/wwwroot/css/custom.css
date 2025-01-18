@@ -33,3 +33,23 @@ main {
     border-radius: 0.5rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+.personal-information {
+    display: flex;
+}
+
+@media (max-width: 975px) {
+    .personal-information {
+        display: block; /* or any other display property you prefer */
+    }
+}
+
+.personal-information-table{
+    border-collapse: separate;
+    border-spacing:0 10px; 
+    width: 100%;
+}
+
+.personal-information-table-data{
+    width: 12em;
+}
