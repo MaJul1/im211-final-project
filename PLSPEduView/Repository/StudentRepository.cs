@@ -20,7 +20,7 @@ public class StudentRepository
 
     public IEnumerable<Student> GetAll()
     {
-        return _context.Students.AsNoTracking();
+        return _context.Students.ToList();
     }
 
     public void CreateStudent(Student student)

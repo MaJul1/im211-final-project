@@ -18,7 +18,7 @@ public class DepartmentRepository
 
     public IEnumerable<Department> GetAll()
     {
-        return _context.Departments.AsNoTracking();
+        return _context.Departments.ToList();
     }
 
     public int GetCount()

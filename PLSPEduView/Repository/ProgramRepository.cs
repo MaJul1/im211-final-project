@@ -18,7 +18,7 @@ public class ProgramRepository
 
     public IEnumerable<SchoolProgram> GetAll()
     {
-        return _context.Programs.AsNoTracking();
+        return _context.Programs.ToList();
     }
 
     public int GetCount()

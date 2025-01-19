@@ -23,7 +23,7 @@ public class CourseRepository
     {
         var courses = _context.Courses
             .Include(c => c.Students)
-            .AsNoTracking();
+            .ToList();
         
         return courses;
     }

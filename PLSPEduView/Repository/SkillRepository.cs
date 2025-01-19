@@ -20,7 +20,7 @@ public class SkillRepository
 
     public IEnumerable<Skill> GetAll()
     {
-        var skill = _context.Skills.AsNoTracking();
+        var skill = _context.Skills.ToList();
 
         foreach (var s in skill)
         {
