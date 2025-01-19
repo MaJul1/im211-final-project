@@ -170,12 +170,6 @@
             <tbody>
                 @{
                     int number = 1;
-                    if (students.Count() == 0 || students.Any() == false)
-                    {
-                        <tr>
-                            <td colspan="6" class="text-center">No student records</td>
-                        </tr>
-                    }
                     foreach (var s in students)
                     {
                         <tr onclick="GoToStudentView('@s.Id')">
@@ -189,6 +183,11 @@
 
                         number++;
                     }
+                    <tr>
+                        <td colspan="6">
+                            <a asp-action="CreateStudent">+ Create new student</a>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
