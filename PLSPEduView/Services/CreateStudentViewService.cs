@@ -1,8 +1,3 @@
-using System;
-using System.Runtime.Intrinsics.X86;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using PLSPEduView.Enums;
-using PLSPEduView.Models;
 using PLSPEduView.Models.DataModels;
 using PLSPEduView.Models.ViewModels;
 using PLSPEduView.Repository;
@@ -11,7 +6,7 @@ namespace PLSPEduView.Services;
 
 public class CreateStudentViewService
 {
-    private readonly ConfigurationService _configurationService;
+    private readonly SelectListService _selectListservice;
     private readonly SkillRepository _skillRepository;
     private readonly CourseRepository _courseRepository;
     private readonly ProgramRepository _programRepository;
@@ -19,14 +14,14 @@ public class CreateStudentViewService
 
     public CreateStudentViewService
     (
-        ConfigurationService configurationService,
+        SelectListService selectListService,
         SkillRepository skillRepository, 
         CourseRepository courseRepository, 
         ProgramRepository programRepository,
         DepartmentRepository departmentRepository
     )
     {
-        _configurationService = configurationService;
+        _selectListservice = selectListService;
         _skillRepository = skillRepository;
         _courseRepository = courseRepository;
         _programRepository = programRepository;
@@ -49,44 +44,23 @@ public class CreateStudentViewService
 
         model.BirthDay = GetCurrentDateAndTime();
 
-        model.SectionOptions = GetSectionOptions();
+        model.SectionOptions = _selectListservice.GetSectionSelectList();
 
-        model.CoursesOptions = GetCoursesOptions();
+        model.CoursesOptions = _selectListservice.GetCourseSelectList();
 
-        model.YearLevelOptions = GetYearLevelOptions();
+        model.YearLevelOptions = _selectListservice.GetYearLevelSelectList();
 
-        model.SkillOptions = GetSkillOptions();
+        model.SkillOptions = _selectListservice.GetSkillSelectList();
 
-        model.ProgramOptions = GetProgramOptions();
+        model.ProgramOptions = _selectListservice.GetProgramSelectList();
 
-        model.DepartmentOptions = GetDepartmentOptions();
+        model.DepartmentOptions = _selectListservice.GetDepartmentSelectList();
         
-        model.SexOptions = GetSexOptions();
+        model.SexOptions = _selectListservice.GetSexSelectList();
 
-        model.StudentTypeOption = GetTypeOptions();
+        model.StudentTypeOptions = _selectListservice.GetStudentTypeSelectList();
 
         return model;     
-    }
-
-    private List<SelectListOption> GetSexOptions()
-    {
-        var options = new List<SelectListOption>()
-        {
-            new() {Value = SexType.MALE.ToString(), Text = "Male"},
-            new() {Value = SexType.FEMALE.ToString(), Text = "Female"}
-        };
-        
-        return options;
-    }
-    private List<SelectListOption> GetTypeOptions()
-    {
-        var options = new List<SelectListOption>()
-        {
-            new() {Value = StudentType.IRREGULAR.ToString(), Text = "Irregular"},
-            new() {Value = StudentType.REGULAR.ToString(), Text = "Regular"}
-        };
-
-        return options;
     }
 
     public Student GetStudent(CreateStudentViewModel model)
@@ -107,121 +81,73 @@ public class CreateStudentViewService
             Section = model.Section,
             Sex = model.Sex,
             Type = model.Type,
-            DateAdded = DateTime.Now
+            DateAdded = DateTime.Now,
+            Program = GetProgramForeignKeyAssociation(int.Parse(model.Program)),
+            Department = GetDepartmentForeignKeyAssociation(int.Parse(model.Department)),
+            Skills = GetRangeSkillsForeignKeyAssociation(model.SkillIds),
+            Courses = GetRangeCoursesForeignKeyAssociation(model.CourseIds)
         };
-
-        student.Program = _programRepository.GetById(int.Parse(model.Program))!;
-
-        student.Department = _departmentRepository.GetById(int.Parse(model.Department))!;
-
-        foreach(var s in model.SkillIds)
-        {
-            var skill = _skillRepository.GetById(int.Parse(s));
-            
-            if (skill == null) continue;
-
-            student.Skills.Add(skill);
-        }
-
-        foreach(var c in model.CourseIds)
-        {
-            var course = _courseRepository.GetById(int.Parse(c));
-            
-            if (course == null) continue;
-
-            student.Courses.Add(course);
-        }
 
         return student;
     }
 
-    private List<SelectListOption> GetDepartmentOptions()
+    private ICollection<Course> GetRangeCoursesForeignKeyAssociation(List<string> courseIds)
     {
-        var departments = _departmentRepository.GetAll();
+        ICollection<Course> courses = [];
 
-        var options = new List<SelectListOption>();
-
-        foreach(var d in departments)
+        foreach(var courseId in courseIds)
         {
-            options.Add(SelectListService.CreateSelectListOption(d.Id.ToString(), string.Join(" - ", d.Code, d.Description)));
+            var numCourseId = int.Parse(courseId);
+
+            if (_courseRepository.IsExists(numCourseId))
+            {
+                courses.Add(new Course() {Id = numCourseId});
+            }
         }
 
-        return options;
+        return courses;
     }
 
-    private List<SelectListOption> GetProgramOptions()
+    private ICollection<Skill> GetRangeSkillsForeignKeyAssociation(List<string> skillIds)
     {
-        var programs = _programRepository.GetAll();
+        ICollection<Skill> skills = [];
 
-        var options = new List<SelectListOption>();
-
-        foreach (var p in programs)
+        foreach (var skillId in skillIds)
         {
-            options.Add(SelectListService.CreateSelectListOption(p.Id.ToString(), p.Description));
+            var numSkillId = int.Parse(skillId);
+
+            if (_skillRepository.IsExists(numSkillId))
+            {
+                skills.Add(new Skill{Id = numSkillId});
+            }
         }
 
-        return options;
+        return skills;
+
     }
 
-    private List<SelectListOption> GetSkillOptions()
+    private Department GetDepartmentForeignKeyAssociation(int id)
     {
-        var skills = _skillRepository.GetAll();
-
-        var options = new List<SelectListOption>();
-
-        foreach(var s in skills)
+        if (_departmentRepository.IsExists(id))
         {
-            options.Add(SelectListService.CreateSelectListOption(s.Id.ToString(), s.Description));
+            return new Department() {Id = id};
         }
 
-        return options;
+        throw new ArgumentNullException($"Department with an id of {id} can't be found.");
     }
 
-    private List<SelectListOption> GetYearLevelOptions()
+    private SchoolProgram GetProgramForeignKeyAssociation(int id)
     {
-        var list = new List<SelectListOption>()
+        if (_programRepository.IsExists(id))
         {
-            new() {Value = "1", Text = "1"},
-            new() {Value = "2", Text = "2"},
-            new() {Value = "3", Text = "3"},
-            new() {Value = "4", Text = "4"}
-        };
-
-        return list;
-    }
-
-    private List<SelectListOption> GetCoursesOptions()
-    {
-        var courses = _courseRepository.GetAll();
-
-        var options = new List<SelectListOption>();
-
-        foreach(var c in courses)
-        {
-            options.Add(SelectListService.CreateSelectListOption(c.Id.ToString(), string.Join(" - ", c.CourseCode, c.CourseDescription)));
+            return new SchoolProgram() {Id = id};
         }
 
-        return options;
+        throw new ArgumentException($"Program with an id of {id} can't be found.");
     }
 
     private static DateOnly GetCurrentDateAndTime()
     {
         return DateOnly.Parse(DateTime.Now.ToString("yyyy-MM-dd"));
     }
-
-    private List<SelectListOption> GetSectionOptions()
-    {
-        var sections = _configurationService.GetListOfCharSections();
-
-        var options = new List<SelectListOption>();
-
-        foreach(var s in sections)
-        {
-            options.Add(SelectListService.CreateSelectListOption(s, s));
-        }
-
-        return options;
-    }
-
-    
 }

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PLSPEduView.Enums;
@@ -80,52 +81,27 @@ public class CreateStudentViewModel
     public List<string> SkillIds { get; set; } = null!;
 
     [ValidateNever]
-    public List<SelectListOption> CoursesOptions { get; set; } = null!;
+    [JsonIgnore]
+    public SelectList CoursesOptions { get; set; } = null!;
     [ValidateNever]
-    public List<SelectListOption> SkillOptions { get; set; } = null!;
+    [JsonIgnore]
+    public SelectList SkillOptions { get; set; } = null!;
     [ValidateNever]
-    public List<SelectListOption> YearLevelOptions { get; set; } = null!;
+    [JsonIgnore]
+    public SelectList YearLevelOptions { get; set; } = null!;
     [ValidateNever]
-    public List<SelectListOption> SectionOptions { get; set; } = null!;
+    [JsonIgnore]
+    public SelectList SectionOptions { get; set; } = null!;
     [ValidateNever]
-    public List<SelectListOption> ProgramOptions { get; set; } = null!;
+    [JsonIgnore]
+    public SelectList ProgramOptions { get; set; } = null!;
     [ValidateNever]
-    public List<SelectListOption> DepartmentOptions {get; set;} = null!;
+    [JsonIgnore]
+    public SelectList DepartmentOptions {get; set;} = null!;
     [ValidateNever]
-    public List<SelectListOption> SexOptions {get; set;} = null!;
+    [JsonIgnore]
+    public SelectList SexOptions {get; set;} = null!;
     [ValidateNever]
-    public List<SelectListOption> StudentTypeOption {get; set;} = null!;
-
-    public SelectList GetSelectListCourses()
-    {
-        return SelectListService.CreateSelectList(CoursesOptions);
-    }
-    public SelectList GetSelectListPrograms()
-    {
-        return SelectListService.CreateSelectList(ProgramOptions);
-    }
-    public SelectList GetSelectListSkills()
-    {
-        return SelectListService.CreateSelectList(SkillOptions);
-    }
-    public SelectList GetSelectListYearLevel()
-    {
-        return SelectListService.CreateSelectList(YearLevelOptions);
-    }
-    public SelectList GetSelectListSections()
-    {
-        return SelectListService.CreateSelectList(SectionOptions);
-    }
-    public SelectList GetSelectListDepartment()
-    {
-        return SelectListService.CreateSelectList(DepartmentOptions);
-    }
-    public SelectList GetSelectListSex()
-    {
-        return SelectListService.CreateSelectList(SexOptions);
-    }
-    public SelectList GetSelectListStudentType()
-    {
-        return SelectListService.CreateSelectList(StudentTypeOption);
-    }
+    [JsonIgnore]
+    public SelectList StudentTypeOptions {get; set;} = null!;
 }

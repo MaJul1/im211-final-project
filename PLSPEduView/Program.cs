@@ -21,6 +21,7 @@ builder.Services.AddScoped<DepartmentRepository>();
 builder.Services.AddScoped<CourseViewService>();
 builder.Services.AddScoped<SkillViewService>();
 builder.Services.AddScoped<CreateStudentViewService>();
+builder.Services.AddScoped<SelectListService>();
 
 builder.Services.AddControllersWithViews();
 

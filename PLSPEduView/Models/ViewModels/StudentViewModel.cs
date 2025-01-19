@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PLSPEduView.Enums;
 using PLSPEduView.Interface;
@@ -8,7 +9,7 @@ using PLSPEduView.Services;
 
 namespace PLSPEduView.Models.ViewModels;
 
-public class StudentViewModel : IStudentFilter, IStudentOption, ISortOption
+public class StudentViewModel : IStudentFilter, ISortOption
 {
     public IEnumerable<Student> Students {get; set;} = [];
 
@@ -45,33 +46,17 @@ public class StudentViewModel : IStudentFilter, IStudentOption, ISortOption
     public string? SearchParameter {get; set;}
 
     //Options
-    public List<SelectListOption> SectionOptions {get; set;} = null!;
-    public List<SelectListOption> DepartmentOptions {get; set;} = null!;
-    public List<SelectListOption> ProgramOptions {get; set;} = null!;
-    public List<SelectListOption> SortOptions {get; set;} = null!;
+    [JsonIgnore]
+    public SelectList SectionOptions {get; set;} = null!;
+    [JsonIgnore]
+    public SelectList DepartmentOptions {get; set;} = null!;
+    [JsonIgnore]
+    public SelectList ProgramOptions {get; set;} = null!;
+    [JsonIgnore]
+    public SelectList SortOptions {get; set;} = null!;
 
     //Sort
     public string? SortParameter { get; set; }
     public bool IsDescending { get; set; }
-
-    public SelectList GetSelectListSections()
-    {
-        return SelectListService.CreateSelectList(SectionOptions);
-    }
-
-    public SelectList GetSelectListDepartments()
-    {
-        return SelectListService.CreateSelectList(DepartmentOptions);
-    }
-
-    public SelectList GetSelectListPrograms()
-    {
-        return SelectListService.CreateSelectList(ProgramOptions);
-    }
-
-    public SelectList GetSelectListSort()
-    {
-        return SelectListService.CreateSelectList(SortOptions);
-    }
 
 }

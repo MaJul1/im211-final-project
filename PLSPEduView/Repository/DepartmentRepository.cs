@@ -41,17 +41,8 @@ public class DepartmentRepository
         return _context.Departments.FirstOrDefault(d => d.Code == code);
     }
 
-    public List<SelectListOption> GetAsSelectListOptions()
+    public bool IsExists(int id)
     {
-        var departments = _context.Departments;
-
-        var options = new List<SelectListOption>();
-
-        foreach (var d in departments)
-        {
-            options.Add(SelectListService.CreateSelectListOption(d.Id.ToString(), d.GetFullText()));
-        }
-
-        return options;
+        return _context.Departments.Any(c => c.Id == id);
     }
 }

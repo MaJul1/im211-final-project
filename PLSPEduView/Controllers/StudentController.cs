@@ -32,7 +32,11 @@ namespace PLSPEduView.Controllers
             {
                 var model = JsonSerializer.Deserialize<StudentViewModel>(json);
 
-                model!.Students = model.Students.ApplySort(model);
+                model = _service.ReGenerateStudentViewModel(model!);
+
+                model.Students = model.Students.ApplyFilter(model);
+                
+                model.Students = model.Students.ApplySort(model);
 
                 return View(model);
             }
@@ -43,10 +47,6 @@ namespace PLSPEduView.Controllers
         [HttpPost]
         public IActionResult Index(StudentViewModel model)
         {
-            model = _service.ReGenerateStudentViewModel(model);
-
-            model.Students = model.Students.ApplyFilter(model);
-
             TempData["StudentViewModel"] = JsonSerializer.Serialize(model);
             
             return RedirectToAction("Index");
