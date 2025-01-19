@@ -6,7 +6,11 @@ using PLSPEduView.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<SystemDatabaseContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("SqlLiteConnectionString"))
+    options.UseMySql
+    (
+        builder.Configuration.GetConnectionString("MySqlConnectionString"), 
+        new MySqlServerVersion(ServerVersion.Parse(builder.Configuration.GetConnectionString("MySqlVersion")))
+    )
 );
 
 builder.Services.AddScoped<CourseRepository>();
