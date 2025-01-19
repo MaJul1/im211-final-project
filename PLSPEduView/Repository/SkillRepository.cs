@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using PLSPEduView.Context;
 using PLSPEduView.Models.DataModels;
 
@@ -19,7 +20,7 @@ public class SkillRepository
 
     public IEnumerable<Skill> GetAll()
     {
-        var skill = _context.Skills;
+        var skill = _context.Skills.AsNoTracking();
 
         foreach (var s in skill)
         {
@@ -55,6 +56,11 @@ public class SkillRepository
     public bool IsExists(int id)
     {
         return _context.Skills.Any(c => c.Id == id);
+    }
+
+    public bool Any()
+    {
+        return _context.Skills.AsNoTracking().Any();
     }
 
 

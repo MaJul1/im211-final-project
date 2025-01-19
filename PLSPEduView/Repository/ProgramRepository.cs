@@ -1,5 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using PLSPEduView.Context;
 using PLSPEduView.Models;
 using PLSPEduView.Models.DataModels;
@@ -17,7 +18,7 @@ public class ProgramRepository
 
     public IEnumerable<SchoolProgram> GetAll()
     {
-        return _context.Programs;
+        return _context.Programs.AsNoTracking();
     }
 
     public int GetCount()
@@ -44,6 +45,11 @@ public class ProgramRepository
     public bool IsExists(int id)
     {
         return _context.Programs.Any(c => c.Id == id);
+    }
+
+    public bool Any()
+    {
+        return _context.Programs.AsNoTracking().Any();
     }
 
 }

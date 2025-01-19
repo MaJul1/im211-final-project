@@ -28,10 +28,10 @@ public class SeederService
         _departmentRepository = departmentRepository;
     }
 
-    public async Task SeedData()
+    public void SeedData()
     {
 
-        if (_courseRepository.GetAll().Any() == false)
+        if (_courseRepository.Any() == false)
         {
             foreach (var c in GetCourses())
             {
@@ -39,7 +39,7 @@ public class SeederService
             }
         }
 
-        if (_skillRepository.GetAll().Any() == false)
+        if (_skillRepository.Any() == false)
         {
             foreach (var s in GetSkills())
             {
@@ -47,7 +47,7 @@ public class SeederService
             }
         }
 
-        if (_programRepository.GetAll().Any() == false)
+        if (_programRepository.Any() == false)
         {
             foreach (var p in GetPrograms())
             {
@@ -55,7 +55,7 @@ public class SeederService
             }
         }
 
-        if (_departmentRepository.GetAll().Any() == false)
+        if (_departmentRepository.Any() == false)
         {
             foreach (var d in GetDepartments())
             {
@@ -63,11 +63,11 @@ public class SeederService
             }
         }
 
-        if (_studentRepository.GetAll().Any() == false)
+        if (_studentRepository.Any() == false)
         {
             foreach (var s in GetListOfStudents())
             {
-                await _studentRepository.CreateStudentAsync(s);
+                _studentRepository.CreateStudent(s);
             }
         }
 

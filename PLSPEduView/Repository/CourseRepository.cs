@@ -22,7 +22,8 @@ public class CourseRepository
     public IEnumerable<Course> GetAll()
     {
         var courses = _context.Courses
-            .Include(c => c.Students);
+            .Include(c => c.Students)
+            .AsNoTracking();
         
         return courses;
     }
@@ -61,5 +62,10 @@ public class CourseRepository
     public bool IsExists(int id)
     {
         return _context.Courses.Any(c => c.Id == id);
+    }
+
+    public bool Any()
+    {
+        return _context.Courses.AsNoTracking().Any();
     }
 }

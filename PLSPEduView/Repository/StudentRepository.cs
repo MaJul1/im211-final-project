@@ -20,7 +20,7 @@ public class StudentRepository
 
     public IEnumerable<Student> GetAll()
     {
-        return _context.Students;
+        return _context.Students.AsNoTracking();
     }
 
     public void CreateStudent(Student student)
@@ -71,5 +71,10 @@ public class StudentRepository
         if (student != null) _context.Students.Remove(student);
 
         _context.SaveChanges();
+    }
+    
+    public bool Any()
+    {
+        return _context.Students.AsNoTracking().Any();
     }
 }

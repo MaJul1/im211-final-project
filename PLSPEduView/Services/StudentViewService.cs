@@ -7,24 +7,15 @@ namespace PLSPEduView.Services;
 public class StudentViewService
 {
     private readonly StudentRepository _studentRepository;
-    private readonly ConfigurationService _configurationService;
-    private readonly ProgramRepository _programRepository;
-    private readonly DepartmentRepository _departmentRepository;
     private readonly SelectListService _selectListService;
     public StudentViewService
     (
         SelectListService selectListService,
-        StudentRepository repository, 
-        ConfigurationService configurationService,
-        ProgramRepository programRepository,
-        DepartmentRepository departmentRepository
+        StudentRepository repository
     )
     {
         _selectListService = selectListService;
         _studentRepository = repository;
-        _configurationService = configurationService;
-        _programRepository = programRepository;
-        _departmentRepository = departmentRepository;
     }
 
     public StudentViewModel Create()
