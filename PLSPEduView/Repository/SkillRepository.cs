@@ -52,5 +52,10 @@ public class SkillRepository
         return skill;
     }
 
+    public bool IsExists(int id)
+    {
+        return _context.Skills.Any(c => c.Id == id);
+    }
+
 
 }

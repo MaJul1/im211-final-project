@@ -10,14 +10,17 @@ public class StudentViewService
     private readonly ConfigurationService _configurationService;
     private readonly ProgramRepository _programRepository;
     private readonly DepartmentRepository _departmentRepository;
+    private readonly SelectListService _selectListService;
     public StudentViewService
     (
+        SelectListService selectListService,
         StudentRepository repository, 
         ConfigurationService configurationService,
         ProgramRepository programRepository,
         DepartmentRepository departmentRepository
     )
     {
+        _selectListService = selectListService;
         _studentRepository = repository;
         _configurationService = configurationService;
         _programRepository = programRepository;
@@ -40,19 +43,13 @@ public class StudentViewService
         
         model.Students = _studentRepository.GetAll();
 
-        model.ProgramOptions = _programRepository.GetAsSelectListOptions();
+        model.ProgramOptions = _selectListService.GetProgramSelectList();
 
-        model.DepartmentOptions = _departmentRepository.GetAsSelectListOptions();
+        model.DepartmentOptions = _selectListService.GetDepartmentSelectList();
 
-        model.SectionOptions = _configurationService.GetSelectListOptionSections();
+        model.SectionOptions = _selectListService.GetSectionSelectList();
 
-        model.SortOptions = [
-            new() {Value = "Id", Text = "Id"},
-            new() {Value = "Name", Text = "Name"},
-            new() {Value = "YearAndSection", Text = "YearAndSection"},
-            new() {Value = "Program", Text = "Program"},
-            new() {Value = "Department", Text = "Department"}
-        ];
+        model.SortOptions = _selectListService.GetSortSelectList();
 
         return model;
     }

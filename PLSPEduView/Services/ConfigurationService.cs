@@ -13,9 +13,7 @@ public class ConfigurationService
 
     public List<SelectListOption> GetSelectListOptionSections()
     {
-        var numberOfSection = GetNumberOfSection();
-
-        var chars = GetListOfCharSections(numberOfSection);
+        var chars = GetListOfCharSections();
 
         return GetSelectListOption(chars);
     }
@@ -31,8 +29,10 @@ public class ConfigurationService
 
         return lists;
     }
-    private static List<string> GetListOfCharSections(int numberSection)
+    public List<string> GetListOfCharSections()
     {
+        var numberSection = GetNumberOfSection();
+
         var list = new List<string>();
 
         for (int i = 65; i < numberSection + 65; i++)
