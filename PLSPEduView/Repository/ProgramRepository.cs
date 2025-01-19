@@ -41,18 +41,9 @@ public class ProgramRepository
         return _context.Programs.FirstOrDefault(p => p.Code == code);
     }
 
-    public List<SelectListOption> GetAsSelectListOptions()
+    public bool IsExists(int id)
     {
-        var programs = _context.Programs;
-
-        var options = new List<SelectListOption>();
-
-        foreach(var p in programs)
-        {
-            options.Add(SelectListService.CreateSelectListOption(p.Id.ToString(), p.GetFullText()));
-        }
-
-        return options;
+        return _context.Programs.Any(c => c.Id == id);
     }
 
 }

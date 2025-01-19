@@ -31,7 +31,7 @@
                 <div class="mb-2">
                     <div>
                         <label class="form-label" asp-for="SortParameter">Sort By</label>
-                        <select asp-for="SortParameter" asp-items="@Model.GetSelectListSort()" class="form-select"></select>
+                        <select asp-for="SortParameter" asp-items="@Model.SortOptions" class="form-select"></select>
                         <div class="mx-auto mt-1">
                             <div class="form-check form-switch">
                                 <label class="form-label me-2" asp-for="IsDescending">Descending</label>
@@ -74,19 +74,19 @@
                 </div>
                 <div class="mb-2">
                     <label class="form-label" asp-for="SectionFilter"></label>
-                    <select asp-for="SectionFilter" asp-items="@Model.GetSelectListSections()" class="form-select">
+                    <select asp-for="SectionFilter" asp-items="@Model.SectionOptions" class="form-select">
                           <option selected>None</option>
                     </select>
                 </div>
                 <div class="mb-2">
                     <label class="form-label" asp-for="ProgramFilter"></label>
-                    <select asp-for="ProgramFilter" asp-items="@Model.GetSelectListPrograms()" class="form-select">
+                    <select asp-for="ProgramFilter" asp-items="@Model.ProgramOptions" class="form-select">
                           <option selected value="">None</option>
                     </select>
                 </div>
                 <div class="mb-2">
                     <label class="form-label" asp-for="DepartmentFilter"></label>
-                    <select asp-for="DepartmentFilter" asp-items="@Model.GetSelectListDepartments()" class="form-select">
+                    <select asp-for="DepartmentFilter" asp-items="@Model.DepartmentOptions" class="form-select">
                           <option selected value="">None</option>
                     </select>
                 </div>

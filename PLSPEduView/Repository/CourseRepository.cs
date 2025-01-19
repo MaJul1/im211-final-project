@@ -58,4 +58,8 @@ public class CourseRepository
         return _context.Courses.FirstOrDefault(c => c.CourseCode == Code);
     }
 
+    public bool IsExists(int id)
+    {
+        return _context.Courses.Any(c => c.Id == id);
+    }
 }
