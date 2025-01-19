@@ -23,7 +23,14 @@ public class StudentRepository
         return _context.Students;
     }
 
-    public async Task CreateStudent(Student student)
+    public void CreateStudent(Student student)
+    {
+        _context.Students.Add(student);
+        
+        _context.SaveChanges();
+    }
+
+    public async Task CreateStudentAsync(Student student)
     {
         await _context.Students.AddAsync(student);
         

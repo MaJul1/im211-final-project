@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PLSPEduView.Models.ViewModels;
 using PLSPEduView.Repository;
 using PLSPEduView.Services;
@@ -8,7 +9,7 @@ namespace PLSPEduView.Controllers
 {
     public class StudentController : Controller
     {
-        private readonly StudentViewService _service;
+        private readonly StudentViewService _viewService;
         private readonly StudentRepository _repository;
         private readonly CreateStudentViewService _createService;
         public StudentController
@@ -18,7 +19,7 @@ namespace PLSPEduView.Controllers
             CreateStudentViewService createService
         )
         {
-            _service = service;
+            _viewService = service;
             _repository = repository;
             _createService = createService;
         }
@@ -32,7 +33,7 @@ namespace PLSPEduView.Controllers
             {
                 var model = JsonSerializer.Deserialize<StudentViewModel>(json);
 
-                model = _service.ReGenerateStudentViewModel(model!);
+                model = _viewService.ReGenerateStudentViewModel(model!);
 
                 model.Students = model.Students.ApplyFilter(model);
                 
@@ -41,7 +42,7 @@ namespace PLSPEduView.Controllers
                 return View(model);
             }
 
-            return View(_service.Create());
+            return View(_viewService.Create());
         }
 
         [HttpPost]
@@ -64,9 +65,43 @@ namespace PLSPEduView.Controllers
             return View(student);
         }
 
+        [HttpGet]
         public IActionResult CreateStudent()
         {
+            var tempData = TempData["InvalidStudentCreateModel"];
+
+            if (tempData is string json)
+            {
+                var model = JsonSerializer.Deserialize<CreateStudentViewModel>(json);
+
+                model = _createService.GetCreateStudentViewModel(model);
+
+                return View(model);
+            }
+            
             return View(_createService.GetCreateStudentViewModel());
+        }
+
+        [HttpPost]
+        public IActionResult CreateStudent(CreateStudentViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var student = _createService.GetStudent(model);
+
+                _repository.CreateStudent(student);
+
+                return RedirectToAction("CreateSuccess");
+            }
+
+            TempData["InvalidStudentCreateModel"] = JsonSerializer.Serialize(model);
+
+            return RedirectToAction("CreateStudent");
+        }
+
+        public IActionResult CreateSuccess()
+        {
+            return View();
         }
     }
 }

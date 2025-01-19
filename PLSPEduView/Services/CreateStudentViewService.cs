@@ -101,7 +101,7 @@ public class CreateStudentViewService
 
             if (_courseRepository.IsExists(numCourseId))
             {
-                courses.Add(new Course() {Id = numCourseId});
+                courses.Add(_courseRepository.GetById(numCourseId)!);
             }
         }
 
@@ -118,7 +118,7 @@ public class CreateStudentViewService
 
             if (_skillRepository.IsExists(numSkillId))
             {
-                skills.Add(new Skill{Id = numSkillId});
+                skills.Add(_skillRepository.GetById(numSkillId)!);
             }
         }
 
@@ -130,7 +130,7 @@ public class CreateStudentViewService
     {
         if (_departmentRepository.IsExists(id))
         {
-            return new Department() {Id = id};
+            return _departmentRepository.GetById(id)!;
         }
 
         throw new ArgumentNullException($"Department with an id of {id} can't be found.");
@@ -140,7 +140,7 @@ public class CreateStudentViewService
     {
         if (_programRepository.IsExists(id))
         {
-            return new SchoolProgram() {Id = id};
+            return _programRepository.GetById(id)!;
         }
 
         throw new ArgumentException($"Program with an id of {id} can't be found.");
