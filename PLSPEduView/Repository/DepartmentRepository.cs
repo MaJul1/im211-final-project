@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PLSPEduView.Context;
@@ -16,9 +17,9 @@ public class DepartmentRepository
         _context = context;
     }
 
-    public IEnumerable<Department> GetAll()
+    public async Task<IEnumerable<Department>> GetAllAsync()
     {
-        return _context.Departments.ToList();
+        return await _context.Departments.ToListAsync();
     }
 
     public int GetCount()
@@ -32,9 +33,9 @@ public class DepartmentRepository
         _context.SaveChanges();
     }
 
-    public Department? GetById(int Id)
+    public async Task<Department?> GetByIdAsync(int Id)
     {
-        return _context.Departments.Find(Id);
+        return await _context.Departments.FindAsync(Id);
     }
 
     public Department? GetByCode(string code)
@@ -42,9 +43,9 @@ public class DepartmentRepository
         return _context.Departments.FirstOrDefault(d => d.Code == code);
     }
 
-    public bool IsExists(int id)
+    public async Task<bool> IsExistsAsync(int id)
     {
-        return _context.Departments.Any(c => c.Id == id);
+        return await _context.Departments.AnyAsync(c => c.Id == id);
     }
 
     public bool Any()

@@ -38,7 +38,7 @@ namespace PLSPEduView.Controllers
             ViewData["ProgramSortParam"] = sortParam == "Program" ? "Program_desc" : "Program";
             ViewData["DepartmentSortParam"] = sortParam == "Department" ? "Department_desc" : "Department";
             
-            var model = _repository.GetById(courseId);
+            var model = _repository.GetByIdAsync(courseId);
 
             if (model == null)
             {

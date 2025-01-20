@@ -67,7 +67,7 @@ public class SeederService
         {
             foreach (var s in GetListOfStudents())
             {
-                _studentRepository.CreateStudent(s);
+                _studentRepository.CreateStudentAsync(s);
             }
         }
 

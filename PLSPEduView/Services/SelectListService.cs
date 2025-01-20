@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PLSPEduView.Enums;
 using PLSPEduView.Models;
@@ -27,7 +28,7 @@ public class SelectListService
         _courseRepository = courseRepository;
         _departmentRepository = departmentRepository;
     }
-    private SelectList CreateSelectList(IEnumerable<SelectListOption> options)
+    private async Task<SelectList> CreateSelectListAsync(IEnumerable<SelectListOption> options)
     {
         List<SelectListItem> items = [];
 
@@ -36,7 +37,9 @@ public class SelectListService
             items.Add(new SelectListItem() { Value = s.Value, Text = s.Text});
         }
 
-        return new (items, "Value", "Text");
+        SelectList list = new(items, "Value", "Text");
+
+        return await Task.FromResult(list);
     }
     
     private SelectListOption CreateSelectListOption(string value, string text)
@@ -44,7 +47,7 @@ public class SelectListService
         return new SelectListOption() {Value = value, Text = text};
     }
 
-    public SelectList GetSexSelectList()
+    public async Task<SelectList> GetSexSelectListAsync()
     {
         var options = new List<SelectListOption>()
         {
@@ -52,9 +55,9 @@ public class SelectListService
             new() {Value = SexType.FEMALE.ToString(), Text = "Female"}
         };
         
-        return CreateSelectList(options);
+        return await CreateSelectListAsync(options);
     }
-    public SelectList GetStudentTypeSelectList()
+    public async Task<SelectList> GetStudentTypeSelectListAsync()
     {
         var options = new List<SelectListOption>()
         {
@@ -62,12 +65,12 @@ public class SelectListService
             new() {Value = StudentType.REGULAR.ToString(), Text = "Regular"}
         };
 
-        return CreateSelectList(options);
+        return await CreateSelectListAsync(options);
     }
 
-    public SelectList GetDepartmentSelectList()
+    public async Task<SelectList> GetDepartmentSelectListAsync()
     {
-        var departments = _departmentRepository.GetAll();
+        var departments = await _departmentRepository.GetAllAsync();
 
         var options = new List<SelectListOption>();
 
@@ -76,12 +79,12 @@ public class SelectListService
             options.Add(CreateSelectListOption(d.Id.ToString(), string.Join(" - ", d.Code, d.Description)));
         }
 
-        return CreateSelectList(options);
+        return await CreateSelectListAsync(options);
     }
 
-    public SelectList GetProgramSelectList()
+    public async Task<SelectList> GetProgramSelectListAsync()
     {
-        var programs = _programRepository.GetAll();
+        var programs = await _programRepository.GetAllAsync();
 
         var options = new List<SelectListOption>();
 
@@ -90,12 +93,12 @@ public class SelectListService
             options.Add(CreateSelectListOption(p.Id.ToString(), string.Join(" - ", p.Code, p.Description)));
         }
 
-        return CreateSelectList(options);
+        return await CreateSelectListAsync(options);
     }
 
-    public SelectList GetSkillSelectList()
+    public async Task<SelectList> GetSkillSelectListAsync()
     {
-        var skills = _skillRepository.GetAll();
+        var skills = await _skillRepository.GetAllAsync();
 
         var options = new List<SelectListOption>();
 
@@ -104,10 +107,10 @@ public class SelectListService
             options.Add(CreateSelectListOption(s.Id.ToString(), s.Description));
         }
 
-        return CreateSelectList(options);
+        return await CreateSelectListAsync(options);
     }
 
-    public SelectList GetYearLevelSelectList()
+    public async Task<SelectList> GetYearLevelSelectListAsync()
     {
         var list = new List<SelectListOption>()
         {
@@ -117,12 +120,12 @@ public class SelectListService
             new() {Value = "4", Text = "4"}
         };
 
-        return CreateSelectList(list);
+        return await CreateSelectListAsync(list);
     }
 
-    public SelectList GetCourseSelectList()
+    public async Task<SelectList> GetCourseSelectListAsync()
     {
-        var courses = _courseRepository.GetAll();
+        var courses = await _courseRepository.GetAllAsync();
 
         var options = new List<SelectListOption>();
 
@@ -131,10 +134,10 @@ public class SelectListService
             options.Add(CreateSelectListOption(c.Id.ToString(), string.Join(" - ", c.CourseCode, c.CourseDescription)));
         }
 
-        return CreateSelectList(options);
+        return await CreateSelectListAsync(options);
     }
 
-    public SelectList GetSectionSelectList()
+    public async Task<SelectList> GetSectionSelectListAsync()
     {
         var sections = _configurationService.GetListOfCharSections();
 
@@ -145,11 +148,11 @@ public class SelectListService
             options.Add(CreateSelectListOption(s, s));
         }
 
-        return CreateSelectList(options);
+        return await CreateSelectListAsync(options);    
     }
     
 
-    public SelectList GetSortSelectList()
+    public async Task<SelectList> GetSortSelectListAsync()
     {
         List<SelectListOption> options = [
             new() {Value = "Id", Text = "Id"},
@@ -159,6 +162,6 @@ public class SelectListService
             new() {Value = "Department", Text = "Department"}
         ];
 
-        return CreateSelectList(options);
+        return await CreateSelectListAsync(options);
     }
 }

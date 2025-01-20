@@ -18,29 +18,29 @@ public class StudentViewService
         _studentRepository = repository;
     }
 
-    public StudentViewModel Create()
+    public async Task<StudentViewModel> Create()
     {
-        return GenerateStudentViewModel(null);
+        return await GenerateStudentViewModel(null);
     }
 
-    public StudentViewModel ReGenerateStudentViewModel(StudentViewModel model)
+    public async Task<StudentViewModel> ReGenerateStudentViewModel(StudentViewModel model)
     {
-        return GenerateStudentViewModel(model);
+        return await GenerateStudentViewModel(model);
     }
 
-    private StudentViewModel GenerateStudentViewModel(StudentViewModel? currentModel)
+    private async Task<StudentViewModel> GenerateStudentViewModel(StudentViewModel? currentModel)
     {
         StudentViewModel model = currentModel ?? new();
         
-        model.Students = _studentRepository.GetAll();
+        model.Students = await _studentRepository.GetAllAsync();
 
-        model.ProgramOptions = _selectListService.GetProgramSelectList();
+        model.ProgramOptions = await _selectListService.GetProgramSelectListAsync();
 
-        model.DepartmentOptions = _selectListService.GetDepartmentSelectList();
+        model.DepartmentOptions = await _selectListService.GetDepartmentSelectListAsync();
 
-        model.SectionOptions = _selectListService.GetSectionSelectList();
+        model.SectionOptions = _selectListService.GetSectionSelectListAsync();
 
-        model.SortOptions = _selectListService.GetSortSelectList();
+        model.SortOptions = _selectListService.GetSortSelectListAsync();
 
         return model;
     }

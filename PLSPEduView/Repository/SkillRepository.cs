@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PLSPEduView.Context;
 using PLSPEduView.Models.DataModels;
@@ -18,13 +19,13 @@ public class SkillRepository
         return _context.Skills.Count();
     }
 
-    public IEnumerable<Skill> GetAll()
+    public async Task<IEnumerable<Skill>> GetAllAsync()
     {
-        var skill = _context.Skills.ToList();
+        var skill = await _context.Skills.ToListAsync();
 
         foreach (var s in skill)
         {
-            _context.Entry(s).Collection(s => s.Students).Load();
+            await _context.Entry(s).Collection(s => s.Students).LoadAsync();
         }
 
         return skill;
@@ -36,26 +37,26 @@ public class SkillRepository
         _context.SaveChanges();
     }
 
-    public Skill? GetById(int Id)
+    public async Task<Skill?> GetByIdAsync(int Id)
     {
-        var skill =  _context.Skills.Find(Id);
+        var skill = await _context.Skills.FindAsync(Id);
 
         if (skill == null) return null;
 
-        _context.Entry(skill).Collection(s => s.Students).Load();
+        await _context.Entry(skill).Collection(s => s.Students).LoadAsync();
 
         foreach (var s in skill.Students)
         {
-            _context.Entry(s).Reference(s => s.Program).Load();
-            _context.Entry(s).Reference(s => s.Department).Load();
+            await _context.Entry(s).Reference(s => s.Program).LoadAsync();
+            await _context.Entry(s).Reference(s => s.Department).LoadAsync();
         }
 
         return skill;
     }
 
-    public bool IsExists(int id)
+    public async Task<bool> IsExistsAsync(int id)
     {
-        return _context.Skills.Any(c => c.Id == id);
+        return await _context.Skills.AnyAsync(c => c.Id == id);
     }
 
     public bool Any()

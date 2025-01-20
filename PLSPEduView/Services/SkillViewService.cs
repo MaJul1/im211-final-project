@@ -17,7 +17,7 @@ public class SkillViewService
     {
         SkillViewModel model = new()
         {
-            Skills = _repository.GetAll()
+            Skills = _repository.GetAllAsync()
         };
 
         return model;

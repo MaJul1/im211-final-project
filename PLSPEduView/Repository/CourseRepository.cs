@@ -1,4 +1,5 @@
 using System.Reflection.Metadata.Ecma335;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PLSPEduView.Context;
 using PLSPEduView.Models.DataModels;
@@ -19,11 +20,11 @@ public class CourseRepository
         return _context.Courses.Count();
     }
 
-    public IEnumerable<Course> GetAll()
+    public async Task<IEnumerable<Course>> GetAllAsync()
     {
-        var courses = _context.Courses
+        var courses = await _context.Courses
             .Include(c => c.Students)
-            .ToList();
+            .ToListAsync();
         
         return courses;
     }
@@ -34,21 +35,21 @@ public class CourseRepository
         _context.SaveChanges();
     }
 
-    public Course? GetById(int Id)
+    public async Task<Course?> GetByIdAsync(int Id)
     {
-        var course =  _context.Courses.Find(Id);
+        var course =  await _context.Courses.FindAsync(Id);
 
         if (course == null)
         {
             return null;
         }
 
-        _context.Entry(course).Collection(c => c.Students).Load();
+        await _context.Entry(course).Collection(c => c.Students).LoadAsync();
 
         foreach (var s in course.Students)
         {
-            _context.Entry(s).Reference(s => s.Program).Load();
-            _context.Entry(s).Reference(s => s.Department).Load();
+            await _context.Entry(s).Reference(s => s.Program).LoadAsync();
+            await _context.Entry(s).Reference(s => s.Department).LoadAsync();
         }
 
         return course;
@@ -59,9 +60,9 @@ public class CourseRepository
         return _context.Courses.FirstOrDefault(c => c.CourseCode == Code);
     }
 
-    public bool IsExists(int id)
+    public async Task<bool> IsExistsAsync(int id)
     {
-        return _context.Courses.Any(c => c.Id == id);
+        return await _context.Courses.AnyAsync(c => c.Id == id);
     }
 
     public bool Any()

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PLSPEduView.Context;
 using PLSPEduView.Models.DataModels;
@@ -18,16 +19,9 @@ public class StudentRepository
         return _context.Students.Count();
     }
 
-    public IEnumerable<Student> GetAll()
+    public async Task<IEnumerable<Student>> GetAllAsync()
     {
-        return _context.Students.ToList();
-    }
-
-    public void CreateStudent(Student student)
-    {
-        _context.Students.Add(student);
-        
-        _context.SaveChanges();
+        return await _context.Students.ToListAsync();
     }
 
     public async Task CreateStudentAsync(Student student)
@@ -37,31 +31,28 @@ public class StudentRepository
         await _context.SaveChangesAsync();
     }
 
-    public Student? GetStudentById(int Id)
+    public async Task<Student?> GetStudentByIdAsync(int Id)
     {
-        var student = _context.Students
+        var student = await _context.Students
                 .AsSplitQuery()
-                .FirstOrDefault(s => s.Id == Id);
+                .FirstOrDefaultAsync(s => s.Id == Id);
 
         if(student != null)
         {
-            _context.Entry(student).Collection(s => s.Courses).Load();
-            _context.Entry(student).Collection(s => s.Skills).Load();
-            _context.Entry(student).Reference(s => s.Program).Load();
-            _context.Entry(student).Reference(s => s.Department).Load();
+            await _context.Entry(student).Collection(s => s.Courses).LoadAsync();
+            await _context.Entry(student).Collection(s => s.Skills).LoadAsync();
+            await _context.Entry(student).Reference(s => s.Program).LoadAsync();
+            await _context.Entry(student).Reference(s => s.Department).LoadAsync();
         }
 
         return student;
     }
 
-    public bool Exist(int Id)
+    public async Task<bool> ExistAsync(int Id)
     {
-        var student = _context.Students.Find(Id);
+        var student = await _context.Students.FindAsync(Id);
 
-        if (student == null)
-            return false;
-
-        return true;
+        return student != null;
     }
 
     public void RemoveById(string Id)

@@ -29,22 +29,22 @@ public class HomeViewService
             NumberOfSkillsRegistered = _skill.GetCount(),
             NumberOfStudentRegistered = _student.GetCount(),
 
-            GroupByMunicipality = _student.GetAll()
+            GroupByMunicipality = _student.GetAllAsync()
                 .GroupBy(s => s.Municipality)
                 .OrderByDescending(s => s.Count())
                 .ToDictionary(g => g.Key, g => g.Count()),
 
-            GroupByProvince = _student.GetAll()
+            GroupByProvince = _student.GetAllAsync()
                 .GroupBy(s => s.Province)
                 .OrderByDescending(s => s.Count())
                 .ToDictionary(s => s.Key, s => s.Count()),
 
-            GroupBySex = _student.GetAll()
+            GroupBySex = _student.GetAllAsync()
                 .GroupBy(s => s.Sex)
                 .OrderByDescending(s => s.Count())
                 .ToDictionary(s => s.Key.ToString(), s => s.Count()),
 
-            GroupByType = _student.GetAll()
+            GroupByType = _student.GetAllAsync()
                 .GroupBy(s => s.Type)
                 .OrderByDescending(s => s.Count())
                 .ToDictionary(s => s.Key.ToString(), s => s.Count())

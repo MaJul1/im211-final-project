@@ -19,7 +19,7 @@ public class CourseViewService
     {
         var model = currentModel ?? new();
 
-        model.Courses = _courseRepository.GetAll();
+        model.Courses = _courseRepository.GetAllAsync();
 
         return model;
     }

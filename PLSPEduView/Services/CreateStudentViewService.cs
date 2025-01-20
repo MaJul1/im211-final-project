@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using PLSPEduView.Models.DataModels;
 using PLSPEduView.Models.ViewModels;
 using PLSPEduView.Repository;
@@ -27,9 +28,9 @@ public class CreateStudentViewService
         _programRepository = programRepository;
         _departmentRepository = departmentRepository;
     }
-    public CreateStudentViewModel GetCreateStudentViewModel()
-        => GetCreateStudentViewModel(null);
-    public CreateStudentViewModel GetCreateStudentViewModel(CreateStudentViewModel? currentModel)
+    public async Task<CreateStudentViewModel> GetCreateStudentViewModel()
+        => await GetCreateStudentViewModelAsync(null);
+    public async Task<CreateStudentViewModel> GetCreateStudentViewModelAsync(CreateStudentViewModel? currentModel)
     {
         CreateStudentViewModel model;
         
@@ -42,28 +43,28 @@ public class CreateStudentViewService
             model = currentModel;
         }
 
-        model.BirthDay = GetCurrentDateAndTime();
+        model.BirthDay = await GetCurrentDateAndTimeAsync();
 
-        model.SectionOptions = _selectListservice.GetSectionSelectList();
+        model.SectionOptions = await _selectListservice.GetSectionSelectListAsync();
 
-        model.CoursesOptions = _selectListservice.GetCourseSelectList();
+        model.CoursesOptions = await _selectListservice.GetCourseSelectListAsync();
 
-        model.YearLevelOptions = _selectListservice.GetYearLevelSelectList();
+        model.YearLevelOptions = await _selectListservice.GetYearLevelSelectListAsync();
 
-        model.SkillOptions = _selectListservice.GetSkillSelectList();
+        model.SkillOptions = await _selectListservice.GetSkillSelectListAsync();
 
-        model.ProgramOptions = _selectListservice.GetProgramSelectList();
+        model.ProgramOptions = await _selectListservice.GetProgramSelectListAsync();
 
-        model.DepartmentOptions = _selectListservice.GetDepartmentSelectList();
+        model.DepartmentOptions = await _selectListservice.GetDepartmentSelectListAsync();
         
-        model.SexOptions = _selectListservice.GetSexSelectList();
+        model.SexOptions = await _selectListservice.GetSexSelectListAsync();
 
-        model.StudentTypeOptions = _selectListservice.GetStudentTypeSelectList();
+        model.StudentTypeOptions = await _selectListservice.GetStudentTypeSelectListAsync();
 
         return model;     
     }
 
-    public Student GetStudent(CreateStudentViewModel model)
+    public async Task<Student> GetStudentAsync(CreateStudentViewModel model)
     {
         Student student = new()
         {
@@ -82,16 +83,16 @@ public class CreateStudentViewService
             Sex = model.Sex,
             Type = model.Type,
             DateAdded = DateTime.Now,
-            Program = GetProgramForeignKeyAssociation(int.Parse(model.Program)),
-            Department = GetDepartmentForeignKeyAssociation(int.Parse(model.Department)),
-            Skills = GetRangeSkillsForeignKeyAssociation(model.SkillIds),
-            Courses = GetRangeCoursesForeignKeyAssociation(model.CourseIds)
+            Program = await GetProgramForeignKeyAssociationAsync(int.Parse(model.Program)),
+            Department = await GetDepartmentForeignKeyAssociationAsync(int.Parse(model.Department)),
+            Skills = await GetRangeSkillsForeignKeyAssociationAsync(model.SkillIds),
+            Courses = await GetRangeCoursesForeignKeyAssociationAsync(model.CourseIds)
         };
 
         return student;
     }
 
-    private ICollection<Course> GetRangeCoursesForeignKeyAssociation(List<string> courseIds)
+    private async Task<ICollection<Course>> GetRangeCoursesForeignKeyAssociationAsync(List<string> courseIds)
     {
         ICollection<Course> courses = [];
 
@@ -99,16 +100,17 @@ public class CreateStudentViewService
         {
             var numCourseId = int.Parse(courseId);
 
-            if (_courseRepository.IsExists(numCourseId))
+            if (await _courseRepository.IsExistsAsync(numCourseId))
             {
-                courses.Add(_courseRepository.GetById(numCourseId)!);
+                var course = await _courseRepository.GetByIdAsync(numCourseId);
+                courses.Add(course!);
             }
         }
 
         return courses;
     }
 
-    private ICollection<Skill> GetRangeSkillsForeignKeyAssociation(List<string> skillIds)
+    private async Task<ICollection<Skill>> GetRangeSkillsForeignKeyAssociationAsync(List<string> skillIds)
     {
         ICollection<Skill> skills = [];
 
@@ -116,9 +118,10 @@ public class CreateStudentViewService
         {
             var numSkillId = int.Parse(skillId);
 
-            if (_skillRepository.IsExists(numSkillId))
+            if (await _skillRepository.IsExistsAsync(numSkillId))
             {
-                skills.Add(_skillRepository.GetById(numSkillId)!);
+                var skill = await _skillRepository.GetByIdAsync(numSkillId);
+                skills.Add(skill!);
             }
         }
 
@@ -126,28 +129,32 @@ public class CreateStudentViewService
 
     }
 
-    private Department GetDepartmentForeignKeyAssociation(int id)
+    private async Task<Department> GetDepartmentForeignKeyAssociationAsync(int id)
     {
-        if (_departmentRepository.IsExists(id))
+        if (await _departmentRepository.IsExistsAsync(id))
         {
-            return _departmentRepository.GetById(id)!;
+            var department = await _departmentRepository.GetByIdAsync(id)!;
+
+            return department!;
         }
 
         throw new ArgumentNullException($"Department with an id of {id} can't be found.");
     }
 
-    private SchoolProgram GetProgramForeignKeyAssociation(int id)
+    private async Task<SchoolProgram> GetProgramForeignKeyAssociationAsync(int id)
     {
-        if (_programRepository.IsExists(id))
+        if (await _programRepository.IsExistsAsync(id))
         {
-            return _programRepository.GetById(id)!;
+            var program = await _programRepository.GetByIdAsync(id)!;
+
+            return program!;
         }
 
         throw new ArgumentException($"Program with an id of {id} can't be found.");
     }
 
-    private static DateOnly GetCurrentDateAndTime()
+    private static async Task<DateOnly> GetCurrentDateAndTimeAsync()
     {
-        return DateOnly.Parse(DateTime.Now.ToString("yyyy-MM-dd"));
+        return await Task.FromResult(DateOnly.Parse(DateTime.Now.ToString("yyyy-MM-dd")));
     }
 }
