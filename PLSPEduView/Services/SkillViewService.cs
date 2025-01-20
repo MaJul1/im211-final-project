@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using PLSPEduView.Models.DataModels;
 using PLSPEduView.Models.ViewModels;
 using PLSPEduView.Repository;
@@ -13,11 +14,11 @@ public class SkillViewService
         _repository = repository;
     }
 
-    public SkillViewModel GetSkillViewModel()
+    public async Task<SkillViewModel> GetSkillViewModel()
     {
         SkillViewModel model = new()
         {
-            Skills = _repository.GetAllAsync()
+            Skills = await _repository.GetAllAsync()
         };
 
         return model;

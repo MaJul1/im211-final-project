@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using PLSPEduView.Models.ViewModels;
 using PLSPEduView.Repository;
 
@@ -12,14 +13,14 @@ public class CourseViewService
         _courseRepository = repository;
     }
 
-    public CourseViewModel GetCourseViewModel() 
-        => GenerateCourseViewModel(null);
+    public async Task<CourseViewModel> GetCourseViewModelAsync() 
+        => await GenerateCourseViewModel(null);
 
-    private CourseViewModel GenerateCourseViewModel(CourseViewModel? currentModel)
+    private async Task<CourseViewModel> GenerateCourseViewModel(CourseViewModel? currentModel)
     {
         var model = currentModel ?? new();
 
-        model.Courses = _courseRepository.GetAllAsync();
+        model.Courses = await _courseRepository.GetAllAsync();
 
         return model;
     }

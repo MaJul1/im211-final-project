@@ -15,9 +15,9 @@ public class CourseRepository
         _context = context;
     }
 
-    public int GetCount()
+    public async Task<int> GetCountAsync()
     {
-        return _context.Courses.Count();
+        return await _context.Courses.CountAsync();
     }
 
     public async Task<IEnumerable<Course>> GetAllAsync()
@@ -29,10 +29,10 @@ public class CourseRepository
         return courses;
     }
 
-    public void CreateCourse(Course course)
+    public async Task CreateCourseAsync(Course course)
     {
-        _context.Courses.Add(course);
-        _context.SaveChanges();
+        await _context.Courses.AddAsync(course);
+        await _context.SaveChangesAsync();
     }
 
     public async Task<Course?> GetByIdAsync(int Id)
@@ -55,9 +55,9 @@ public class CourseRepository
         return course;
     }
 
-    public Course? GetByCode(string Code)
+    public async Task<Course?> GetByCodeAsync(string Code)
     {
-        return _context.Courses.FirstOrDefault(c => c.CourseCode == Code);
+        return await _context.Courses.FirstOrDefaultAsync(c => c.CourseCode == Code);
     }
 
     public async Task<bool> IsExistsAsync(int id)
@@ -65,8 +65,8 @@ public class CourseRepository
         return await _context.Courses.AnyAsync(c => c.Id == id);
     }
 
-    public bool Any()
+    public async Task<bool> AnyAsync()
     {
-        return _context.Courses.AsNoTracking().Any();
+        return await _context.Courses.AsNoTracking().AnyAsync();
     }
 }

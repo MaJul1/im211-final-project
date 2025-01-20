@@ -14,9 +14,9 @@ public class StudentRepository
         _context = context;
     }
 
-    public int GetCount()
+    public async Task<int> GetCountAsync()
     {
-        return _context.Students.Count();
+        return await _context.Students.CountAsync();
     }
 
     public async Task<IEnumerable<Student>> GetAllAsync()
@@ -55,17 +55,17 @@ public class StudentRepository
         return student != null;
     }
 
-    public void RemoveById(string Id)
+    public async Task RemoveByIdAsync(string Id)
     {
-        var student = _context.Students.Find(Id);
+        var student = await _context.Students.FindAsync(Id);
 
         if (student != null) _context.Students.Remove(student);
 
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
     
-    public bool Any()
+    public async Task<bool> AnyAsync()
     {
-        return _context.Students.AsNoTracking().Any();
+        return await _context.Students.AsNoTracking().AnyAsync();
     }
 }

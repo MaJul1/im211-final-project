@@ -22,15 +22,15 @@ public class DepartmentRepository
         return await _context.Departments.ToListAsync();
     }
 
-    public int GetCount()
+    public async Task<int> GetCount()
     {
-        return _context.Departments.Count();
+        return await _context.Departments.CountAsync();
     }
 
-    public void Create(Department department)
+    public async Task CreateAsync(Department department)
     {
-        _context.Departments.Add(department);
-        _context.SaveChanges();
+        await _context.Departments.AddAsync(department);
+        await _context.SaveChangesAsync();
     }
 
     public async Task<Department?> GetByIdAsync(int Id)
@@ -38,9 +38,9 @@ public class DepartmentRepository
         return await _context.Departments.FindAsync(Id);
     }
 
-    public Department? GetByCode(string code)
+    public async Task<Department?> GetByCodeAsync(string code)
     {
-        return _context.Departments.FirstOrDefault(d => d.Code == code);
+        return await _context.Departments.FirstOrDefaultAsync(d => d.Code == code);
     }
 
     public async Task<bool> IsExistsAsync(int id)
@@ -48,8 +48,8 @@ public class DepartmentRepository
         return await _context.Departments.AnyAsync(c => c.Id == id);
     }
 
-    public bool Any()
+    public async Task<bool> AnyAsync()
     {
-        return _context.Departments.AsNoTracking().Any();
+        return await _context.Departments.AsNoTracking().AnyAsync();
     }
 }

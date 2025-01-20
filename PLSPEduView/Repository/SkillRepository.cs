@@ -14,9 +14,9 @@ public class SkillRepository
         _context = context;
     }
 
-    public int GetCount()
+    public async Task<int> GetCountAsync()
     {
-        return _context.Skills.Count();
+        return await _context.Skills.CountAsync();
     }
 
     public async Task<IEnumerable<Skill>> GetAllAsync()
@@ -31,10 +31,10 @@ public class SkillRepository
         return skill;
     }
     
-    public void CreateSkill(Skill skill)
+    public async Task CreateSkillAsync(Skill skill)
     {
-        _context.Skills.Add(skill);
-        _context.SaveChanges();
+        await _context.Skills.AddAsync(skill);
+        await _context.SaveChangesAsync();
     }
 
     public async Task<Skill?> GetByIdAsync(int Id)
@@ -59,9 +59,9 @@ public class SkillRepository
         return await _context.Skills.AnyAsync(c => c.Id == id);
     }
 
-    public bool Any()
+    public async Task<bool> AnyAsync()
     {
-        return _context.Skills.AsNoTracking().Any();
+        return await _context.Skills.AsNoTracking().AnyAsync();
     }
 
 

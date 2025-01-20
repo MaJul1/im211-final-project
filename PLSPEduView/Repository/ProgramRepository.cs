@@ -27,10 +27,10 @@ public class ProgramRepository
         return _context.Programs.Count();
     }
 
-    public void Create(SchoolProgram program)
+    public async Task CreateAsync(SchoolProgram program)
     {
-        _context.Programs.Add(program);
-        _context.SaveChanges();
+        await _context.Programs.AddAsync(program);
+        await _context.SaveChangesAsync();
     }
 
     public async Task<SchoolProgram?> GetByIdAsync(int Id)
@@ -38,9 +38,9 @@ public class ProgramRepository
         return await _context.Programs.FindAsync(Id);
     }
 
-    public SchoolProgram? GetByCode(string code)
+    public async Task<SchoolProgram?> GetByCodeAsync(string code)
     {
-        return _context.Programs.FirstOrDefault(p => p.Code == code);
+        return await _context.Programs.FirstOrDefaultAsync(p => p.Code == code);
     }
 
     public async Task<bool> IsExistsAsync(int id)
@@ -48,9 +48,9 @@ public class ProgramRepository
         return await _context.Programs.AnyAsync(c => c.Id == id);
     }
 
-    public bool Any()
+    public async Task<bool> AnyAsync()
     {
-        return _context.Programs.AsNoTracking().Any();
+        return await _context.Programs.AsNoTracking().AnyAsync();
     }
 
 }

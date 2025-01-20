@@ -34,7 +34,7 @@ namespace PLSPEduView.Controllers
             {
                 var model = JsonSerializer.Deserialize<StudentViewModel>(json);
 
-                model = await _viewService.ReGenerateStudentViewModel(model!);
+                model = await _viewService.ReGenerateStudentViewModelAsync(model!);
 
                 model.Students = model.Students.ApplyFilter(model);
                 
@@ -43,7 +43,7 @@ namespace PLSPEduView.Controllers
                 return View(model);
             }
 
-            return View(_viewService.Create());
+            return View(await _viewService.CreateAsync());
         }
 
         [HttpPost]
@@ -61,7 +61,7 @@ namespace PLSPEduView.Controllers
                 return NotFound($"Student with ID {itemid} not found.");
             }
 
-            var student = _repository.GetStudentByIdAsync(itemid);
+            var student = await _repository.GetStudentByIdAsync(itemid);
 
             return View(student);
         }
@@ -80,7 +80,7 @@ namespace PLSPEduView.Controllers
                 return View(model);
             }
             
-            return View(_createService.GetCreateStudentViewModel());
+            return View(await _createService.GetCreateStudentViewModelAsync());
         }
 
         [HttpPost]

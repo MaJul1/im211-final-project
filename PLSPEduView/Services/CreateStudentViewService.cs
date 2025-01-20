@@ -28,7 +28,7 @@ public class CreateStudentViewService
         _programRepository = programRepository;
         _departmentRepository = departmentRepository;
     }
-    public async Task<CreateStudentViewModel> GetCreateStudentViewModel()
+    public async Task<CreateStudentViewModel> GetCreateStudentViewModelAsync()
         => await GetCreateStudentViewModelAsync(null);
     public async Task<CreateStudentViewModel> GetCreateStudentViewModelAsync(CreateStudentViewModel? currentModel)
     {

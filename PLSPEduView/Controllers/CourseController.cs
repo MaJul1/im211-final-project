@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PLSPEduView.Repository;
 using PLSPEduView.Services;
@@ -16,13 +17,13 @@ namespace PLSPEduView.Controllers
         }
 
         // GET: CourseController
-        public ActionResult Index(string sortParam)
+        public async Task<ActionResult> Index(string sortParam)
         {
             ViewData["CodeSortParam"] = string.IsNullOrEmpty(sortParam) ? "" : "Code";
             ViewData["DescriptionSortParam"] = sortParam == "Description" ? "Description_desc" : "Description";
             ViewData["NumberOfStudentsSortParam"] = sortParam == "NumberOfStudents" ? "NumberOfStudents_desc" : "NumberOfStudents";
 
-            var model = _service.GetCourseViewModel();
+            var model = await _service.GetCourseViewModelAsync();
 
             model.Courses = model.Courses.ApplySort(sortParam);
             
@@ -30,7 +31,7 @@ namespace PLSPEduView.Controllers
         }
 
         //ToDo: Sorting
-        public ActionResult ViewCourse(int courseId, string? sortParam)
+        public async Task<ActionResult> ViewCourse(int courseId, string? sortParam)
         {
             ViewData["IdSortParam"] = string.IsNullOrEmpty(sortParam) ? "Id" : "";
             ViewData["NameSortParam"] = sortParam == "Name" ? "Name_desc" : "Name";
@@ -38,7 +39,7 @@ namespace PLSPEduView.Controllers
             ViewData["ProgramSortParam"] = sortParam == "Program" ? "Program_desc" : "Program";
             ViewData["DepartmentSortParam"] = sortParam == "Department" ? "Department_desc" : "Department";
             
-            var model = _repository.GetByIdAsync(courseId);
+            var model = await _repository.GetByIdAsync(courseId);
 
             if (model == null)
             {
