@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PLSPEduView.Repository;
 using PLSPEduView.Services;
@@ -14,18 +15,18 @@ namespace PLSPEduView.Controllers
             _repository = repository;
         }
 
-        public ActionResult Index(string sortParam)
+        public async Task<ActionResult> Index(string sortParam)
         {
             ConfigureSort(sortParam);
 
-            var model = _service.GetSkillViewModel();
+            var model = await _service.GetSkillViewModel();
 
             model.Skills = model.Skills.ApplySort(sortParam);
             
             return View(model);
         }
 
-        public ActionResult ViewSkill(int itemid, string? sortParam)
+        public async Task<ActionResult> ViewSkill(int itemid, string? sortParam)
         {
             ViewData["IdSortParam"] = string.IsNullOrEmpty(sortParam) ? "Id" : "";
             ViewData["NameSortParam"] = sortParam == "Name" ? "Name_desc" : "Name";
@@ -33,7 +34,7 @@ namespace PLSPEduView.Controllers
             ViewData["ProgramSortParam"] = sortParam == "Program" ? "Program_desc" : "Program";
             ViewData["DepartmentSortParam"] = sortParam == "Department" ? "Department_desc" : "Department";
 
-            var skill = _repository.GetById(itemid);
+            var skill = await _repository.GetByIdAsync(itemid);
 
             if (skill == null)
             {

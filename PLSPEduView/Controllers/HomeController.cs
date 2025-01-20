@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PLSPEduView.Models;
 using PLSPEduView.Models.ViewModels;
@@ -17,9 +18,9 @@ public class HomeController : Controller
         _homeService = homeViewService;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View(_homeService.GetHomeViewModel());
+        return View(await _homeService.GetHomeViewModel());
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

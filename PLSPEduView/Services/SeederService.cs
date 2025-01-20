@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using PLSPEduView.Enums;
 using PLSPEduView.Models.DataModels;
 using PLSPEduView.Repository;
@@ -28,53 +29,60 @@ public class SeederService
         _departmentRepository = departmentRepository;
     }
 
-    public void SeedData()
+    public async Task SeedDataAsync()
     {
 
-        if (_courseRepository.Any() == false)
+        if (await _courseRepository.AnyAsync() == false)
         {
-            foreach (var c in GetCourses())
+            foreach (var c in await GetCoursesAsync())
             {
-                _courseRepository.CreateCourse(c);
+                await _courseRepository.CreateCourseAsync(c);
             }
         }
 
-        if (_skillRepository.Any() == false)
+        if ( await _skillRepository.AnyAsync() == false)
         {
-            foreach (var s in GetSkills())
+            foreach (var s in await GetSkillsAsync())
             {
-                _skillRepository.CreateSkill(s);
+                await _skillRepository.CreateSkillAsync(s);
             }
         }
 
-        if (_programRepository.Any() == false)
+        if (await _programRepository.AnyAsync() == false)
         {
-            foreach (var p in GetPrograms())
+            foreach (var p in await GetProgramsAsync())
             {
-                _programRepository.Create(p);
+                await _programRepository.CreateAsync(p);
             }
         }
 
-        if (_departmentRepository.Any() == false)
+        if (await _departmentRepository.AnyAsync() == false)
         {
-            foreach (var d in GetDepartments())
+            foreach (var d in await GetDepartmentsAsync())
             {
-                _departmentRepository.Create(d);
+                await _departmentRepository.CreateAsync(d);
             }
         }
 
-        if (_studentRepository.Any() == false)
+        if (await _studentRepository.AnyAsync() == false)
         {
-            foreach (var s in GetListOfStudents())
+            foreach (var s in await GetListOfStudentsAsync())
             {
-                _studentRepository.CreateStudent(s);
+                await _studentRepository.CreateStudentAsync(s);
             }
         }
 
     }
 
-    private List<Student> GetListOfStudents()
+    private async Task<List<Student>> GetListOfStudentsAsync()
     {
+        var im211Course = await _courseRepository.GetByCodeAsync("IM211");
+        var cs101Course = await _courseRepository.GetByCodeAsync("IM211");
+        var chkDepartment = await _departmentRepository.GetByCodeAsync("CHK");
+        var ccstDepartment = await _departmentRepository.GetByCodeAsync("CCST");
+        var bsitProgram = await _programRepository.GetByCodeAsync("BSIT");
+        var bpedProgram = await _programRepository.GetByCodeAsync("BPED");
+
         List<Student> students = new List<Student>
         {
             new()
@@ -94,9 +102,9 @@ public class SeederService
                 Barangay = "Santa Ana",
                 Municipality = "Laguna",
                 Province = "Laguna",
-                Department = _departmentRepository.GetByCode("CHK")!,
-                Program = _programRepository.GetByCode("BSPED")!,
-                Courses = [_courseRepository.GetByCode("IM211")!, _courseRepository.GetByCode("CS101")!]
+                Department = chkDepartment!,
+                Program = bpedProgram!,
+                Courses = [im211Course!, cs101Course!]
             },
             new()
             {
@@ -115,9 +123,9 @@ public class SeederService
                 Barangay = "San Juan",
                 Municipality = "Quezon City",
                 Province = "Metro Manila",
-                Department = _departmentRepository.GetByCode("CCST")!,
-                Program = _programRepository.GetByCode("BSIT")!,
-                Courses = [_courseRepository.GetByCode("IM211")!, _courseRepository.GetByCode("CS101")!]
+                Department = ccstDepartment!,
+                Program = bsitProgram!,
+                Courses = [im211Course!, cs101Course!]
             },
             new()
             {
@@ -136,9 +144,9 @@ public class SeederService
                 Barangay = "Santa Cruz",
                 Municipality = "Manila",
                 Province = "Metro Manila",
-                Department = _departmentRepository.GetByCode("CCST")!,
-                Program = _programRepository.GetByCode("BSIS")!,
-                Courses = [_courseRepository.GetByCode("IM211")!, _courseRepository.GetByCode("CS101")!]
+                Department = ccstDepartment!,
+                Program = bsitProgram!,
+                Courses = [im211Course!, cs101Course!]
             },
             new()
             {
@@ -157,9 +165,9 @@ public class SeederService
                 Barangay = "San Miguel",
                 Municipality = "Pasig",
                 Province = "Metro Manila",
-                Department = _departmentRepository.GetByCode("CCST")!,
-                Program = _programRepository.GetByCode("BSIS")!,
-                Courses = [_courseRepository.GetByCode("IM211")!, _courseRepository.GetByCode("CS101")!]
+                Department = ccstDepartment!,
+                Program = bsitProgram!,
+                Courses = [im211Course!, cs101Course!]
             },
             new()
             {
@@ -178,16 +186,16 @@ public class SeederService
                 Barangay = "San Andres",
                 Municipality = "Cavite City",
                 Province = "Cavite",
-                Department = _departmentRepository.GetByCode("CHK")!,
-                Program = _programRepository.GetByCode("BSPED")!,
-                Courses = [_courseRepository.GetByCode("IM211")!, _courseRepository.GetByCode("CS101")!]
+                Department = chkDepartment!,
+                Program = bpedProgram!,
+                Courses = [im211Course!, cs101Course!]
             }
         };
 
         return students;
     }
 
-    private static List<Course> GetCourses()
+    private static async Task<List<Course>> GetCoursesAsync()
     {
         List<Course> courses = new List<Course>
         {
@@ -229,10 +237,10 @@ public class SeederService
             }
         };
 
-        return courses;
+        return await Task.FromResult(courses);
     }
 
-    private static List<Skill> GetSkills()
+    private static async Task<List<Skill>> GetSkillsAsync()
     {
         List<Skill> skills =
         [
@@ -262,10 +270,10 @@ public class SeederService
             }
         ];
 
-        return skills;
+        return await Task.FromResult(skills);
     }
 
-    private static List<Department> GetDepartments()
+    private static async Task<List<Department>> GetDepartmentsAsync()
     {
         List<Department> departments = new()
         {
@@ -279,10 +287,10 @@ public class SeederService
             new () { Code = "CTHM", Description = "College of Tourism And Hospitality Management" },
             new () { Code = "CTEd", Description = "Bachelor of Teacher Education" }
         };
-        return departments;
+        return await Task.FromResult(departments);
     }
 
-    private static List<SchoolProgram> GetPrograms()
+    private static async Task<List<SchoolProgram>> GetProgramsAsync()
     {
         List<SchoolProgram> program = new()
         {
@@ -311,6 +319,6 @@ public class SeederService
             new () { Code = "BPEd", Description = "Bachelor of Physical Education" },
             new () { Code = "BSEd", Description = "Bachelor of Secondary Education" }        
         };
-        return program;
+        return await Task.FromResult(program);
     }
 }

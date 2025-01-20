@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PLSPEduView.Models.ViewModels;
@@ -25,7 +26,7 @@ namespace PLSPEduView.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var studentViewModel = TempData["StudentViewModel"];
 
@@ -33,7 +34,7 @@ namespace PLSPEduView.Controllers
             {
                 var model = JsonSerializer.Deserialize<StudentViewModel>(json);
 
-                model = _viewService.ReGenerateStudentViewModel(model!);
+                model = await _viewService.ReGenerateStudentViewModelAsync(model!);
 
                 model.Students = model.Students.ApplyFilter(model);
                 
@@ -42,7 +43,7 @@ namespace PLSPEduView.Controllers
                 return View(model);
             }
 
-            return View(_viewService.Create());
+            return View(await _viewService.CreateAsync());
         }
 
         [HttpPost]
@@ -53,20 +54,20 @@ namespace PLSPEduView.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult ViewStudent(int itemid)
+        public async Task<IActionResult> ViewStudent(int itemid)
         {
-            if (_repository.Exist(itemid) == false)
+            if ( await _repository.ExistAsync(itemid) == false)
             {
                 return NotFound($"Student with ID {itemid} not found.");
             }
 
-            var student = _repository.GetStudentById(itemid);
+            var student = await _repository.GetStudentByIdAsync(itemid);
 
             return View(student);
         }
 
         [HttpGet]
-        public IActionResult CreateStudent()
+        public async Task<IActionResult> CreateStudent()
         {
             var tempData = TempData["InvalidStudentCreateModel"];
 
@@ -74,22 +75,22 @@ namespace PLSPEduView.Controllers
             {
                 var model = JsonSerializer.Deserialize<CreateStudentViewModel>(json);
 
-                model = _createService.GetCreateStudentViewModel(model);
+                model = await _createService.GetCreateStudentViewModelAsync(model);
 
                 return View(model);
             }
             
-            return View(_createService.GetCreateStudentViewModel());
+            return View(await _createService.GetCreateStudentViewModelAsync());
         }
 
         [HttpPost]
-        public IActionResult CreateStudent(CreateStudentViewModel model)
+        public async Task<IActionResult> CreateStudent(CreateStudentViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var student = _createService.GetStudent(model);
+                var student = await _createService.GetStudentAsync(model);
 
-                _repository.CreateStudent(student);
+                await _repository.CreateStudentAsync(student);
 
                 return RedirectToAction("CreateSuccess");
             }
