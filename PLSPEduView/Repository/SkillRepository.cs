@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using PLSPEduView.Context;
 using PLSPEduView.Models.DataModels;
 
@@ -12,49 +14,54 @@ public class SkillRepository
         _context = context;
     }
 
-    public int GetCount()
+    public async Task<int> GetCountAsync()
     {
-        return _context.Skills.Count();
+        return await _context.Skills.CountAsync();
     }
 
-    public IEnumerable<Skill> GetAll()
+    public async Task<IEnumerable<Skill>> GetAllAsync()
     {
-        var skill = _context.Skills;
+        var skill = await _context.Skills.ToListAsync();
 
         foreach (var s in skill)
         {
-            _context.Entry(s).Collection(s => s.Students).Load();
+            await _context.Entry(s).Collection(s => s.Students).LoadAsync();
         }
 
         return skill;
     }
     
-    public void CreateSkill(Skill skill)
+    public async Task CreateSkillAsync(Skill skill)
     {
-        _context.Skills.Add(skill);
-        _context.SaveChanges();
+        await _context.Skills.AddAsync(skill);
+        await _context.SaveChangesAsync();
     }
 
-    public Skill? GetById(int Id)
+    public async Task<Skill?> GetByIdAsync(int Id)
     {
-        var skill =  _context.Skills.Find(Id);
+        var skill = await _context.Skills.FindAsync(Id);
 
         if (skill == null) return null;
 
-        _context.Entry(skill).Collection(s => s.Students).Load();
+        await _context.Entry(skill).Collection(s => s.Students).LoadAsync();
 
         foreach (var s in skill.Students)
         {
-            _context.Entry(s).Reference(s => s.Program).Load();
-            _context.Entry(s).Reference(s => s.Department).Load();
+            await _context.Entry(s).Reference(s => s.Program).LoadAsync();
+            await _context.Entry(s).Reference(s => s.Department).LoadAsync();
         }
 
         return skill;
     }
 
-    public bool IsExists(int id)
+    public async Task<bool> IsExistsAsync(int id)
     {
-        return _context.Skills.Any(c => c.Id == id);
+        return await _context.Skills.AnyAsync(c => c.Id == id);
+    }
+
+    public async Task<bool> AnyAsync()
+    {
+        return await _context.Skills.AsNoTracking().AnyAsync();
     }
 
 

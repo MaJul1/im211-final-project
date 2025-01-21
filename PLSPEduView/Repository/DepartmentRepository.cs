@@ -1,5 +1,7 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using PLSPEduView.Context;
 using PLSPEduView.Models;
 using PLSPEduView.Models.DataModels;
@@ -15,34 +17,39 @@ public class DepartmentRepository
         _context = context;
     }
 
-    public IEnumerable<Department> GetAll()
+    public async Task<IEnumerable<Department>> GetAllAsync()
     {
-        return _context.Departments;
+        return await _context.Departments.ToListAsync();
     }
 
-    public int GetCount()
+    public async Task<int> GetCount()
     {
-        return _context.Departments.Count();
+        return await _context.Departments.CountAsync();
     }
 
-    public void Create(Department department)
+    public async Task CreateAsync(Department department)
     {
-        _context.Departments.Add(department);
-        _context.SaveChanges();
+        await _context.Departments.AddAsync(department);
+        await _context.SaveChangesAsync();
     }
 
-    public Department? GetById(int Id)
+    public async Task<Department?> GetByIdAsync(int Id)
     {
-        return _context.Departments.Find(Id);
+        return await _context.Departments.FindAsync(Id);
     }
 
-    public Department? GetByCode(string code)
+    public async Task<Department?> GetByCodeAsync(string code)
     {
-        return _context.Departments.FirstOrDefault(d => d.Code == code);
+        return await _context.Departments.FirstOrDefaultAsync(d => d.Code == code);
     }
 
-    public bool IsExists(int id)
+    public async Task<bool> IsExistsAsync(int id)
     {
-        return _context.Departments.Any(c => c.Id == id);
+        return await _context.Departments.AnyAsync(c => c.Id == id);
+    }
+
+    public async Task<bool> AnyAsync()
+    {
+        return await _context.Departments.AsNoTracking().AnyAsync();
     }
 }

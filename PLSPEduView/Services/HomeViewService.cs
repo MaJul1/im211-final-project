@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using PLSPEduView.Models.ViewModels;
 using PLSPEduView.Repository;
 
@@ -21,30 +22,32 @@ public class HomeViewService
         _student = student;
     }
 
-    public HomeViewModel GetHomeViewModel()
+    public async Task<HomeViewModel> GetHomeViewModel()
     {
+        var students = await _student.GetAllAsync();
+
         HomeViewModel view = new()
         {
-            NumberOfCoursesRegistered = _course.GetCount(),
-            NumberOfSkillsRegistered = _skill.GetCount(),
-            NumberOfStudentRegistered = _student.GetCount(),
+            NumberOfCoursesRegistered = await _course.GetCountAsync(),
+            NumberOfSkillsRegistered = await _skill.GetCountAsync(),
+            NumberOfStudentRegistered = await _student.GetCountAsync(),
 
-            GroupByMunicipality = _student.GetAll()
+            GroupByMunicipality = students
                 .GroupBy(s => s.Municipality)
                 .OrderByDescending(s => s.Count())
                 .ToDictionary(g => g.Key, g => g.Count()),
 
-            GroupByProvince = _student.GetAll()
+            GroupByProvince = students
                 .GroupBy(s => s.Province)
                 .OrderByDescending(s => s.Count())
                 .ToDictionary(s => s.Key, s => s.Count()),
 
-            GroupBySex = _student.GetAll()
+            GroupBySex = students
                 .GroupBy(s => s.Sex)
                 .OrderByDescending(s => s.Count())
                 .ToDictionary(s => s.Key.ToString(), s => s.Count()),
 
-            GroupByType = _student.GetAll()
+            GroupByType = students
                 .GroupBy(s => s.Type)
                 .OrderByDescending(s => s.Count())
                 .ToDictionary(s => s.Key.ToString(), s => s.Count())

@@ -7,49 +7,40 @@ namespace PLSPEduView.Services;
 public class StudentViewService
 {
     private readonly StudentRepository _studentRepository;
-    private readonly ConfigurationService _configurationService;
-    private readonly ProgramRepository _programRepository;
-    private readonly DepartmentRepository _departmentRepository;
     private readonly SelectListService _selectListService;
     public StudentViewService
     (
         SelectListService selectListService,
-        StudentRepository repository, 
-        ConfigurationService configurationService,
-        ProgramRepository programRepository,
-        DepartmentRepository departmentRepository
+        StudentRepository repository
     )
     {
         _selectListService = selectListService;
         _studentRepository = repository;
-        _configurationService = configurationService;
-        _programRepository = programRepository;
-        _departmentRepository = departmentRepository;
     }
 
-    public StudentViewModel Create()
+    public async Task<StudentViewModel> CreateAsync()
     {
-        return GenerateStudentViewModel(null);
+        return await GenerateStudentViewModelAsync(null);
     }
 
-    public StudentViewModel ReGenerateStudentViewModel(StudentViewModel model)
+    public async Task<StudentViewModel> ReGenerateStudentViewModelAsync(StudentViewModel model)
     {
-        return GenerateStudentViewModel(model);
+        return await GenerateStudentViewModelAsync(model);
     }
 
-    private StudentViewModel GenerateStudentViewModel(StudentViewModel? currentModel)
+    private async Task<StudentViewModel> GenerateStudentViewModelAsync(StudentViewModel? currentModel)
     {
         StudentViewModel model = currentModel ?? new();
         
-        model.Students = _studentRepository.GetAll();
+        model.Students = await _studentRepository.GetAllAsync();
 
-        model.ProgramOptions = _selectListService.GetProgramSelectList();
+        model.ProgramOptions = await _selectListService.GetProgramSelectListAsync();
 
-        model.DepartmentOptions = _selectListService.GetDepartmentSelectList();
+        model.DepartmentOptions = await _selectListService.GetDepartmentSelectListAsync();
 
-        model.SectionOptions = _selectListService.GetSectionSelectList();
+        model.SectionOptions = await _selectListService.GetSectionSelectListAsync();
 
-        model.SortOptions = _selectListService.GetSortSelectList();
+        model.SortOptions = await _selectListService.GetSortSelectListAsync();
 
         return model;
     }
