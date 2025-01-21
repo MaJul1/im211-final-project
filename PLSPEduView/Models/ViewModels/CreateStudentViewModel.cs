@@ -9,9 +9,10 @@ namespace PLSPEduView.Models.ViewModels;
 
 public class CreateStudentViewModel
 {
-    [Required]
+    [Required(ErrorMessage = "SchoolId is required.")]
+    [StringLength(8, ErrorMessage = "Must be 8 characters in length.")]
+    [RegularExpression(@"^\d{2}-\d{5}$", ErrorMessage = "Invalid School ID format.")]
     [Display(Name = "School Id")]
-    [Length(8, 8)]
     public string SchoolId { get; set; } = null!;
 
     [Required(ErrorMessage = "First name is required.")]
