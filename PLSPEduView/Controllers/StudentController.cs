@@ -105,5 +105,10 @@ namespace PLSPEduView.Controllers
         {
             return View();
         }
+
+        public IActionResult UpdateStudent()
+        {
+            return View();
+        }
     }
 }
