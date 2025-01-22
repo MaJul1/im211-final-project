@@ -13,17 +13,17 @@ namespace PLSPEduView.Controllers
     {
         private readonly StudentViewService _viewService;
         private readonly StudentRepository _repository;
-        private readonly CreateStudentViewService _createService;
+        private readonly StudentWriteModelService _viewModelService;
         public StudentController
         (
             StudentViewService service, 
             StudentRepository repository,
-            CreateStudentViewService createService
+            StudentWriteModelService createService
         )
         {
             _viewService = service;
             _repository = repository;
-            _createService = createService;
+            _viewModelService = createService;
         }
 
         [HttpGet]
@@ -74,22 +74,22 @@ namespace PLSPEduView.Controllers
 
             if (tempData is string json)
             {
-                var model = JsonSerializer.Deserialize<CreateStudentViewModel>(json);
+                var model = JsonSerializer.Deserialize<StudentWriteModel>(json);
 
-                model = await _createService.GetCreateStudentViewModelAsync(model);
+                model = await _viewModelService.GetStudentWriteModelAsync(model!);
 
                 return View(model);
             }
             
-            return View(await _createService.GetCreateStudentViewModelAsync());
+            return View(await _viewModelService.GetStudentWriteModelAsync());
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateStudent(CreateStudentViewModel model)
+        public async Task<IActionResult> CreateStudent(StudentWriteModel model)
         {
             if (ModelState.IsValid)
             {
-                var student = await _createService.GetStudentAsync(model);
+                var student = await _viewModelService.GetStudentAsync(model);
 
                 await _repository.CreateStudentAsync(student);
 
@@ -106,9 +106,46 @@ namespace PLSPEduView.Controllers
             return View();
         }
 
-        public IActionResult UpdateStudent()
+        public async Task<IActionResult> UpdateStudent(int itemid)
         {
-            return View();
+            var model = new StudentWriteModel();
+
+            if (ViewData["InvalidUpdateModel"] is string json)
+            {
+                model = JsonSerializer.Deserialize<StudentWriteModel>(json);
+
+                model = await _viewModelService.GetStudentWriteModelAsync(model!);
+            }
+            else
+            {
+                var student = await _repository.GetStudentByIdAsync(itemid);
+
+                if (student == null)
+                    return NotFound($"Student with an id of {itemid} not found.");
+                
+                model = await _viewModelService.GetStudentWriteModelAsync(student);
+            }
+
+            ViewData["StudentId"] = itemid;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateStudent(StudentWriteModel model, int itemid)
+        {
+            if (ModelState.IsValid == false)
+            {
+                ViewData["InvalidUpdateModel"] = JsonSerializer.Serialize(model);
+
+                return RedirectToAction("UpdateStudent", new {itemid});
+            }
+
+            var student = await _viewModelService.GetStudentAsync(model);
+
+            await _repository.UpdateAsync(student, itemid);
+
+            return RedirectToAction("ViewStudent", new {itemid});
         }
     }
 }
