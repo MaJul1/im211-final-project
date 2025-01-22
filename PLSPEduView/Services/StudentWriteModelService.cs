@@ -76,7 +76,6 @@ public class StudentWriteModelService
             FirstName = student.FirstName,
             MiddleName = student.MiddleName,
             LastName = student.LastName,
-            BirthDay = student.BirthDay,
             Email = student.Email,
             PhoneNumber = student.PhoneNumber,
             Barangay = student.Barangay,
@@ -93,6 +92,8 @@ public class StudentWriteModelService
         };
 
         model = await GenerateSelectListsForModel(model);
+
+        model.BirthDay = student.BirthDay;
 
         return model;
     }
