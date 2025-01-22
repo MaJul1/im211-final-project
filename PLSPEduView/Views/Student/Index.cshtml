@@ -75,19 +75,19 @@
                 <div class="mb-2">
                     <label class="form-label" asp-for="SectionFilter"></label>
                     <select asp-for="SectionFilter" asp-items="@Model.SectionOptions" class="form-select">
-                          <option selected>None</option>
+                        <option selected>None</option>
                     </select>
                 </div>
                 <div class="mb-2">
                     <label class="form-label" asp-for="ProgramFilter"></label>
                     <select asp-for="ProgramFilter" asp-items="@Model.ProgramOptions" class="form-select">
-                          <option selected value="">None</option>
+                        <option selected value="">None</option>
                     </select>
                 </div>
                 <div class="mb-2">
                     <label class="form-label" asp-for="DepartmentFilter"></label>
                     <select asp-for="DepartmentFilter" asp-items="@Model.DepartmentOptions" class="form-select">
-                          <option selected value="">None</option>
+                        <option selected value="">None</option>
                     </select>
                 </div>
                 <div class="mb-2">
@@ -156,6 +156,7 @@
         </div>
     </div>
     <div class="flex-grow-1">
+        <a class="btn btn-primary mb-2 w-100 text-center" asp-action="CreateStudent">+ Create Student</a>
         <table class="table table-bordered table-sm table-hover table-striped text-center">
             <thead>
                 <tr>
@@ -170,6 +171,12 @@
             <tbody>
                 @{
                     int number = 1;
+                    if (students.Any() == false)
+                    {
+                        <tr>
+                            <td colspan="6">No students registered</td>
+                        </tr>
+                    }
                     foreach (var s in students)
                     {
                         <tr onclick="GoToStudentView('@s.Id')">
@@ -183,11 +190,6 @@
 
                         number++;
                     }
-                    <tr>
-                        <td colspan="6">
-                            <a asp-action="CreateStudent">+ Create new student</a>
-                        </td>
-                    </tr>
                 }
             </tbody>
         </table>

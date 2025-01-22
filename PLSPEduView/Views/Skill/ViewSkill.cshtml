@@ -9,8 +9,12 @@
 </div>
 
 <div>
-    <div>
+    <div class="d-flex justify-content-between mb-2">
         <h3>List of students who have @Model.Description skill</h3>
+        <div>
+            <a class="btn btn-primary btn-wide" asp-action="UpdateSkill" asp-route-itemid="@Model.Id">Update Skill</a>
+            <a class="btn btn-primary btn-wide">Delete Skill</a>
+        </div>
     </div>
     <table class="table table-bordered table-sm">
             <thead>

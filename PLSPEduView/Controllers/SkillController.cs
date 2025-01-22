@@ -49,6 +49,16 @@ namespace PLSPEduView.Controllers
             return View(skill);
         }
 
+        public IActionResult CreateSkill()
+        {
+            return View();
+        }
+
+        public IActionResult UpdateSkill()
+        {
+            return View();
+        }
+        
         private void ConfigureSort(string sortParam)
         {
             ViewData["NameSortParam"] = string.IsNullOrEmpty(sortParam) ? "Name" : "";
