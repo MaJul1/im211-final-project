@@ -55,7 +55,7 @@ public class StudentRepository
         return student != null;
     }
 
-    public async Task RemoveByIdAsync(string Id)
+    public async Task RemoveByIdAsync(int Id)
     {
         var student = await _context.Students.FindAsync(Id);
 
