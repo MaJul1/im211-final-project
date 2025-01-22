@@ -63,6 +63,30 @@ public class StudentRepository
 
         await _context.SaveChangesAsync();
     }
+
+    public async Task UpdateAsync(Student newStudent, int id)
+    {
+        var existingStudent = await GetStudentByIdAsync(id);
+
+        if (existingStudent != null)
+        {
+            newStudent.Id = existingStudent.Id;
+
+            _context.Entry(existingStudent).CurrentValues.SetValues(newStudent);
+
+            existingStudent.Courses.Clear();
+            existingStudent.Courses = newStudent.Courses;
+
+            existingStudent.Skills.Clear();
+            existingStudent.Skills = newStudent.Skills;
+
+            existingStudent.Program = newStudent.Program;
+
+            existingStudent.Department = newStudent.Department;
+
+            await _context.SaveChangesAsync();
+        }
+    }
     
     public async Task<bool> AnyAsync()
     {

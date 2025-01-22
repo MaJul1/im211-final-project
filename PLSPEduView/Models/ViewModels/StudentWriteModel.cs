@@ -7,7 +7,7 @@ using PLSPEduView.Services;
 
 namespace PLSPEduView.Models.ViewModels;
 
-public class CreateStudentViewModel
+public class StudentWriteModel
 {
     [Required(ErrorMessage = "SchoolId is required.")]
     [StringLength(8, ErrorMessage = "Must be 8 characters in length.")]

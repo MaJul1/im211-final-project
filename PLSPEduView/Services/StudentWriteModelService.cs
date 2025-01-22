@@ -5,7 +5,7 @@ using PLSPEduView.Repository;
 
 namespace PLSPEduView.Services;
 
-public class CreateStudentViewService
+public class StudentWriteModelService
 {
     private readonly SelectListService _selectListservice;
     private readonly SkillRepository _skillRepository;
@@ -13,7 +13,7 @@ public class CreateStudentViewService
     private readonly ProgramRepository _programRepository;
     private readonly DepartmentRepository _departmentRepository;
 
-    public CreateStudentViewService
+    public StudentWriteModelService
     (
         SelectListService selectListService,
         SkillRepository skillRepository, 
@@ -28,11 +28,15 @@ public class CreateStudentViewService
         _programRepository = programRepository;
         _departmentRepository = departmentRepository;
     }
-    public async Task<CreateStudentViewModel> GetCreateStudentViewModelAsync()
-        => await GetCreateStudentViewModelAsync(null);
-    public async Task<CreateStudentViewModel> GetCreateStudentViewModelAsync(CreateStudentViewModel? currentModel)
+    public async Task<StudentWriteModel> GetStudentWriteModelAsync()
+        => await GenerateSelectListsForModel(null);
+
+    public async Task<StudentWriteModel> GetStudentWriteModelAsync(StudentWriteModel model)
+        => await GenerateSelectListsForModel(model);
+
+    private async Task<StudentWriteModel> GenerateSelectListsForModel(StudentWriteModel? currentModel)
     {
-        CreateStudentViewModel model;
+        StudentWriteModel model;
         
         if (currentModel == null)
         {
@@ -64,7 +68,36 @@ public class CreateStudentViewService
         return model;     
     }
 
-    public async Task<Student> GetStudentAsync(CreateStudentViewModel model)
+    public async Task<StudentWriteModel> GetStudentWriteModelAsync(Student student)
+    {
+        StudentWriteModel model = new()
+        {
+            SchoolId = student.SchoolId,
+            FirstName = student.FirstName,
+            MiddleName = student.MiddleName,
+            LastName = student.LastName,
+            BirthDay = student.BirthDay,
+            Email = student.Email,
+            PhoneNumber = student.PhoneNumber,
+            Barangay = student.Barangay,
+            Municipality = student.Municipality,
+            Province = student.Province,
+            YearLevel = student.YearLevel,
+            Section = student.Section,
+            Sex = student.Sex,
+            Type = student.Type,
+            Program = student.Program.Id.ToString(),
+            Department = student.Department.Id.ToString(),
+            SkillIds = [.. student.Skills.Select(s => s.Id.ToString())],
+            CourseIds = [.. student.Courses.Select(c => c.Id.ToString())]
+        };
+
+        model = await GenerateSelectListsForModel(model);
+
+        return model;
+    }
+
+    public async Task<Student> GetStudentAsync(StudentWriteModel model)
     {
         Student student = new()
         {
@@ -83,16 +116,16 @@ public class CreateStudentViewService
             Sex = model.Sex,
             Type = model.Type,
             DateAdded = DateTime.Now,
-            Program = await GetProgramForeignKeyAssociationAsync(int.Parse(model.Program)),
-            Department = await GetDepartmentForeignKeyAssociationAsync(int.Parse(model.Department)),
-            Skills = await GetRangeSkillsForeignKeyAssociationAsync(model.SkillIds),
-            Courses = await GetRangeCoursesForeignKeyAssociationAsync(model.CourseIds)
+            Program = await GetProgram(int.Parse(model.Program)),
+            Department = await GetDepartment(int.Parse(model.Department)),
+            Skills = await GetSkills(model.SkillIds),
+            Courses = await GetCourses(model.CourseIds)
         };
 
         return student;
     }
 
-    private async Task<ICollection<Course>> GetRangeCoursesForeignKeyAssociationAsync(List<string> courseIds)
+    private async Task<ICollection<Course>> GetCourses(List<string> courseIds)
     {
         ICollection<Course> courses = [];
 
@@ -110,7 +143,7 @@ public class CreateStudentViewService
         return courses;
     }
 
-    private async Task<ICollection<Skill>> GetRangeSkillsForeignKeyAssociationAsync(List<string> skillIds)
+    private async Task<ICollection<Skill>> GetSkills(List<string> skillIds)
     {
         ICollection<Skill> skills = [];
 
@@ -129,7 +162,7 @@ public class CreateStudentViewService
 
     }
 
-    private async Task<Department> GetDepartmentForeignKeyAssociationAsync(int id)
+    private async Task<Department> GetDepartment(int id)
     {
         if (await _departmentRepository.IsExistsAsync(id))
         {
@@ -141,7 +174,7 @@ public class CreateStudentViewService
         throw new ArgumentNullException($"Department with an id of {id} can't be found.");
     }
 
-    private async Task<SchoolProgram> GetProgramForeignKeyAssociationAsync(int id)
+    private async Task<SchoolProgram> GetProgram(int id)
     {
         if (await _programRepository.IsExistsAsync(id))
         {
