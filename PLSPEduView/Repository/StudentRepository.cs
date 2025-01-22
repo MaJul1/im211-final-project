@@ -66,7 +66,7 @@ public class StudentRepository
 
     public async Task UpdateAsync(Student newStudent, int id)
     {
-        var existingStudent = await GetStudentByIdAsync(id);
+        var existingStudent = await _context.Students.FindAsync(id);
 
         if (existingStudent != null)
         {
@@ -74,10 +74,8 @@ public class StudentRepository
 
             _context.Entry(existingStudent).CurrentValues.SetValues(newStudent);
 
-            existingStudent.Courses.Clear();
             existingStudent.Courses = newStudent.Courses;
 
-            existingStudent.Skills.Clear();
             existingStudent.Skills = newStudent.Skills;
 
             existingStudent.Program = newStudent.Program;
