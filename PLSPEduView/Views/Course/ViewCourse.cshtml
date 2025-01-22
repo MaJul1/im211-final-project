@@ -16,7 +16,7 @@
     <div class="d-flex mb-2 justify-content-between">
         <h3>List of students enrolled in @Model.CourseCode</h3>
         <div>
-            <a class="btn btn-primary btn-wide">Edit Course</a>
+            <a class="btn btn-primary btn-wide" asp-action="UpdateCourse" asp-route-itemid="@Model.Id">Update Course</a>
             <a class="btn btn-primary btn-wide">Remove Course</a>
         </div>
     </div>

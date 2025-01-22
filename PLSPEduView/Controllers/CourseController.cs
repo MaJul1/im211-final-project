@@ -54,5 +54,15 @@ namespace PLSPEduView.Controllers
             return View(model);
         }
 
+        public IActionResult CreateCourse()
+        {
+            return View();
+        }
+
+        public IActionResult UpdateCourse()
+        {
+            return View();
+        }
+
     }
 }
