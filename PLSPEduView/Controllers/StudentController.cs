@@ -147,5 +147,12 @@ namespace PLSPEduView.Controllers
 
             return RedirectToAction("ViewStudent", new {itemid});
         }
+
+        public async Task<IActionResult> DeleteStudent(int itemid)
+        {
+            await _repository.RemoveByIdAsync(itemid);
+
+            return RedirectToAction("Index");
+        }
     }
 }
