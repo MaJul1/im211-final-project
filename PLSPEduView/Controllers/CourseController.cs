@@ -93,11 +93,11 @@ namespace PLSPEduView.Controllers
                 return RedirectToAction("CreateCourse");
             }
 
-            if (await _repository.IsCodeExistsAsync(model.Code.ToUpper()))
+            if (await _repository.IsCodeExistsAsync(model.Code))
             {
                 TempData["InvalidCourseModel"] = JsonConvert.SerializeObject(model);
 
-                TempData["CodeExists"] = $"{model.Code.ToUpper()} is already used, use another code.";
+                TempData["CodeExists"] = $"{model.Code} is already used, use another code.";
 
                 return RedirectToAction("CreateCourse");
             }

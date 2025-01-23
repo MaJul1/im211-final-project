@@ -11,7 +11,7 @@
 <form asp-action="CreateCourse" asp-controller="Course" method="post">
     <div class="from-group mb-2">
         <label asp-for="Code" class="control-label"></label>
-        <input asp-for="Code" class="form-control" type="text" />
+        <input asp-for="Code" class="form-control" type="text" oninput="toUpperCase(this)"/>
         <span asp-validation-for="Code" class="text-danger"></span>
     </div>
     <div class="from-group mb-2">
@@ -37,3 +37,12 @@
         }
     </div>
 </form>
+
+@section Scripts {
+    <script>
+        function toUpperCase(input) {
+            input.value = input.value.toUpperCase();
+        }
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
