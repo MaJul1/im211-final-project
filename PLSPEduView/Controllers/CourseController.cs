@@ -7,6 +7,9 @@ using PLSPEduView.Services;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Permissions;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Reflection.Metadata;
 
 namespace PLSPEduView.Controllers
 {
@@ -75,11 +78,6 @@ namespace PLSPEduView.Controllers
                 model = _writeService.GetCourseWriteModel(model!);
             }
 
-            if (TempData["CodeExists"] is string error)
-            {
-                ModelState.AddModelError("Code", error);
-            }
-
             return View(model);
         }
 
@@ -93,15 +91,6 @@ namespace PLSPEduView.Controllers
                 return RedirectToAction("CreateCourse");
             }
 
-            if (await _repository.IsCodeExistsAsync(model.Code))
-            {
-                TempData["InvalidCourseModel"] = JsonConvert.SerializeObject(model);
-
-                TempData["CodeExists"] = $"{model.Code} is already used, use another code.";
-
-                return RedirectToAction("CreateCourse");
-            }
-
             var course = _writeService.GetCourse(model);
 
             await _repository.CreateCourseAsync(course);
@@ -109,9 +98,44 @@ namespace PLSPEduView.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult UpdateCourse()
+        public async Task<IActionResult> UpdateCourse(int itemid)
         {
-            return View();
+            CourseWriteModel? model;
+
+            if (TempData["InvalidCourseModel"] is string json)
+            {
+                model = JsonConvert.DeserializeObject<CourseWriteModel>(json);
+            }
+            else
+            {
+                var existingCourse = await _repository.GetByIdAsync(itemid);
+
+                if (existingCourse == null)
+                {
+                    return NotFound("Course not found.");
+                }
+                
+                model = _writeService.GetCourseWriteModel(existingCourse);
+            }
+
+            ViewData["CourseId"] = itemid;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateCourse(CourseWriteModel model, int itemid)
+        {
+            var course = _writeService.GetCourse(model);
+
+            if (await _repository.IsExistsAsync(itemid) == false)
+            {
+                return NotFound("Course not found.");
+            }
+
+            await _repository.UpdateAsync(course, itemid);
+
+            return RedirectToAction("ViewCourse", new {courseId = itemid});
         }
 
         [HttpPost]
@@ -126,6 +150,5 @@ namespace PLSPEduView.Controllers
 
             return RedirectToAction("Index");
         }
-
     }
 }
