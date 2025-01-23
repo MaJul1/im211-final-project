@@ -114,5 +114,18 @@ namespace PLSPEduView.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> DeleteCourse(int itemid)
+        {
+            if (await _repository.IsExistsAsync(itemid) == false)
+            {
+                return NotFound($"User with an id of {itemid} not found");
+            }
+
+            await _repository.Remove(itemid);
+
+            return RedirectToAction("Index");
+        }
+
     }
 }

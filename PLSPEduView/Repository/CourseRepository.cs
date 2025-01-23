@@ -1,4 +1,5 @@
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PLSPEduView.Context;
@@ -73,5 +74,15 @@ public class CourseRepository
     public async Task<bool> IsCodeExistsAsync(string code)
     {
         return await _context.Courses.AnyAsync(c => c.CourseCode == code);
+    }
+
+    public async Task Remove(int id)
+    {
+        var course = await _context.Courses.FindAsync(id);
+
+        if (course != null)
+        _context.Courses.Remove(course);
+
+        await _context.SaveChangesAsync();
     }
 }
