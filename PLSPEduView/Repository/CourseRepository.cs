@@ -69,4 +69,9 @@ public class CourseRepository
     {
         return await _context.Courses.AsNoTracking().AnyAsync();
     }
+
+    public async Task<bool> IsCodeExistsAsync(string code)
+    {
+        return await _context.Courses.AnyAsync(c => c.CourseCode == code);
+    }
 }

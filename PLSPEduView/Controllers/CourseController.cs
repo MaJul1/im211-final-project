@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using PLSPEduView.Models.ViewModels;
 using PLSPEduView.Repository;
 using PLSPEduView.Services;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace PLSPEduView.Controllers
 {
@@ -13,10 +16,10 @@ namespace PLSPEduView.Controllers
         private readonly CourseRepository _repository;
         private readonly CourseWriteModelService _writeService;
 
-        public CourseController 
+        public CourseController
         (
-            CourseViewService service, 
-            CourseRepository repository, 
+            CourseViewService service,
+            CourseRepository repository,
             CourseWriteModelService writeModelService
         )
         {
@@ -34,7 +37,7 @@ namespace PLSPEduView.Controllers
             var model = await _viewService.GetCourseViewModelAsync();
 
             model.Courses = model.Courses.ApplySort(sortParam);
-            
+
             return View(model);
         }
 
@@ -45,7 +48,7 @@ namespace PLSPEduView.Controllers
             ViewData["YearAndSectionSortParam"] = sortParam == "YearAndSection" ? "YearAndSection_desc" : "YearAndSection";
             ViewData["ProgramSortParam"] = sortParam == "Program" ? "Program_desc" : "Program";
             ViewData["DepartmentSortParam"] = sortParam == "Department" ? "Department_desc" : "Department";
-            
+
             var model = await _repository.GetByIdAsync(courseId);
 
             if (model == null)
@@ -55,7 +58,7 @@ namespace PLSPEduView.Controllers
 
             if (string.IsNullOrEmpty(sortParam) == false)
             {
-                model.Students = [..model.Students.ApplySort(sortParam)];
+                model.Students = [.. model.Students.ApplySort(sortParam)];
             }
 
             return View(model);
@@ -67,9 +70,14 @@ namespace PLSPEduView.Controllers
 
             if (TempData["InvalidCourseModel"] is string json)
             {
-                model = JsonSerializer.Deserialize<CourseWriteModel>(json);
+                model = JsonConvert.DeserializeObject<CourseWriteModel>(json);
 
                 model = _writeService.GetCourseWriteModel(model!);
+            }
+
+            if (TempData["CodeExists"] is string error)
+            {
+                ModelState.AddModelError("Code", error);
             }
 
             return View(model);
@@ -80,7 +88,16 @@ namespace PLSPEduView.Controllers
         {
             if (ModelState.IsValid == false)
             {
-                TempData["InvalidCourseModel"] = JsonSerializer.Serialize(model);
+                TempData["InvalidCourseModel"] = JsonConvert.SerializeObject(model);
+
+                return RedirectToAction("CreateCourse");
+            }
+
+            if (await _repository.IsCodeExistsAsync(model.Code.ToUpper()))
+            {
+                TempData["InvalidCourseModel"] = JsonConvert.SerializeObject(model);
+
+                TempData["CodeExists"] = $"{model.Code.ToUpper()} is already used, use another code.";
 
                 return RedirectToAction("CreateCourse");
             }
