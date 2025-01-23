@@ -85,4 +85,15 @@ public class CourseRepository
 
         await _context.SaveChangesAsync();
     }
+
+    public async Task UpdateAsync(Course newCourse, int existingCourseId)
+    {
+        var course = await _context.Courses.FindAsync(existingCourseId) ?? throw new ArgumentNullException($"Course witn an id of {existingCourseId} not found.");
+
+        newCourse.Id = course.Id;
+        
+        _context.Entry(course).CurrentValues.SetValues(newCourse);
+
+        await _context.SaveChangesAsync();
+    }
 }
