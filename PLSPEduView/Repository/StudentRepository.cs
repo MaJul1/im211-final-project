@@ -73,9 +73,13 @@ public class StudentRepository
             newStudent.Id = existingStudent.Id;
 
             _context.Entry(existingStudent).CurrentValues.SetValues(newStudent);
+            await _context.Entry(existingStudent).Collection(s => s.Skills).LoadAsync();
+            await _context.Entry(existingStudent).Collection(s => s.Courses).LoadAsync();
 
+            existingStudent.Courses.Clear();
             existingStudent.Courses = newStudent.Courses;
 
+            existingStudent.Skills.Clear();
             existingStudent.Skills = newStudent.Skills;
 
             existingStudent.Program = newStudent.Program;
