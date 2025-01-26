@@ -30,7 +30,7 @@ public static class SortService
                 students = students.OrderBy(s => s.SchoolId);
                 break;
             case "Id_desc":
-                students = students.OrderBy(s => s.Id);
+                students = students.OrderByDescending(s => s.SchoolId);
                 break;
             case "Name":
                 students = students.OrderBy(s => s.FirstName).ThenBy(s => s.LastName);
