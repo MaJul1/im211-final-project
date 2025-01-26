@@ -47,7 +47,7 @@ namespace PLSPEduView.Controllers
 
             if (skill == null)
             {
-                return BadRequest("Skill with an id of {itemid} does not exists.");
+                return BadRequest($"Skill with an id of {itemid} does not exists.");
             }
 
             if (string.IsNullOrEmpty(sortParam) == false)
