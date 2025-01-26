@@ -126,10 +126,15 @@ public class StudentWriteModelService
         return student;
     }
 
-    private async Task<ICollection<Course>> GetCourses(List<string> courseIds)
+    private async Task<ICollection<Course>> GetCourses(List<string>? courseIds)
     {
         ICollection<Course> courses = [];
 
+        if (courseIds == null || courseIds.Count == 0)
+        {
+            return courses;
+        }
+        
         foreach(var courseId in courseIds)
         {
             var numCourseId = int.Parse(courseId);
@@ -144,9 +149,14 @@ public class StudentWriteModelService
         return courses;
     }
 
-    private async Task<ICollection<Skill>> GetSkills(List<string> skillIds)
+    private async Task<ICollection<Skill>> GetSkills(List<string>? skillIds)
     {
         ICollection<Skill> skills = [];
+
+        if (skillIds == null || skillIds.Count == 0)
+        {
+            return skills;
+        }
 
         foreach (var skillId in skillIds)
         {

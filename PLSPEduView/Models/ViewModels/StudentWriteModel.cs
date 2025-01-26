@@ -76,10 +76,10 @@ public class StudentWriteModel
     public StudentType Type { get; set; }
 
     [Display(Name = "Courses Enrolled")]
-    public List<string> CourseIds { get; set; } = null!;
+    public List<string>? CourseIds { get; set; }
 
     [Display(Name = "Skills")]
-    public List<string> SkillIds { get; set; } = null!;
+    public List<string>? SkillIds { get; set; }
 
     [ValidateNever]
     [JsonIgnore]
