@@ -12,8 +12,10 @@
     <div class="d-flex justify-content-between mb-2">
         <h3>List of students who have @Model.Description skill</h3>
         <div>
-            <a class="btn btn-primary btn-wide" asp-action="UpdateSkill" asp-route-itemid="@Model.Id">Update Skill</a>
-            <a class="btn btn-primary btn-wide">Delete Skill</a>
+            <form class="d-flex gap-2" asp-action="DeleteSkill" asp-controller="Skill" asp-route-itemid="@Model.Id" method="post" onsubmit="return confirmDelete()">
+                <a class="btn btn-primary btn-wide" asp-action="UpdateSkill" asp-route-itemid="@Model.Id">Update Skill</a>
+                <input class="btn btn-primary btn-wide" type="submit" value="Delete Skill">
+            </form>
         </div>
     </div>
     <table class="table table-bordered table-sm">
@@ -46,3 +48,11 @@
             </tbody>
         </table>
 </div>
+
+@section Scripts {
+    <script>
+        function confirmDelete() {
+            return confirm("Are you sure you want to delete this skill?");
+        }
+    </script>
+}

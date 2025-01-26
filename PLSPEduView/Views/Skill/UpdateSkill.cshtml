@@ -1,4 +1,23 @@
-﻿
+﻿@model SkillWriteModel
 @{
     ViewData["Title"] = "Update Skill Page";
+
+    var skillId = ViewData["SkillId"];
 }
+
+<div class="text-center">
+    <h1>Update @Model.Description</h1>
+    <hr>
+</div>
+
+<form asp-action="UpdateSkill" asp-controller="Skill" asp-route-itemid="@skillId" method="post">
+    <div class="from-group mb-2">
+        <label asp-for="Description" class="control-label"></label>
+        <input asp-for="Description" class="form-control" type="text" value="@Model.Description"/>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="d-flex justify-content-end gap-2">
+        <input type="submit" class="btn btn-primary btn-wide" value="Submit">
+        <a class="btn btn-secondary btn-wide" asp-action="Index">Cancel</a>
+    </div>
+</form>
