@@ -160,7 +160,6 @@
         <table class="table table-bordered table-sm table-hover table-striped text-center">
             <thead>
                 <tr>
-                    <th>No.</th>
                     <th>Student Id</th>                    
                     <th>Name</th>
                     <th>Year and Section</th>
@@ -170,7 +169,6 @@
             </thead>
             <tbody>
                 @{
-                    int number = 1;
                     if (students.Any() == false)
                     {
                         <tr>
@@ -180,7 +178,6 @@
                     foreach (var s in students)
                     {
                         <tr onclick="GoToStudentView('@s.Id')">
-                            <td>@number</td>
                             <td>@s.SchoolId</td>
                             <td>@s.Name</td>
                             <td>@s.YearLevelAndSection</td>
@@ -188,7 +185,6 @@
                             <td>@s.Department.Code</td>
                         </tr>
 
-                        number++;
                     }
                 }
             </tbody>

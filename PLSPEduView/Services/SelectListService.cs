@@ -157,7 +157,7 @@ public class SelectListService
         List<SelectListOption> options = [
             new() {Value = "Id", Text = "Id"},
             new() {Value = "Name", Text = "Name"},
-            new() {Value = "YearAndSection", Text = "YearAndSection"},
+            new() {Value = "YearAndSection", Text = "Year and Section"},
             new() {Value = "Program", Text = "Program"},
             new() {Value = "Department", Text = "Department"}
         ];

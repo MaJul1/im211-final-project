@@ -93,7 +93,7 @@ namespace PLSPEduView.Controllers
 
                 await _repository.CreateStudentAsync(student);
 
-                return RedirectToAction("CreateSuccess");
+                return RedirectToAction("Index");
             }
 
             TempData["InvalidStudentCreateModel"] = JsonSerializer.Serialize(model);
