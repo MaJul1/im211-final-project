@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PLSPEduView.Context;
 using PLSPEduView.Models.DataModels;
@@ -62,6 +63,27 @@ public class SkillRepository
     public async Task<bool> AnyAsync()
     {
         return await _context.Skills.AsNoTracking().AnyAsync();
+    }
+
+    public async Task UpdateAsync(Skill newSkill, int id)
+    {
+        var skill = await _context.Skills.FindAsync(id) ?? throw new ArgumentNullException($"Skill with an id of {id} not found");
+
+        newSkill.Id = skill.Id;
+
+        _context.Entry(skill).CurrentValues.SetValues(newSkill);
+
+        await _context.SaveChangesAsync();
+    }
+
+    [HttpPost]
+    public async Task DeleteAsync(int id)
+    {
+        var skill = await _context.Skills.FindAsync(id) ?? throw new ArgumentNullException($"Skill with an id of {id} not found");
+
+        _context.Skills.Remove(skill);
+
+        await _context.SaveChangesAsync();
     }
 
 

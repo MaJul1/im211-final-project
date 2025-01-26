@@ -27,6 +27,7 @@ builder.Services.AddScoped<SkillViewService>();
 builder.Services.AddScoped<StudentWriteModelService>();
 builder.Services.AddScoped<SelectListService>();
 builder.Services.AddScoped<CourseWriteModelService>();
+builder.Services.AddScoped<SkillWriteModelService>();
 
 builder.Services.AddControllersWithViews();
 
