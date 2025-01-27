@@ -6,7 +6,6 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using Microsoft.Extensions.Options;
 using Populator.Database;
-using SQLitePCL;
 
 namespace Populator;
 
@@ -36,10 +35,8 @@ class Program
 
     private static void PopulateDatabase(Option option)
     {
-        
-        VerifyIfFilesExists(option);
 
-        DeleteAllRecords(option.DatabasePath);
+        DeleteAllRecords(option.MySqlStringConnection);
 
         var csvModels = GetCsvModels(option.CsvPath);
 
@@ -51,16 +48,16 @@ class Program
 
         var programs = GetPrograms();
 
-        PopulateAllNecessaryRecords(courses, skills, departments, programs, option.DatabasePath);
+        PopulateAllNecessaryRecords(courses, skills, departments, programs, option.MySqlStringConnection);
 
-        PopulateStudents(csvModels, option.DatabasePath);
+        PopulateStudents(csvModels, option.MySqlStringConnection);
 
         Console.WriteLine("Successful Population");
     }
 
     private static void PopulateStudents(List<CSVModel> csvModels, string path)
     {
-        var context = new SystemContext(path);
+        var context = new PlspeduviewContext(path);
 
         List<Student> result = [];
 
@@ -69,7 +66,7 @@ class Program
             Student student = new() 
             {
                 Barangay = model.Barangay,
-                BirthDay = string.Join('-', model.Birthday.Split('/')),
+                BirthDay = DateOnly.Parse(model.Birthday),
                 Department = context.Departments.FirstOrDefault(s => s.Code == model.Department)!,
                 Program = context.Programs.FirstOrDefault(s => s.Code == model.Program)!,
                 Email = model.Email,
@@ -84,7 +81,7 @@ class Program
                 Sex = int.Parse(model.Sex),
                 Type = int.Parse(model.StudentType),
                 YearLevel = int.Parse(model.YearLevel),
-                DateAdded = DateTime.Now.ToString("yyyy-MM-dd")
+                DateAdded = DateTime.Now
             };
 
             string[] courses = model.Courses.Split(";");
@@ -115,7 +112,7 @@ class Program
 
     private static void PopulateAllNecessaryRecords(List<Course> courses, List<Skill> skills, List<Department> departments, List<SchoolProgram> programs, string path)
     {
-        using (var context = new SystemContext(path))
+        using (var context = new PlspeduviewContext(path))
         {
             context.Courses.AddRange(courses);
             context.Skills.AddRange(skills);
@@ -147,7 +144,7 @@ class Program
             var skill = new Skill()
             {
                 Description = s,
-                DateAdded = DateTime.Now.ToString("yyyy-MM-dd")
+                DateAdded = DateTime.Now
             };
 
             result.Add(skill);
@@ -195,7 +192,7 @@ class Program
                 course.CourseCode = courseData[0];
                 course.CourseDescription = courseData[1];
                 course.Units = int.Parse(courseData[2]);
-                course.DateAdded = DateTime.Now.ToString("yyyy-MM-dd");
+                course.DateAdded = DateTime.Now;
             }
             catch
             {
@@ -217,9 +214,9 @@ class Program
             throw new ArgumentException($"{option.CsvPath} does not exists.");
         }
 
-        if (File.Exists(option.DatabasePath) == false)
+        if (File.Exists(option.MySqlStringConnection) == false)
         {
-            throw new ArgumentException($"{option.DatabasePath} does not exists.");
+            throw new ArgumentException($"{option.MySqlStringConnection} does not exists.");
         }
     }
 
@@ -294,7 +291,7 @@ class Program
     {
         Console.WriteLine("Resetting Database");
         
-        using (var context = new SystemContext(path))
+        using (var context = new PlspeduviewContext(path))
         {
             context.Courses.RemoveRange(context.Courses);
             context.Skills.RemoveRange(context.Skills);

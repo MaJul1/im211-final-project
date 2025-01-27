@@ -11,9 +11,9 @@ public partial class Course
 
     public string CourseDescription { get; set; } = null!;
 
-    public string DateAdded { get; set; } = null!;
-
     public int Units { get; set; }
+
+    public DateTime DateAdded { get; set; }
 
     public virtual ICollection<Student> Students { get; set; } = new List<Student>();
 }

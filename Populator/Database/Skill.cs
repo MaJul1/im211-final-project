@@ -7,9 +7,9 @@ public partial class Skill
 {
     public int Id { get; set; }
 
-    public string DateAdded { get; set; } = null!;
-
     public string Description { get; set; } = null!;
+
+    public DateTime DateAdded { get; set; }
 
     public virtual ICollection<Student> Students { get; set; } = new List<Student>();
 }
