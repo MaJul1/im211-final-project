@@ -68,6 +68,9 @@ public static class SortService
             case "Code":
                 courses = courses.OrderBy(s => s.CourseCode);
             break;
+            case "Code_desc":
+                courses = courses.OrderByDescending(s => s.CourseCode);
+            break;
             case "Description":
                 courses = courses.OrderBy(s => s.CourseDescription);
             break;
@@ -89,8 +92,11 @@ public static class SortService
     {
         switch (sortParam)
         {
-            case "Name":
+            case "Description":
                 skills = skills.OrderBy(s => s.Description);
+            break;
+            case "Description_desc":
+                skills = skills.OrderByDescending(s => s.Description);
             break;
             case "NumberOfStudents":
                 skills = skills.OrderBy(s => s.GetStudentCount());
