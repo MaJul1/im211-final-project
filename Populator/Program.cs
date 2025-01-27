@@ -96,6 +96,10 @@ class Program
 
             foreach(var skill in skills)
             {
+                if (string.IsNullOrEmpty(skill))
+                {
+                    continue;
+                }
                 student.Skills.Add(context.Skills.FirstOrDefault(s => s.Description == skill)!);
             }
 
@@ -141,6 +145,11 @@ class Program
         List<Skill> result = [];
         foreach(var s in uniqueSkills)
         {
+            if (string.IsNullOrEmpty(s))
+            {
+                continue;
+            }
+
             var skill = new Skill()
             {
                 Description = s,
