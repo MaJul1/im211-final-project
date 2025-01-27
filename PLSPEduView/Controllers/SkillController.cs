@@ -26,7 +26,8 @@ namespace PLSPEduView.Controllers
 
         public async Task<ActionResult> Index(string sortParam)
         {
-            ConfigureSort(sortParam);
+            ViewData["DescriptionSortParam"] = sortParam == "Description" ? "Description_desc" : "Description";
+            ViewData["NumberOfStudentSortParam"] = sortParam == "NumberOfStudents" ? "NumberOfStudents_desc" : "NumberOfStudents";
 
             var model = await _readService.GetSkillViewModel();
 
@@ -37,7 +38,7 @@ namespace PLSPEduView.Controllers
 
         public async Task<ActionResult> ViewSkill(int itemid, string? sortParam)
         {
-            ViewData["IdSortParam"] = string.IsNullOrEmpty(sortParam) ? "Id" : "";
+            ViewData["IdSortParam"] = sortParam == "Id" ? "Id_desc" : "Id";
             ViewData["NameSortParam"] = sortParam == "Name" ? "Name_desc" : "Name";
             ViewData["YearAndSectionSortParam"] = sortParam == "YearAndSection" ? "YearAndSection_desc" : "YearAndSection";
             ViewData["ProgramSortParam"] = sortParam == "Program" ? "Program_desc" : "Program";
@@ -114,12 +115,6 @@ namespace PLSPEduView.Controllers
             await _repository.DeleteAsync(itemid);
 
             return RedirectToAction("Index");
-        }
-        
-        private void ConfigureSort(string sortParam)
-        {
-            ViewData["NameSortParam"] = string.IsNullOrEmpty(sortParam) ? "Name" : "";
-            ViewData["NumberOfStudentSortParam"] = sortParam == "NumberOfStudents" ? "NumberOfStudents_desc" : "NumberOfStudents";
         }
     }
 }
