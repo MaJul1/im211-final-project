@@ -79,6 +79,8 @@ public class SelectListService
             options.Add(CreateSelectListOption(d.Id.ToString(), string.Join(" - ", d.Code, d.Description)));
         }
 
+        options = [.. options.OrderBy(s => s.Text)];
+
         return await CreateSelectListAsync(options);
     }
 
@@ -92,6 +94,8 @@ public class SelectListService
         {
             options.Add(CreateSelectListOption(p.Id.ToString(), string.Join(" - ", p.Code, p.Description)));
         }
+        
+        options = [.. options.OrderBy(s => s.Text)];
 
         return await CreateSelectListAsync(options);
     }
@@ -106,6 +110,8 @@ public class SelectListService
         {
             options.Add(CreateSelectListOption(s.Id.ToString(), s.Description));
         }
+        
+        options = [.. options.OrderBy(s => s.Text)];
 
         return await CreateSelectListAsync(options);
     }
@@ -133,6 +139,8 @@ public class SelectListService
         {
             options.Add(CreateSelectListOption(c.Id.ToString(), string.Join(" - ", c.CourseCode, c.CourseDescription)));
         }
+
+        options = [.. options.OrderBy(s => s.Text)];
 
         return await CreateSelectListAsync(options);
     }
