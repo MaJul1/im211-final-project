@@ -21,8 +21,7 @@ public class StudentWriteModel
     public string FirstName { get; set; } = null!;
 
     [StringLength(50, ErrorMessage = "Middle name cannot exceed 50 characters.")]
-    [Display(Name = "Middle Name")]
-    public string MiddleName { get; set; } = null!;
+    public string? MiddleName { get; set; } = null!;
 
     [Required(ErrorMessage = "Last name is required..")]
     [StringLength(50, ErrorMessage = "Last name cannot exceed 50 characters.")]

@@ -104,7 +104,7 @@ public class StudentWriteModelService
         {
             SchoolId = model.SchoolId,
             FirstName = model.FirstName,
-            MiddleName = model.MiddleName,
+            MiddleName = model.MiddleName ?? "",
             LastName = model.LastName,
             BirthDay = model.BirthDay,
             Email = model.Email,
