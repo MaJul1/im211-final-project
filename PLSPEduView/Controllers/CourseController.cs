@@ -33,7 +33,7 @@ namespace PLSPEduView.Controllers
 
         public async Task<ActionResult> Index(string sortParam)
         {
-            ViewData["CodeSortParam"] = string.IsNullOrEmpty(sortParam) ? "" : "Code";
+            ViewData["CodeSortParam"] = string.IsNullOrEmpty(sortParam) ? "Code" : "";
             ViewData["DescriptionSortParam"] = sortParam == "Description" ? "Description_desc" : "Description";
             ViewData["NumberOfStudentsSortParam"] = sortParam == "NumberOfStudents" ? "NumberOfStudents_desc" : "NumberOfStudents";
 
