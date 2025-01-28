@@ -31,37 +31,21 @@ namespace PLSPEduView.Controllers
             _writeService = writeModelService;
         }
 
-        public async Task<ActionResult> Index(string sortParam)
+        public async Task<ActionResult> Index()
         {
-            ViewData["CodeSortParam"] = sortParam == "Code" ? "Code_desc" : "Code";
-            ViewData["DescriptionSortParam"] = sortParam == "Description" ? "Description_desc" : "Description";
-            ViewData["NumberOfStudentsSortParam"] = sortParam == "NumberOfStudents" ? "NumberOfStudents_desc" : "NumberOfStudents";
-
             var model = await _viewService.GetCourseViewModelAsync();
-
-            model.Courses = model.Courses.ApplySort(sortParam);
 
             return View(model);
         }
 
-        public async Task<ActionResult> ViewCourse(int courseId, string? sortParam)
+        public async Task<ActionResult> ViewCourse(int courseId)
         {
-            ViewData["IdSortParam"] = sortParam == "Id" ? "Id_desc" : "Id";
-            ViewData["NameSortParam"] = sortParam == "Name" ? "Name_desc" : "Name";
-            ViewData["YearAndSectionSortParam"] = sortParam == "YearAndSection" ? "YearAndSection_desc" : "YearAndSection";
-            ViewData["ProgramSortParam"] = sortParam == "Program" ? "Program_desc" : "Program";
-            ViewData["DepartmentSortParam"] = sortParam == "Department" ? "Department_desc" : "Department";
 
             var model = await _repository.GetByIdAsync(courseId);
 
             if (model == null)
             {
                 return BadRequest($"Course with an id {courseId} cannot be found.");
-            }
-
-            if (string.IsNullOrEmpty(sortParam) == false)
-            {
-                model.Students = [.. model.Students.ApplySort(sortParam)];
             }
 
             return View(model);
