@@ -9,7 +9,7 @@ using PLSPEduView.Services;
 
 namespace PLSPEduView.Models.ViewModels;
 
-public class StudentViewModel : IStudentFilter, ISortOption
+public class StudentViewModel : IStudentFilter
 {
     public IEnumerable<Student> Students {get; set;} = [];
 
@@ -54,9 +54,5 @@ public class StudentViewModel : IStudentFilter, ISortOption
     public SelectList ProgramOptions {get; set;} = null!;
     [JsonIgnore]
     public SelectList SortOptions {get; set;} = null!;
-
-    //Sort
-    public string? SortParameter { get; set; }
-    public bool IsDescending { get; set; }
 
 }

@@ -15,9 +15,9 @@
     <table class="table table-bordered table-sm table-hover table-striped text-center">
         <thead>
             <tr>
-                <th><a asp-action="Index" asp-route-sortParam="@ViewData["CodeSortParam"]">Code</a></th>
-                <th><a asp-action="Index" asp-route-sortParam="@ViewData["DescriptionSortParam"]">Description</a></th>
-                <th><a asp-action="Index" asp-route-sortParam="@ViewData["NumberOfStudentsSortParam"]">Student Count</a></th>
+                <th><a href="#" onclick="sortTable(0)">Code</a></th>
+                <th><a href="#" onclick="sortTable(1)">Description</a></th>
+                <th><a href="#" onclick="sortTable(2)">Student Count</a></th>
             </tr>
         </thead>
         <tbody>

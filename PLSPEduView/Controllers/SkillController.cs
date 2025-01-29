@@ -24,36 +24,21 @@ namespace PLSPEduView.Controllers
             _writeService = writeService;
         }
 
-        public async Task<ActionResult> Index(string sortParam)
+        public async Task<ActionResult> Index()
         {
-            ViewData["DescriptionSortParam"] = sortParam == "Description" ? "Description_desc" : "Description";
-            ViewData["NumberOfStudentSortParam"] = sortParam == "NumberOfStudents" ? "NumberOfStudents_desc" : "NumberOfStudents";
-
             var model = await _readService.GetSkillViewModel();
-
-            model.Skills = model.Skills.ApplySort(sortParam);
             
             return View(model);
         }
 
-        public async Task<ActionResult> ViewSkill(int itemid, string? sortParam)
+        public async Task<ActionResult> ViewSkill(int itemid)
         {
-            ViewData["IdSortParam"] = sortParam == "Id" ? "Id_desc" : "Id";
-            ViewData["NameSortParam"] = sortParam == "Name" ? "Name_desc" : "Name";
-            ViewData["YearAndSectionSortParam"] = sortParam == "YearAndSection" ? "YearAndSection_desc" : "YearAndSection";
-            ViewData["ProgramSortParam"] = sortParam == "Program" ? "Program_desc" : "Program";
-            ViewData["DepartmentSortParam"] = sortParam == "Department" ? "Department_desc" : "Department";
 
             var skill = await _repository.GetByIdAsync(itemid);
 
             if (skill == null)
             {
                 return BadRequest($"Skill with an id of {itemid} does not exists.");
-            }
-
-            if (string.IsNullOrEmpty(sortParam) == false)
-            {
-                skill.Students = skill.Students.ApplySort(sortParam).ToList();
             }
 
             return View(skill);

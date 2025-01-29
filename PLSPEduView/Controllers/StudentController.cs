@@ -29,7 +29,7 @@ namespace PLSPEduView.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var studentViewModel = TempData["StudentViewModel"];
+            var studentViewModel = HttpContext.Session.GetString("StudentViewModel");
 
             if (studentViewModel is string json)
             {
@@ -38,8 +38,8 @@ namespace PLSPEduView.Controllers
                 model = await _viewService.ReGenerateStudentViewModelAsync(model!);
 
                 model.Students = model.Students.ApplyFilter(model);
-                
-                model.Students = model.Students.ApplySort(model);
+
+                ViewData["IsFiltered"] = "true";
 
                 return View(model);
             }
@@ -50,8 +50,17 @@ namespace PLSPEduView.Controllers
         [HttpPost]
         public IActionResult Index(StudentViewModel model)
         {
-            TempData["StudentViewModel"] = JsonSerializer.Serialize(model);
-            
+            var json = JsonSerializer.Serialize(model);
+
+            HttpContext.Session.SetString("StudentViewModel", json);           
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult ResetFilterSession()
+        {
+            HttpContext.Session.Remove("StudentViewModel");
+
             return RedirectToAction("Index");
         }
 
@@ -108,8 +117,7 @@ namespace PLSPEduView.Controllers
 
         public async Task<IActionResult> UpdateStudent(int itemid)
         {
-            var model = new StudentWriteModel();
-
+            StudentWriteModel? model;
             if (ViewData["InvalidUpdateModel"] is string json)
             {
                 model = JsonSerializer.Deserialize<StudentWriteModel>(json);
@@ -122,7 +130,7 @@ namespace PLSPEduView.Controllers
 
                 if (student == null)
                     return NotFound($"Student with an id of {itemid} not found.");
-                
+
                 model = await _viewModelService.GetStudentWriteModelAsync(student);
             }
 
@@ -153,6 +161,29 @@ namespace PLSPEduView.Controllers
             await _repository.RemoveByIdAsync(itemid);
 
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult FilterStudent(StudentViewModel model)
+        {
+            TempData["FilterStudent"] = JsonSerializer.Serialize(model);
+
+            return RedirectToAction("FilterStudent");
+        }
+
+        public async Task<IActionResult> FilterStudent()
+        {
+            var model = new StudentViewModel();
+
+            if (TempData["FilterStudent"] is string json)
+            {
+                model = JsonSerializer.Deserialize<StudentViewModel>(json);
+
+            }
+            
+            model = await _viewService.ReGenerateStudentViewModelAsync(model!);
+
+            return View(model);
         }
     }
 }

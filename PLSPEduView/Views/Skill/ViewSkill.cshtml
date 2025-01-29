@@ -21,11 +21,11 @@
     <table class="table table-bordered table-sm">
             <thead>
                 <tr>
-                    <th><a asp-action="ViewSkill" asp-route-itemid="@Model.Id" asp-route-sortParam="@ViewData["IdSortParam"]">Student Id</a></th>                    
-                    <th><a asp-action="ViewSkill" asp-route-itemid="@Model.Id" asp-route-sortParam="@ViewData["NameSortParam"]">Name</a></th>
-                    <th><a asp-action="ViewSkill" asp-route-itemid="@Model.Id" asp-route-sortParam="@ViewData["YearAndSectionSortParam"]">Year and Section</a></th>
-                    <th><a asp-action="ViewSkill" asp-route-itemid="@Model.Id" asp-route-sortParam="@ViewData["ProgramSortParam"]">Program</a></th>
-                    <th><a asp-action="ViewSkill" asp-route-itemid="@Model.Id" asp-route-sortParam="@ViewData["DepartmentSortParam"]">Department</a></th>
+                    <th><a href="#" onclick="sortTable(0)">Student Id</a></th>                    
+                    <th><a href="#" onclick="sortTable(1)">Name</a></th>
+                    <th><a href="#" onclick="sortTable(2)">Year and Section</a></th>
+                    <th><a href="#" onclick="sortTable(3)">Program</a></th>
+                    <th><a href="#" onclick="sortTable(4)">Department</a></th>
                 </tr>
             </thead>
             <tbody>
