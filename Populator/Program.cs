@@ -25,7 +25,7 @@ class Program
         }
         catch(ArgumentException e)
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine(e);
         }
         catch
         {
@@ -36,7 +36,6 @@ class Program
     private static void PopulateDatabase(Option option)
     {
 
-        DeleteAllRecords(option.MySqlStringConnection);
 
         var csvModels = GetCsvModels(option.CsvPath);
 
@@ -47,6 +46,8 @@ class Program
         var departments = GetDepartments();
 
         var programs = GetPrograms();
+        
+        DeleteAllRecords(option.MySqlStringConnection);
 
         PopulateAllNecessaryRecords(courses, skills, departments, programs, option.MySqlStringConnection);
 
@@ -66,9 +67,7 @@ class Program
             Student student = new() 
             {
                 Barangay = model.Barangay,
-                BirthDay = DateOnly.Parse(model.Birthday),
-                Department = context.Departments.FirstOrDefault(s => s.Code == model.Department)!,
-                Program = context.Programs.FirstOrDefault(s => s.Code == model.Program)!,
+                BirthDay = DateOnly.TryParse(model.Birthday, out _) ? DateOnly.Parse(model.Birthday) : DateOnly.Parse(DateTime.Now.ToString("MM/dd/yyyy")),
                 Email = model.Email,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
@@ -84,10 +83,17 @@ class Program
                 DateAdded = DateTime.Now
             };
 
+            student.DepartmentId = context.Departments.FirstOrDefault(s => s.Code == model.Department.Trim())!.Id;
+            student.ProgramId = context.Programs.FirstOrDefault(s => s.Code == model.Program.Trim())!.Id;  
+
             string[] courses = model.Courses.Split(";");
 
             foreach(var course in courses)
             {
+                if (string.IsNullOrEmpty(course))
+                {
+                    continue;
+                }
                 string[] data = course.Split('%');
                 student.Courses.Add(context.Courses.FirstOrDefault(s => s.CourseCode == data[0])!);
             }
@@ -170,6 +176,7 @@ class Program
 
         foreach(var record in csvModels)
         {
+            if (string.IsNullOrEmpty(record.Courses)) continue;
             string[] courses = record.Courses.Split(';');
             foreach (var course in courses)
             {
@@ -254,12 +261,12 @@ class Program
             new () { Code = "CCST", Description = "College of Computer Studies and Technology" },
             new () { Code = "CHK", Description = "College of Human Kinetics" },
             new () { Code = "COA", Description = "College of Accountancy" },
-            new () { Code = "CAHS", Description = "College Of Allied Health Science" },
+            new () { Code = "CNAHS", Description = "College Of Allied Health Science" },
             new () { Code = "CAS", Description = "College of Arts and Science" },
             new () { Code = "CBA", Description = "College of Business Administration" },
             new () { Code = "COE", Description = "College of Engineering" },
             new () { Code = "CTHM", Description = "College of Tourism And Hospitality Management" },
-            new () { Code = "CTEd", Description = "Bachelor of Teacher Education" }
+            new () { Code = "CTED", Description = "Bachelor of Teacher Education" }
         };
         return departments;
     }
@@ -270,28 +277,28 @@ class Program
         {
             new () { Code = "BSIT", Description = "Bachelor of Science in Information Technology" },
             new () { Code = "BSIS", Description = "Bachelor of Science in Information System" },
-            new () { Code = "BSPED", Description = "Bachelor of Science in Physical Education" },
             new () { Code = "BSA", Description = "Bachelor of Science in Accountancy" },
             new () { Code = "BSAIS", Description = "Bachelor of Science in Accounting Information System" },
             new () { Code = "BSMA", Description = "Bachelor Of Science In Management Accounting" },
             new () { Code = "BSN", Description = "Bachelor of Science in Nursing" },
-            new () { Code = "BAPS", Description = "Bachelor of Arts in Political Science" },
+            new () { Code = "BSPOLSCI", Description = "Bachelor of Arts in Political Science" },
             new () { Code = "BAC", Description = "Bachelor of Arts in Communication" },
             new () { Code = "BPA", Description = "Bachelor of Public Administration" },
-            new () { Code = "BSP", Description = "Bachelor of Science in Psychology" },
+            new () { Code = "BSPSY", Description = "Bachelor of Science in Psychology" },
             new () { Code = "BSEc", Description = "Bachelor of Science in Economics" },
             new () { Code = "BSBA", Description = "Bachelor of Science in Business Administration" },
             new () { Code = "BSEnt", Description = "Bachelor of Science in Entrepreneurship" },
             new () { Code = "BSOA", Description = "Bachelor of Science Office Administration" },
-            new () { Code = "BSCE", Description = "Bachelor of Science in Computer Engineering" },
+            new () { Code = "BSCPE", Description = "Bachelor of Science in Computer Engineering" },
+            new () { Code = "BSIE", Description = "Bachelor of Science in Industrial Engineering"},
             new () { Code = "BSHM", Description = "Bachelor of Science in Hospitality Management" },
             new () { Code = "BSTM", Description = "Bachelor of Science in Tourism Management" },
             new () { Code = "BSNEd", Description = "Bachelor of Special Need Education" },
             new () { Code = "BTTVTEd", Description = "Bachelor of Technical - Vocational Teacher Education" },
             new () { Code = "BECEd", Description = "Bachelor of Early Childhood Education" },
-            new () { Code = "BEEd", Description = "Bachelor of Elementary Education" },
-            new () { Code = "BPEd", Description = "Bachelor of Physical Education" },
-            new () { Code = "BSEd", Description = "Bachelor of Secondary Education" }        
+            new () { Code = "BEED", Description = "Bachelor of Elementary Education" },
+            new () { Code = "BPED", Description = "Bachelor of Physical Education" },
+            new () { Code = "BSED", Description = "Bachelor of Secondary Education" }        
         };
         return program;
     }

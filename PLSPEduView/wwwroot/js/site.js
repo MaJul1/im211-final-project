@@ -18,3 +18,22 @@ function sortTable(columnIndex) {
     });
     table.setAttribute("data-sort-order", isAscending ? "desc" : "asc");
 }
+
+function sortTableByNumber(columnIndex) {
+    var table = document.querySelector(".table tbody");
+    var rows = Array.from(table.rows);
+    var isAscending = table.getAttribute("data-sort-order") !== "desc"; // Default to ascending
+
+    rows.sort(function (rowA, rowB) {
+        var cellA = parseFloat(rowA.cells[columnIndex].innerText) || 0;
+        var cellB = parseFloat(rowB.cells[columnIndex].innerText) || 0;
+        return isAscending ? cellA - cellB : cellB - cellA;
+    });
+
+    table.innerHTML = "";
+    rows.forEach(function (row) {
+        table.appendChild(row);
+    });
+
+    table.setAttribute("data-sort-order", isAscending ? "desc" : "asc");
+}
