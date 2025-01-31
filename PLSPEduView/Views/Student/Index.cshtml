@@ -9,7 +9,7 @@
     {
         s.Id,
         s.SchoolId,
-        Name = string.Join(" ", s.FirstName, s.LastName),
+        Name = string.Join(", ", s.LastName, s.FirstName),
         YearLevelAndSection = string.Concat(s.YearLevel, s.Section),
         s.Program,
         s.Department

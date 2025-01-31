@@ -106,7 +106,7 @@ class Program
                 {
                     continue;
                 }
-                student.Skills.Add(context.Skills.FirstOrDefault(s => s.Description == skill)!);
+                student.Skills.Add(context.Skills.FirstOrDefault(s => s.Description == skill.Trim())!);
             }
 
             result.Add(student);
@@ -144,7 +144,7 @@ class Program
             string[] skills = record.Skills.Split(';');
             foreach(var s in skills)
             {
-                uniqueSkills.Add(s);
+                uniqueSkills.Add(s.Trim());
             }
         }
 
